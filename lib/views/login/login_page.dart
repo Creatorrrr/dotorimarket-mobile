@@ -17,62 +17,64 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          return Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    AppConstant.APP_TITLE,
-                    style: TextStyle(
-                      fontSize: 28,
+          return SafeArea(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      AppConstant.APP_TITLE,
+                      style: TextStyle(
+                        fontSize: 28,
+                      ),
                     ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 100,
+                    ),
+                    alignment: Alignment(0.0, 0.0),
                   ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 100,
+                  Container(
+                    child: LoginTextField(
+                      labelText: TEXT_EMAIL,
+                      icon: Icon(Icons.email),
+                    ),
+                    padding: EdgeInsets.all(WIDGET_PADDING),
                   ),
-                  alignment: Alignment(0.0, 0.0),
-                ),
-                Container(
-                  child: LoginTextField(
-                    labelText: TEXT_EMAIL,
-                    icon: Icon(Icons.email),
+                  Container(
+                    child: LoginTextField(
+                      labelText: TEXT_PASSWORD,
+                      icon: Icon(Icons.lock),
+                    ),
+                    padding: EdgeInsets.all(WIDGET_PADDING),
                   ),
-                  padding: EdgeInsets.all(WIDGET_PADDING),
-                ),
-                Container(
-                  child: LoginTextField(
-                    labelText: TEXT_PASSWORD,
-                    icon: Icon(Icons.lock),
+                  Container(
+                    child: LoginButton(
+                      text: TEXT_LOGIN,
+                      textColor: Colors.white,
+                      buttonColor: Colors.blue,
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute<void>(
+                            builder: (context) {
+                              return GoodListPage();
+                            }
+                        ));
+                      },
+                    ),
+                    padding: EdgeInsets.all(WIDGET_PADDING),
                   ),
-                  padding: EdgeInsets.all(WIDGET_PADDING),
-                ),
-                Container(
-                  child: LoginButton(
-                    text: TEXT_LOGIN,
-                    textColor: Colors.white,
-                    buttonColor: Colors.blue,
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute<void>(
-                        builder: (context) {
-                          return GoodListPage();
-                        }
-                      ));
-                    },
-                  ),
-                  padding: EdgeInsets.all(WIDGET_PADDING),
-                ),
-                Container(
-                  child: LoginButton(
-                    text: TEXT_SIGN_UP,
-                    onPressed: () {
+                  Container(
+                    child: LoginButton(
+                      text: TEXT_SIGN_UP,
+                      onPressed: () {
 
-                    },
+                      },
+                    ),
+                    padding: EdgeInsets.all(WIDGET_PADDING),
                   ),
-                  padding: EdgeInsets.all(WIDGET_PADDING),
-                ),
-              ],
+                ],
+              ),
+              padding: EdgeInsets.all(PAGE_PADDING),
             ),
-            padding: EdgeInsets.all(PAGE_PADDING),
           );
         },
       ),

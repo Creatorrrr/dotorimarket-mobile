@@ -6,8 +6,6 @@ class TabAllLayout extends StatelessWidget {
   static const String ALL_BANNER_PATH = 'assets/dotori-banner.png';
   static const double LAYOUT_BANNER_TOP_PADDING = 10.0;
   static const double LAYOUT_BANNER_BOTTOM_PADDING = 5.0;
-  static const double LAYOUT_BANNER_LEFT_PADDING = 5.0;
-  static const double LAYOUT_BANNER_RIGHT_PADDING = 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +19,6 @@ class TabAllLayout extends StatelessWidget {
             padding: EdgeInsets.only(
               top: LAYOUT_BANNER_TOP_PADDING,
               bottom: LAYOUT_BANNER_BOTTOM_PADDING,
-              left: LAYOUT_BANNER_LEFT_PADDING,
-              right: LAYOUT_BANNER_RIGHT_PADDING,
             ),
           ),
           Expanded(
@@ -31,7 +27,6 @@ class TabAllLayout extends StatelessWidget {
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
               childAspectRatio: 0.8,
-              padding: EdgeInsets.all(10.0),
               children: <Widget>[
                 TabAllGridItem(
                   title: '바바파파시리즈 아동도서',

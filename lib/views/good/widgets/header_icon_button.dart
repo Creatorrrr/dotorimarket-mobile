@@ -25,6 +25,8 @@ class HeaderIconButton extends StatelessWidget {
         iconSize: this.iconSize,
         color: Colors.black,
         alignment: Alignment.center,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
         onPressed: this.onPressed,
       ),
       width: this.width,

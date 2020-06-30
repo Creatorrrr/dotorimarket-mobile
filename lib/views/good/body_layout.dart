@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/good/widgets/tab_all_layout.dart';
+import 'package:dotorimarket/views/good/tab_all_layout.dart';
 import 'package:dotorimarket/views/good/widgets/body_tab_bar.dart';
 import 'package:dotorimarket/views/good/widgets/body_tab_bar_view.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,6 @@ class BodyLayout extends StatefulWidget {
 class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMixin {
   static const String TAB_ALL = '전체';
   static const String TAB_BEST = '베스트';
-  static const double TAB_BAR_VIEW_TOP = 45.0;
 
   TabController tabController;
 

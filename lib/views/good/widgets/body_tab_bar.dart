@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class BodyTabBar extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 45.0;
+  static const double HORIZONTAL_PADDING = 15.0;
   static const MaterialColor INDICATOR_COLOR_DEFAULT = Colors.amber;
   static const double INDICATOR_WEIGHT_DEFAULT = 4.0;
   static const double LABEL_FONT_SIZE = 16.0;
@@ -32,7 +33,6 @@ class BodyTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: this.height,
       child: TabBar(
         tabs: this.tabs,
         controller: this.tabController,
@@ -45,6 +45,19 @@ class BodyTabBar extends StatelessWidget {
         unselectedLabelStyle: TextStyle(
           fontSize: this.unselectedLabelFontSize,
         ),
+      ),
+      height: this.height,
+      padding: EdgeInsets.symmetric(
+        horizontal: HORIZONTAL_PADDING,
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 1.0,
+            color: Colors.black12,
+          ),
+        ),
+        color: Colors.white,
       ),
     );
   }

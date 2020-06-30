@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BodyTabBarView extends StatelessWidget {
+  static const double HORIZONTAL_PADDING = 15.0;
+
   final TabController tabController;
   final List<Widget> views;
 
@@ -12,9 +14,14 @@ class BodyTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      controller: this.tabController,
-      children: this.views,
+    return Container(
+      child: TabBarView(
+        controller: this.tabController,
+        children: this.views,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: HORIZONTAL_PADDING,
+      ),
     );
   }
 }
