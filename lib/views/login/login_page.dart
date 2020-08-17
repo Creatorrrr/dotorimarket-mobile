@@ -1,6 +1,6 @@
 import 'package:dotorimarket/constants/app_constant.dart';
 import 'package:dotorimarket/views/chat/chat_content_page.dart';
-import 'package:dotorimarket/views/good/good_list_page.dart';
+import 'package:dotorimarket/views/good/list/good_list_page.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
 import 'package:flutter/material.dart';

@@ -1,22 +1,20 @@
-import 'package:dotorimarket/views/chat/layouts/chat_input_layout.dart';
-import 'package:dotorimarket/views/chat/layouts/header_layout.dart';
-import 'package:dotorimarket/views/chat/layouts/body_layout.dart';
+import 'package:dotorimarket/views/common/menu_layout.dart';
+import 'package:dotorimarket/views/category/layouts/body_layout.dart';
+import 'package:dotorimarket/views/category/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
-class ChatContentPage extends StatelessWidget {
+class CategoryListPage extends StatelessWidget {
   static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
   static const double TAB_BOTTOM_HEIGHT = 50.0;
 
-  final TextEditingController controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) {
-          return SafeArea(
-            child: GestureDetector(
+    return GestureDetector(
+      child: Scaffold(
+        body: Builder(
+          builder: (context) {
+            return SafeArea(
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 child: Stack(
@@ -28,7 +26,7 @@ class ChatContentPage extends StatelessWidget {
                       right: 0.0,
                       child: HeaderLayout(
                         height: HEADER_TOP_HEIGHT,
-                        logoPath: HEADER_LOGO_PATH,
+                        controller: TextEditingController(),
                       ),
                     ),
                     Positioned(
@@ -43,21 +41,20 @@ class ChatContentPage extends StatelessWidget {
                       bottom: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: ChatInputLayout(
+                      child: MenuLayout(
                         height: TAB_BOTTOM_HEIGHT,
-                        controller: controller,
                       ),
                     ),
                   ],
                 ),
               ),
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
     );
   }
 }

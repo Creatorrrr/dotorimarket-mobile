@@ -1,25 +1,27 @@
 import 'package:dotorimarket/views/chat/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/good/list/widgets/header_logo_image.dart';
+import 'package:dotorimarket/views/good/list/widgets/header_search_button.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
   static const double HORIZONTAL_PADDING = 15.0;
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 10.0;
+  static const double HEADER_ROW_PADDING = 5.0;
 
   final double height;
-  final String logoPath;
+  final String title;
 
   HeaderLayout({
     Key key,
     this.height = HEADER_TOP_HEIGHT_DEFAULT,
-    @required this.logoPath,
+    @required this.title,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Row(
-        children: <Widget>[
+        children: [
           Container(
             child: HeaderIconButton(
               icon: Icon(Icons.arrow_back_ios),
@@ -29,30 +31,22 @@ class HeaderLayout extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(),
-          ),
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.more_horiz),
-              onPressed: () {
-
-              },
+            child: Container(
+              child: Text(
+                this.title,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              height: this.height,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(
+                left: 10.0,
+              ),
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: HEADER_ROW_PADDING,
-            ),
-          ),
+          )
         ],
-      ),
-      height: this.height,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1.0,
-            color: Colors.black12,
-          ),
-        ),
-        color: Colors.white,
       ),
     );
   }

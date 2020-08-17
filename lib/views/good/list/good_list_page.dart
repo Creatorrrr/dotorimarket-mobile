@@ -1,9 +1,9 @@
 import 'package:dotorimarket/views/common/menu_layout.dart';
-import 'package:dotorimarket/views/mypage/layouts/body_layout.dart';
-import 'package:dotorimarket/views/mypage/layouts/header_layout.dart';
+import 'package:dotorimarket/views/good/list/layouts/body_layout.dart';
+import 'package:dotorimarket/views/good/list/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
-class MyPagePage extends StatelessWidget {
+class GoodListPage extends StatelessWidget {
   static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
   static const double TAB_BOTTOM_HEIGHT = 50.0;
@@ -25,6 +25,7 @@ class MyPagePage extends StatelessWidget {
                     right: 0.0,
                     child: HeaderLayout(
                       height: HEADER_TOP_HEIGHT,
+                      logoPath: HEADER_LOGO_PATH,
                     ),
                   ),
                   Positioned(

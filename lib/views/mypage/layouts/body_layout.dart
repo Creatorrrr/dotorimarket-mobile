@@ -1,8 +1,8 @@
 import 'package:dotorimarket/views/chat/widgets/chat_content_list_item.dart';
 import 'package:dotorimarket/views/chat/widgets/chat_content_list_time.dart';
-import 'package:dotorimarket/views/mypage/circle_buttons_layout.dart';
-import 'package:dotorimarket/views/mypage/my_profile_layout.dart';
-import 'package:dotorimarket/views/mypage/text_buttons_layout.dart';
+import 'package:dotorimarket/views/mypage/layouts/circle_buttons_layout.dart';
+import 'package:dotorimarket/views/mypage/layouts/my_profile_layout.dart';
+import 'package:dotorimarket/views/mypage/layouts/text_buttons_layout.dart';
 import 'package:dotorimarket/views/mypage/widgets/my_page_circle_button.dart';
 import 'package:dotorimarket/views/mypage/widgets/my_page_text_button.dart';
 import 'package:flutter/material.dart';

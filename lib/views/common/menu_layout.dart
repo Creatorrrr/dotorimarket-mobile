@@ -1,6 +1,8 @@
+import 'package:dotorimarket/views/category/category_list_page.dart';
 import 'package:dotorimarket/views/chat/chat_content_page.dart';
 import 'package:dotorimarket/views/common/widgets/menu_item_button.dart';
-import 'package:dotorimarket/views/good/good_list_page.dart';
+import 'package:dotorimarket/views/good/list/good_list_page.dart';
+import 'package:dotorimarket/views/good/register/good_register_page.dart';
 import 'package:dotorimarket/views/mypage/mypage_page.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +57,11 @@ class MenuLayout extends StatelessWidget {
               icon: Icons.menu,
               name: MENU_ITEM_CATEGORY,
               onPressed: this.onCategoryPressed ?? () {
-
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (context) {
+                      return CategoryListPage();
+                    }
+                ));
               },
             ),
           ),
@@ -65,7 +71,11 @@ class MenuLayout extends StatelessWidget {
               icon: Icons.add_circle_outline,
               name: MENU_ITEM_WRITE,
               onPressed: this.onWritePressed ?? () {
-
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (context) {
+                      return GoodRegisterPage();
+                    }
+                ));
               },
             ),
           ),

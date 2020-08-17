@@ -1,5 +1,5 @@
-import 'package:dotorimarket/views/good/widgets/tab_all_banner_image.dart';
-import 'package:dotorimarket/views/good/widgets/tab_all_grid_item.dart';
+import 'package:dotorimarket/views/good/list/widgets/tab_all_banner_image.dart';
+import 'package:dotorimarket/views/good/list/widgets/tab_all_grid_item.dart';
 import 'package:flutter/material.dart';
 
 class TabAllLayout extends StatelessWidget {

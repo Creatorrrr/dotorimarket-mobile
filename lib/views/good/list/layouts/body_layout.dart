@@ -1,7 +1,7 @@
-import 'package:dotorimarket/views/good/tab_all_layout.dart';
-import 'package:dotorimarket/views/good/tab_best_layout.dart';
-import 'package:dotorimarket/views/good/widgets/body_tab_bar.dart';
-import 'package:dotorimarket/views/good/widgets/body_tab_bar_view.dart';
+import 'package:dotorimarket/views/good/list/layouts/tab_all_layout.dart';
+import 'package:dotorimarket/views/good/list/layouts/tab_best_layout.dart';
+import 'package:dotorimarket/views/good/list/widgets/body_tab_bar.dart';
+import 'package:dotorimarket/views/good/list/widgets/body_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatefulWidget {
