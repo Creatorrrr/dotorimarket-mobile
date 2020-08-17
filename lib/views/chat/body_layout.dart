@@ -2,16 +2,7 @@ import 'package:dotorimarket/views/chat/widgets/chat_content_list_item.dart';
 import 'package:dotorimarket/views/chat/widgets/chat_content_list_time.dart';
 import 'package:flutter/material.dart';
 
-class BodyLayout extends StatefulWidget {
-  BodyLayout({
-    Key key,
-  }):super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => BodyLayoutState();
-}
-
-class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMixin {
+class BodyLayout extends StatelessWidget {
   static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
   static const double CHAT_CONTENT_ITEM_VERTICAL_PADDING = 10.0;
   static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 10.0;

@@ -1,4 +1,7 @@
+import 'package:dotorimarket/views/chat/chat_content_page.dart';
 import 'package:dotorimarket/views/common/widgets/menu_item_button.dart';
+import 'package:dotorimarket/views/good/good_list_page.dart';
+import 'package:dotorimarket/views/mypage/mypage_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuLayout extends StatelessWidget {
@@ -20,11 +23,11 @@ class MenuLayout extends StatelessWidget {
   MenuLayout({
     Key key,
     this.height = HEIGHT_DEFAULT,
-    @required this.onHomePressed,
-    @required this.onCategoryPressed,
-    @required this.onWritePressed,
-    @required this.onChatPressed,
-    @required this.onMyPagePressed,
+    this.onHomePressed,
+    this.onCategoryPressed,
+    this.onWritePressed,
+    this.onChatPressed,
+    this.onMyPagePressed,
   }):super(key: key);
 
   @override
@@ -37,7 +40,13 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.home,
               name: MENU_ITEM_HOME,
-              onPressed: this.onHomePressed,
+              onPressed: this.onHomePressed ?? () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (context) {
+                      return GoodListPage();
+                    }
+                ));
+              },
             ),
           ),
           Expanded(
@@ -45,7 +54,9 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.menu,
               name: MENU_ITEM_CATEGORY,
-              onPressed: this.onCategoryPressed,
+              onPressed: this.onCategoryPressed ?? () {
+
+              },
             ),
           ),
           Expanded(
@@ -53,7 +64,9 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.add_circle_outline,
               name: MENU_ITEM_WRITE,
-              onPressed: this.onWritePressed,
+              onPressed: this.onWritePressed ?? () {
+
+              },
             ),
           ),
           Expanded(
@@ -61,7 +74,13 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.chat_bubble_outline,
               name: MENU_ITEM_CHAT,
-              onPressed: this.onChatPressed,
+              onPressed: this.onChatPressed ?? () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (context) {
+                      return ChatContentPage();
+                    }
+                ));
+              },
             ),
           ),
           Expanded(
@@ -69,7 +88,13 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.perm_identity,
               name: MENU_ITEM_MY_PAGE,
-              onPressed: this.onMyPagePressed,
+              onPressed: this.onMyPagePressed ?? () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (context) {
+                      return MyPagePage();
+                    }
+                ));
+              },
             ),
           ),
         ],

@@ -1,11 +1,9 @@
-import 'package:dotorimarket/views/chat/chat_content_page.dart';
 import 'package:dotorimarket/views/common/menu_layout.dart';
-import 'package:dotorimarket/views/good/body_layout.dart';
-import 'package:dotorimarket/views/good/header_layout.dart';
-import 'package:dotorimarket/views/mypage/mypage_page.dart';
+import 'package:dotorimarket/views/mypage/body_layout.dart';
+import 'package:dotorimarket/views/mypage/header_layout.dart';
 import 'package:flutter/material.dart';
 
-class GoodListPage extends StatelessWidget {
+class MyPagePage extends StatelessWidget {
   static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
   static const double TAB_BOTTOM_HEIGHT = 50.0;
@@ -44,29 +42,6 @@ class GoodListPage extends StatelessWidget {
                     right: 0.0,
                     child: MenuLayout(
                       height: TAB_BOTTOM_HEIGHT,
-                      onHomePressed: () {
-
-                      },
-                      onCategoryPressed: () {
-
-                      },
-                      onWritePressed: () {
-
-                      },
-                      onChatPressed: () {
-                        Navigator.push(context, MaterialPageRoute<void>(
-                            builder: (context) {
-                              return ChatContentPage();
-                            }
-                        ));
-                      },
-                      onMyPagePressed: () {
-                        Navigator.push(context, MaterialPageRoute<void>(
-                            builder: (context) {
-                              return MyPagePage();
-                            }
-                        ));
-                      },
                     ),
                   ),
                 ],
