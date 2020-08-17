@@ -1,3 +1,4 @@
+import 'package:dotorimarket/views/chat/chat_content_page.dart';
 import 'package:dotorimarket/views/common/menu_layout.dart';
 import 'package:dotorimarket/views/good/body_layout.dart';
 import 'package:dotorimarket/views/good/header_layout.dart';
@@ -42,6 +43,25 @@ class GoodListPage extends StatelessWidget {
                     right: 0.0,
                     child: MenuLayout(
                       height: TAB_BOTTOM_HEIGHT,
+                      onHomePressed: () {
+
+                      },
+                      onCategoryPressed: () {
+
+                      },
+                      onWritePressed: () {
+
+                      },
+                      onChatPressed: () {
+                        Navigator.push(context, MaterialPageRoute<void>(
+                            builder: (context) {
+                              return ChatContentPage();
+                            }
+                        ));
+                      },
+                      onMyPagePressed: () {
+
+                      },
                     ),
                   ),
                 ],

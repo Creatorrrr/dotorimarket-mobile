@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TabAllGridItem extends StatelessWidget {
-  static const String GRID_LOGO_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
 
   final String title;
   final String price;
@@ -20,7 +20,7 @@ class TabAllGridItem extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               child: Image.asset(
-                GRID_LOGO_PATH,
+                THUMBNAIL_PATH,
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(5.0),

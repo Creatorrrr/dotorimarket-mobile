@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
   static const double HORIZONTAL_PADDING = 15.0;
-  static const double HEADER_TOP_DEFAULT = 50.0;
+  static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
   static const double HEADER_ROW_PADDING = 5.0;
 
   final double height;
@@ -13,7 +13,7 @@ class HeaderLayout extends StatelessWidget {
 
   HeaderLayout({
     Key key,
-    this.height = HEADER_TOP_DEFAULT,
+    this.height = HEADER_TOP_HEIGHT_DEFAULT,
     @required this.logoPath,
   }):super(key: key);
 

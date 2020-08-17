@@ -11,10 +11,20 @@ class MenuLayout extends StatelessWidget {
   static const String MENU_ITEM_MY_PAGE = '마이페이지';
 
   final double height;
+  final Function onHomePressed;
+  final Function onCategoryPressed;
+  final Function onWritePressed;
+  final Function onChatPressed;
+  final Function onMyPagePressed;
 
   MenuLayout({
     Key key,
     this.height = HEIGHT_DEFAULT,
+    @required this.onHomePressed,
+    @required this.onCategoryPressed,
+    @required this.onWritePressed,
+    @required this.onChatPressed,
+    @required this.onMyPagePressed,
   }):super(key: key);
 
   @override
@@ -27,9 +37,7 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.home,
               name: MENU_ITEM_HOME,
-              onPressed: () {
-
-              },
+              onPressed: this.onHomePressed,
             ),
           ),
           Expanded(
@@ -37,9 +45,7 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.menu,
               name: MENU_ITEM_CATEGORY,
-              onPressed: () {
-
-              },
+              onPressed: this.onCategoryPressed,
             ),
           ),
           Expanded(
@@ -47,9 +53,7 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.add_circle_outline,
               name: MENU_ITEM_WRITE,
-              onPressed: () {
-
-              },
+              onPressed: this.onWritePressed,
             ),
           ),
           Expanded(
@@ -57,9 +61,7 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.chat_bubble_outline,
               name: MENU_ITEM_CHAT,
-              onPressed: () {
-
-              },
+              onPressed: this.onChatPressed,
             ),
           ),
           Expanded(
@@ -67,9 +69,7 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.perm_identity,
               name: MENU_ITEM_MY_PAGE,
-              onPressed: () {
-
-              },
+              onPressed: this.onMyPagePressed,
             ),
           ),
         ],

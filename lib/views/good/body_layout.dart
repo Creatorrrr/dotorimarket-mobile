@@ -1,4 +1,5 @@
 import 'package:dotorimarket/views/good/tab_all_layout.dart';
+import 'package:dotorimarket/views/good/tab_best_layout.dart';
 import 'package:dotorimarket/views/good/widgets/body_tab_bar.dart';
 import 'package:dotorimarket/views/good/widgets/body_tab_bar_view.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMi
               tabController: this.tabController,
               views: <Widget>[
                 TabAllLayout(),
-                TabAllLayout(),
+                TabBestLayout(),
               ],
             ),
           ),

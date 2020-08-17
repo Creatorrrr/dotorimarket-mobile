@@ -1,4 +1,5 @@
 import 'package:dotorimarket/constants/app_constant.dart';
+import 'package:dotorimarket/views/chat/chat_content_page.dart';
 import 'package:dotorimarket/views/good/good_list_page.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
@@ -14,70 +15,77 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) {
-          return SafeArea(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      AppConstant.APP_TITLE,
-                      style: TextStyle(
-                        fontSize: 28,
+    return GestureDetector(
+      child: Scaffold(
+        body: Builder(
+          builder: (context) {
+            return SafeArea(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        AppConstant.APP_TITLE,
+                        style: TextStyle(
+                          fontSize: 28,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 100,
+                      ),
+                      alignment: Alignment(0.0, 0.0),
                     ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: 100,
+                    Container(
+                      child: LoginTextField(
+                        labelText: TEXT_EMAIL,
+                        icon: Icon(Icons.email),
+                        controller: TextEditingController(),
+                      ),
+                      padding: EdgeInsets.all(WIDGET_PADDING),
                     ),
-                    alignment: Alignment(0.0, 0.0),
-                  ),
-                  Container(
-                    child: LoginTextField(
-                      labelText: TEXT_EMAIL,
-                      icon: Icon(Icons.email),
+                    Container(
+                      child: LoginTextField(
+                        labelText: TEXT_PASSWORD,
+                        icon: Icon(Icons.lock),
+                        controller: TextEditingController(),
+                      ),
+                      padding: EdgeInsets.all(WIDGET_PADDING),
                     ),
-                    padding: EdgeInsets.all(WIDGET_PADDING),
-                  ),
-                  Container(
-                    child: LoginTextField(
-                      labelText: TEXT_PASSWORD,
-                      icon: Icon(Icons.lock),
+                    Container(
+                      child: LoginButton(
+                        text: TEXT_LOGIN,
+                        textColor: Colors.white,
+                        buttonColor: Colors.blue,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute<void>(
+                              builder: (context) {
+                                return GoodListPage();
+                              }
+                          ));
+                        },
+                      ),
+                      padding: EdgeInsets.all(WIDGET_PADDING),
                     ),
-                    padding: EdgeInsets.all(WIDGET_PADDING),
-                  ),
-                  Container(
-                    child: LoginButton(
-                      text: TEXT_LOGIN,
-                      textColor: Colors.white,
-                      buttonColor: Colors.blue,
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute<void>(
-                            builder: (context) {
-                              return GoodListPage();
-                            }
-                        ));
-                      },
-                    ),
-                    padding: EdgeInsets.all(WIDGET_PADDING),
-                  ),
-                  Container(
-                    child: LoginButton(
-                      text: TEXT_SIGN_UP,
-                      onPressed: () {
+                    Container(
+                      child: LoginButton(
+                        text: TEXT_SIGN_UP,
+                        onPressed: () {
 
-                      },
+                        },
+                      ),
+                      padding: EdgeInsets.all(WIDGET_PADDING),
                     ),
-                    padding: EdgeInsets.all(WIDGET_PADDING),
-                  ),
-                ],
+                  ],
+                ),
+                padding: EdgeInsets.all(PAGE_PADDING),
               ),
-              padding: EdgeInsets.all(PAGE_PADDING),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
     );
   }
 }
