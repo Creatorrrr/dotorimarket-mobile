@@ -1,11 +1,12 @@
 import 'package:dotorimarket/views/chat/widgets/header_icon_button.dart';
-import 'package:dotorimarket/views/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
   static const double HEADER_ROW_PADDING = 10.0;
+  static const double HEADER_TEXT_LEFT_PADDING = 15.0;
+
+  static const String HEADER_TEXT = '설정';
 
   final double height;
 
@@ -28,35 +29,22 @@ class HeaderLayout extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(),
-          ),
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.more_horiz),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return SettingPage();
-                    }
-                ));
-              },
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: HEADER_ROW_PADDING,
+            child: Container(
+              child: Text(
+                HEADER_TEXT,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              padding: const EdgeInsets.only(
+                left: HEADER_TEXT_LEFT_PADDING,
+              ),
             ),
           ),
         ],
       ),
       height: this.height,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1.0,
-            color: Colors.black12,
-          ),
-        ),
-        color: Colors.white,
-      ),
     );
   }
 }

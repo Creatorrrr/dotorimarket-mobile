@@ -10,6 +10,8 @@ class LoginPage extends StatelessWidget {
   static const String TEXT_PASSWORD = 'Password';
   static const String TEXT_LOGIN = '로그인';
   static const String TEXT_SIGN_UP = '회원가입';
+  static const String TEXT_FIND_ID = '아이디 찾기';
+  static const String TEXT_FIND_PASSWORD = '비밀번호 찾기';
   static const double PAGE_PADDING = 5.0;
   static const double WIDGET_PADDING = 5.0;
 
@@ -74,6 +76,35 @@ class LoginPage extends StatelessWidget {
                         },
                       ),
                       padding: EdgeInsets.all(WIDGET_PADDING),
+                    ),
+                    Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              TEXT_FIND_ID,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                                ' | '
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              TEXT_FIND_PASSWORD,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                      padding: const EdgeInsets.all(10.0),
                     ),
                   ],
                 ),

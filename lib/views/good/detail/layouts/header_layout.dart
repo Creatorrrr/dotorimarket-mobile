@@ -1,5 +1,4 @@
 import 'package:dotorimarket/views/chat/widgets/header_icon_button.dart';
-import 'package:dotorimarket/views/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
@@ -27,36 +26,9 @@ class HeaderLayout extends StatelessWidget {
               },
             ),
           ),
-          Expanded(
-            child: Container(),
-          ),
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.more_horiz),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return SettingPage();
-                    }
-                ));
-              },
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: HEADER_ROW_PADDING,
-            ),
-          ),
         ],
       ),
       height: this.height,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1.0,
-            color: Colors.black12,
-          ),
-        ),
-        color: Colors.white,
-      ),
     );
   }
 }

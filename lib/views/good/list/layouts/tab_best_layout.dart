@@ -1,3 +1,4 @@
+import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
 import 'package:dotorimarket/views/good/list/widgets/tab_all_banner_image.dart';
 import 'package:dotorimarket/views/good/list/widgets/tab_best_list_item.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,13 @@ class TabBestLayout extends StatelessWidget {
                   child: TabBestListItem(
                     title: '바바파파시리즈 아동도서',
                     price: '40,000원',
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (context) {
+                            return GoodDetailPage();
+                          }
+                      ));
+                    },
                   ),
                   padding: const EdgeInsets.only(
                     bottom: 10.0,
@@ -37,6 +45,13 @@ class TabBestLayout extends StatelessWidget {
                   child: TabBestListItem(
                     title: '바바파파시리즈 아동도서',
                     price: '40,000원',
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (context) {
+                            return GoodDetailPage();
+                          }
+                      ));
+                    },
                   ),
                   padding: const EdgeInsets.only(
                     bottom: 10.0,
@@ -46,6 +61,13 @@ class TabBestLayout extends StatelessWidget {
                   child: TabBestListItem(
                     title: '바바파파시리즈 아동도서',
                     price: '40,000원',
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (context) {
+                            return GoodDetailPage();
+                          }
+                      ));
+                    },
                   ),
                   padding: const EdgeInsets.only(
                     bottom: 10.0,
