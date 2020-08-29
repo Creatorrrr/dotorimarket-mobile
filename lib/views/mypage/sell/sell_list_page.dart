@@ -1,5 +1,5 @@
-import 'package:dotorimarket/views/sell/layouts/body_layout.dart';
-import 'package:dotorimarket/views/sell/layouts/header_layout.dart';
+import 'package:dotorimarket/views/mypage/sell/layouts/body_layout.dart';
+import 'package:dotorimarket/views/mypage/sell/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
 class SellListPage extends StatelessWidget {

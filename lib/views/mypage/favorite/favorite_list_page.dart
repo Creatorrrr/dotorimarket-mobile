@@ -1,6 +1,5 @@
-import 'package:dotorimarket/views/common/menu_layout.dart';
-import 'package:dotorimarket/views/favorite/layouts/body_layout.dart';
-import 'package:dotorimarket/views/favorite/layouts/header_layout.dart';
+import 'package:dotorimarket/views/mypage/favorite/layouts/body_layout.dart';
+import 'package:dotorimarket/views/mypage/favorite/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteListPage extends StatelessWidget {

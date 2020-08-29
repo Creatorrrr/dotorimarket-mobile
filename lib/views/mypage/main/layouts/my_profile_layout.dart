@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/mypage/widgets/my_page_circle_button.dart';
+import 'package:dotorimarket/views/mypage/main/widgets/my_page_circle_button.dart';
 import 'package:flutter/cupertino.dart';
 
 class MyProfileLayout extends StatelessWidget {

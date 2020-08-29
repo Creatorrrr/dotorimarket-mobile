@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/favorite/widgets/favorite_list_item.dart';
+import 'package:dotorimarket/views/mypage/favorite/widgets/favorite_list_item.dart';
 import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
 import 'package:flutter/material.dart';
 

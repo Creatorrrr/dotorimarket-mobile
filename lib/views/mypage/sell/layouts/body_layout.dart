@@ -1,6 +1,6 @@
-import 'package:dotorimarket/views/sell/layouts/tab_selling_layout.dart';
-import 'package:dotorimarket/views/sell/widgets/body_tab_bar.dart';
-import 'package:dotorimarket/views/sell/widgets/body_tab_bar_view.dart';
+import 'package:dotorimarket/views/mypage/sell/layouts/tab_selling_layout.dart';
+import 'package:dotorimarket/views/mypage/sell/widgets/body_tab_bar.dart';
+import 'package:dotorimarket/views/mypage/sell/widgets/body_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatefulWidget {

@@ -7,6 +7,8 @@ class HeaderLayout extends StatelessWidget {
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
   static const double HEADER_ROW_PADDING = 10.0;
 
+  static const String HEADER_TITLE_TEXT = '나의 도토리';
+
   final double height;
 
   HeaderLayout({
@@ -28,7 +30,20 @@ class HeaderLayout extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(),
+            child: Container(
+              child: Text(
+                HEADER_TITLE_TEXT,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              height: this.height,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(
+                left: 10.0,
+              ),
+            ),
           ),
           Container(
             child: HeaderIconButton(

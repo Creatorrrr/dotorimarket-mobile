@@ -1,8 +1,8 @@
-import 'package:dotorimarket/views/favorite/favorite_list_page.dart';
-import 'package:dotorimarket/views/mypage/widgets/my_page_circle_button.dart';
-import 'package:dotorimarket/views/purchase/purchase_list_page.dart';
-import 'package:dotorimarket/views/sell/sell_list_page.dart';
-import 'package:dotorimarket/views/sell/widgets/sell_list_item.dart';
+import 'package:dotorimarket/views/mypage/favorite/favorite_list_page.dart';
+import 'package:dotorimarket/views/mypage/main/widgets/my_page_circle_button.dart';
+import 'package:dotorimarket/views/mypage/purchase/purchase_list_page.dart';
+import 'package:dotorimarket/views/mypage/sell/sell_list_page.dart';
+import 'package:dotorimarket/views/mypage/sell/widgets/sell_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

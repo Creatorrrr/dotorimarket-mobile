@@ -1,8 +1,6 @@
-import 'package:dotorimarket/views/mypage/layouts/circle_buttons_layout.dart';
-import 'package:dotorimarket/views/mypage/layouts/my_profile_layout.dart';
-import 'package:dotorimarket/views/mypage/layouts/text_buttons_layout.dart';
-import 'package:dotorimarket/views/mypage/widgets/my_page_circle_button.dart';
-import 'package:dotorimarket/views/mypage/widgets/my_page_text_button.dart';
+import 'package:dotorimarket/views/mypage/main/layouts/circle_buttons_layout.dart';
+import 'package:dotorimarket/views/mypage/main/layouts/my_profile_layout.dart';
+import 'package:dotorimarket/views/mypage/main/layouts/text_buttons_layout.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {

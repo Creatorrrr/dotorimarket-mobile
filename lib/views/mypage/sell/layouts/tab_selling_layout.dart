@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/sell/widgets/sell_list_item.dart';
+import 'package:dotorimarket/views/mypage/sell/widgets/sell_list_item.dart';
 import 'package:flutter/material.dart';
 
 class TabSellingLayout extends StatelessWidget {

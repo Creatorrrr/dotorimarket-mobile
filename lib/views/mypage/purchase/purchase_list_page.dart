@@ -1,6 +1,6 @@
 
-import 'package:dotorimarket/views/purchase/layouts/body_layout.dart';
-import 'package:dotorimarket/views/purchase/layouts/header_layout.dart';
+import 'package:dotorimarket/views/mypage/purchase/layouts/body_layout.dart';
+import 'package:dotorimarket/views/mypage/purchase/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
 class PurchaseListPage extends StatelessWidget {

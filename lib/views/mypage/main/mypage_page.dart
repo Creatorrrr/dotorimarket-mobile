@@ -1,6 +1,6 @@
 import 'package:dotorimarket/views/common/menu_layout.dart';
-import 'package:dotorimarket/views/mypage/layouts/body_layout.dart';
-import 'package:dotorimarket/views/mypage/layouts/header_layout.dart';
+import 'package:dotorimarket/views/mypage/main/layouts/body_layout.dart';
+import 'package:dotorimarket/views/mypage/main/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
 class MyPagePage extends StatelessWidget {
