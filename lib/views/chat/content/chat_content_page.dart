@@ -1,6 +1,6 @@
-import 'package:dotorimarket/views/chat/layouts/chat_input_layout.dart';
-import 'package:dotorimarket/views/chat/layouts/header_layout.dart';
-import 'package:dotorimarket/views/chat/layouts/body_layout.dart';
+import 'package:dotorimarket/views/chat/content/layouts/chat_input_layout.dart';
+import 'package:dotorimarket/views/chat/content/layouts/header_layout.dart';
+import 'package:dotorimarket/views/chat/content/layouts/body_layout.dart';
 import 'package:flutter/material.dart';
 
 class ChatContentPage extends StatelessWidget {

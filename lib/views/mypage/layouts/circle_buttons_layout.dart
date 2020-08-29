@@ -1,5 +1,10 @@
+import 'package:dotorimarket/views/favorite/favorite_list_page.dart';
 import 'package:dotorimarket/views/mypage/widgets/my_page_circle_button.dart';
+import 'package:dotorimarket/views/purchase/purchase_list_page.dart';
+import 'package:dotorimarket/views/sell/sell_list_page.dart';
+import 'package:dotorimarket/views/sell/widgets/sell_list_item.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CircleButtonsLayout extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
@@ -17,6 +22,13 @@ class CircleButtonsLayout extends StatelessWidget {
             child: MyPageCircleButton(
               image: AssetImage(THUMBNAIL_PATH),
               text: SALE_LIST_BUTTON_TEXT,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (context) {
+                    return SellListPage();
+                  }
+                ));
+              },
             ),
             flex: 1,
           ),
@@ -24,6 +36,13 @@ class CircleButtonsLayout extends StatelessWidget {
             child: MyPageCircleButton(
               image: AssetImage(THUMBNAIL_PATH),
               text: PURCHASE_LIST_BUTTON_TEXT,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (context) {
+                    return PurchaseListPage();
+                  }
+                ));
+              },
             ),
             flex: 1,
           ),
@@ -31,6 +50,13 @@ class CircleButtonsLayout extends StatelessWidget {
             child: MyPageCircleButton(
               image: AssetImage(THUMBNAIL_PATH),
               text: FAVORITE_LIST_BUTTON_TEXT,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (context) {
+                    return FavoriteListPage();
+                  }
+                ));
+              },
             ),
             flex: 1,
           ),

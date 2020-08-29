@@ -1,5 +1,5 @@
 import 'package:dotorimarket/views/category/category_list_page.dart';
-import 'package:dotorimarket/views/chat/chat_content_page.dart';
+import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/common/widgets/menu_item_button.dart';
 import 'package:dotorimarket/views/good/list/good_list_page.dart';
 import 'package:dotorimarket/views/good/register/good_register_page.dart';
@@ -87,7 +87,7 @@ class MenuLayout extends StatelessWidget {
               onPressed: this.onChatPressed ?? () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return ChatContentPage();
+                      return ChatListPage();
                     }
                 ));
               },
@@ -100,9 +100,9 @@ class MenuLayout extends StatelessWidget {
               name: MENU_ITEM_MY_PAGE,
               onPressed: this.onMyPagePressed ?? () {
                 Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return MyPagePage();
-                    }
+                  builder: (context) {
+                    return MyPagePage();
+                  }
                 ));
               },
             ),

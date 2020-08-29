@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/chat/widgets/chat_profile_image.dart';
+import 'package:dotorimarket/views/chat/content/widgets/chat_profile_image.dart';
 import 'package:flutter/material.dart';
 
 class ChatContentListItem extends StatelessWidget {

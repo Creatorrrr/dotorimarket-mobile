@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/chat/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {

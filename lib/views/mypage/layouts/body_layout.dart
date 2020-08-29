@@ -1,5 +1,3 @@
-import 'package:dotorimarket/views/chat/widgets/chat_content_list_item.dart';
-import 'package:dotorimarket/views/chat/widgets/chat_content_list_time.dart';
 import 'package:dotorimarket/views/mypage/layouts/circle_buttons_layout.dart';
 import 'package:dotorimarket/views/mypage/layouts/my_profile_layout.dart';
 import 'package:dotorimarket/views/mypage/layouts/text_buttons_layout.dart';

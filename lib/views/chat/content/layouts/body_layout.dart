@@ -1,5 +1,5 @@
-import 'package:dotorimarket/views/chat/widgets/chat_content_list_item.dart';
-import 'package:dotorimarket/views/chat/widgets/chat_content_list_time.dart';
+import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_item.dart';
+import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_time.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {

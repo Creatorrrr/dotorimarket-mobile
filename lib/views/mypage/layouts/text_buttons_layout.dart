@@ -1,6 +1,8 @@
 import 'package:dotorimarket/views/mypage/widgets/my_page_circle_button.dart';
 import 'package:dotorimarket/views/mypage/widgets/my_page_text_button.dart';
+import 'package:dotorimarket/views/notice/list/notice_list_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TextButtonsLayout extends StatelessWidget {
   static const double VERTICAL_PADDING = 5.0;
@@ -64,7 +66,14 @@ class TextButtonsLayout extends StatelessWidget {
           ),
           Container(
             child: MyPageTextButton(
-                text: NOTICE_BUTTON_TEXT
+              text: NOTICE_BUTTON_TEXT,
+              onTab: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (context) {
+                    return NoticeListPage();
+                  }
+                ));
+              },
             ),
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(

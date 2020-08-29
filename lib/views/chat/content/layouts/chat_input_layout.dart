@@ -1,5 +1,4 @@
-import 'package:dotorimarket/views/chat/widgets/chat_content_input_text_field.dart';
-import 'package:dotorimarket/views/common/widgets/menu_item_button.dart';
+import 'package:dotorimarket/views/chat/content/widgets/chat_content_input_text_field.dart';
 import 'package:flutter/material.dart';
 
 class ChatInputLayout extends StatelessWidget {
