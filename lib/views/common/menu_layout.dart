@@ -57,7 +57,7 @@ class MenuLayout extends StatelessWidget {
               icon: Icons.menu,
               name: MENU_ITEM_CATEGORY,
               onPressed: this.onCategoryPressed ?? () {
-                Navigator.push(context, MaterialPageRoute<void>(
+                Navigator.pushReplacement(context, MaterialPageRoute<void>(
                     builder: (context) {
                       return CategoryListPage();
                     }
@@ -85,7 +85,7 @@ class MenuLayout extends StatelessWidget {
               icon: Icons.chat_bubble_outline,
               name: MENU_ITEM_CHAT,
               onPressed: this.onChatPressed ?? () {
-                Navigator.push(context, MaterialPageRoute<void>(
+                Navigator.pushReplacement(context, MaterialPageRoute<void>(
                     builder: (context) {
                       return ChatListPage();
                     }
@@ -99,7 +99,7 @@ class MenuLayout extends StatelessWidget {
               icon: Icons.perm_identity,
               name: MENU_ITEM_MY_PAGE,
               onPressed: this.onMyPagePressed ?? () {
-                Navigator.push(context, MaterialPageRoute<void>(
+                Navigator.pushReplacement(context, MaterialPageRoute<void>(
                   builder: (context) {
                     return MyPagePage();
                   }

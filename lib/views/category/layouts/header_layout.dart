@@ -26,7 +26,9 @@ class HeaderLayout extends StatelessWidget {
             child: HeaderIconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                Navigator.of(context).pop();
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),

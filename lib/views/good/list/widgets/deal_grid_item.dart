@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TabAllGridItem extends StatelessWidget {
+class DealGridItem extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
 
   final String title;
   final String price;
   final Function onPressed;
 
-  TabAllGridItem({
+  DealGridItem({
     Key key,
     @required this.title,
     @required this.price,
