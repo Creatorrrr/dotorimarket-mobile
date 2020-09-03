@@ -1,6 +1,5 @@
 import 'package:dotorimarket/views/chat/content/chat_content_page.dart';
 import 'package:dotorimarket/views/chat/list/widgets/chat_list_item.dart';
-import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {

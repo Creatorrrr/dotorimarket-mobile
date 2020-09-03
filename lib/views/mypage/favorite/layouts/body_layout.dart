@@ -12,6 +12,7 @@ class BodyLayout extends StatelessWidget {
             child: FavoriteListItem(
               title: '바바파파시리즈 아동도서',
               price: '40,000원',
+              favorite: true,
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
@@ -19,7 +20,7 @@ class BodyLayout extends StatelessWidget {
                     }
                 ));
               },
-              onFavoritePressed: () {
+              onFavoritePressed: (bool favorite) {
 
               },
             ),
@@ -37,7 +38,7 @@ class BodyLayout extends StatelessWidget {
                     }
                 ));
               },
-              onFavoritePressed: () {
+              onFavoritePressed: (bool favorite) {
 
               },
             ),
@@ -55,7 +56,7 @@ class BodyLayout extends StatelessWidget {
                     }
                 ));
               },
-              onFavoritePressed: () {
+              onFavoritePressed: (bool favorite) {
 
               },
             ),
