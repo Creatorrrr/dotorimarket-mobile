@@ -1,3 +1,5 @@
+import 'package:dotorimarket/views/login/login_page.dart';
+import 'package:dotorimarket/views/setting/widgets/setting_button.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
@@ -24,11 +26,11 @@ class BodyLayout extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            child: Text(
-              IMPORTANT_NOTICE_TEXT,
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+            child: SettingButton(
+              text: IMPORTANT_NOTICE_TEXT,
+              onPressed: () {
+                // TODO 중요 알림 페이지로 이동
+              },
             ),
             padding: const EdgeInsets.symmetric(
               vertical: SETTING_ITEM_VERTICAL_PADDING,
@@ -36,11 +38,11 @@ class BodyLayout extends StatelessWidget {
             ),
           ),
           Container(
-            child: Text(
-              EXTRA_NOTICE_TEXT,
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+            child: SettingButton(
+              text: EXTRA_NOTICE_TEXT,
+              onPressed: () {
+                // TODO 기타 알림 페이지로 이동
+              },
             ),
             padding: const EdgeInsets.symmetric(
               vertical: SETTING_ITEM_VERTICAL_PADDING,
@@ -63,11 +65,16 @@ class BodyLayout extends StatelessWidget {
             ),
           ),
           Container(
-            child: Text(
-              LOGOUT_TEXT,
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+            child: SettingButton(
+              text: LOGOUT_TEXT,
+              onPressed: () {
+                // 로그인 페이지로 이동
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute<void>(
+                  builder: (context) {
+                    return LoginPage();
+                  },
+                ), (route) => false);
+              },
             ),
             padding: const EdgeInsets.symmetric(
               vertical: SETTING_ITEM_VERTICAL_PADDING,
@@ -75,11 +82,11 @@ class BodyLayout extends StatelessWidget {
             ),
           ),
           Container(
-            child: Text(
-              WITHDRAW_TEXT,
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+            child: SettingButton(
+              text: WITHDRAW_TEXT,
+              onPressed: () {
+                // TODO 탈퇴하기 페이지로 이동
+              },
             ),
             padding: const EdgeInsets.symmetric(
               vertical: SETTING_ITEM_VERTICAL_PADDING,

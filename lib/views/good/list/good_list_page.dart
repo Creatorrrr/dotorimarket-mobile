@@ -54,7 +54,7 @@ class GoodListPage extends StatelessWidget {
           },
         ),
       ),
-      viewModel: DealViewModel(),
+      viewModel: DealViewModel(context),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dotorimarket/views/login/widgets/find_button.dart';
+import 'package:dotorimarket/views/login/widgets/save_email_checkbox.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotorimarket/constants/app_constant.dart';
 import 'package:dotorimarket/dtos/user/user_login_dto.dart';
@@ -9,19 +12,51 @@ import 'package:dotorimarket/views/good/list/good_list_page.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatelessWidget {
-  static const String TEXT_EMAIL = '이메일';
-  static const String TEXT_PASSWORD = '패스워드';
-  static const String TEXT_LOGIN = '로그인';
-  static const String TEXT_SIGN_UP = '회원가입';
-  static const String TEXT_FIND_ID = '아이디 찾기';
-  static const String TEXT_FIND_PASSWORD = '비밀번호 찾기';
-  static const double PAGE_PADDING = 5.0;
-  static const double WIDGET_PADDING = 5.0;
+class LoginPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _LoginPageState();
+}
 
-  final TextEditingController emailTextController = TextEditingController();
-  final TextEditingController passwordTextController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
+  static const double LOGO_HEIGHT = 200.0;
+  static const double HORIZONTAL_PADDING = 10.0;
+  static const double LOGIN_TEXT_FIELD_TOP_PADDING = 10.0;
+  static const double LOGIN_BUTTON_TOP_PADDING = 10.0;
+
+  static const String SAVE_EMAIL_KEY = 'saveEmail';
+  static const String EMAIL_KEY = 'email';
+
+  static const String EMAIL_TEXT = '이메일';
+  static const String PASSWORD_TEXT = '패스워드';
+  static const String LOGIN_TEXT = '로그인';
+  static const String SIGN_UP_TEXT = '회원가입';
+  static const String FIND_ID_TEXT = '아이디 찾기';
+  static const String FIND_PASSWORD_TEXT = '패스워드 찾기';
+  static const String SAVE_EMAIL_PASSWORD_TEXT = '아이디 저장';
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final FocusNode passwordFocusNode = FocusNode();
+
+  bool saveEmail = false;
+
+  @override
+  void initState() {
+    // shared preferences에서 아이디 저장 여부를 확인하고 이메일 초기화
+    // 초기화 여부를 보장하지 음 (페이지 동작에 큰 영향을 주지 않음)
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        saveEmail = prefs.getBool(SAVE_EMAIL_KEY) ?? false;
+        if (saveEmail) {
+          String email = prefs.getString(EMAIL_KEY);
+          emailController.text = email;
+        }
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,89 +76,119 @@ class LoginPage extends StatelessWidget {
                             fontSize: 28,
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 100,
-                        ),
-                        alignment: Alignment(0.0, 0.0),
+                        alignment: Alignment.center,
+                        height: LOGO_HEIGHT,
                       ),
                       Container(
                         child: LoginTextField(
-                          labelText: TEXT_EMAIL,
+                          labelText: EMAIL_TEXT,
                           icon: Icon(Icons.email),
-                          controller: emailTextController,
+                          controller: emailController,
+                          onFieldSubmitted: (String value) {
+                            FocusScope.of(context).requestFocus(passwordFocusNode);
+                          }
                         ),
-                        padding: EdgeInsets.all(WIDGET_PADDING),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: HORIZONTAL_PADDING,
+                        ),
                       ),
                       Container(
                         child: LoginTextField(
-                          labelText: TEXT_PASSWORD,
+                          labelText: PASSWORD_TEXT,
                           icon: Icon(Icons.lock),
-                          controller: passwordTextController,
+                          controller: passwordController,
+                          focusNode: passwordFocusNode,
                         ),
-                        padding: EdgeInsets.all(WIDGET_PADDING),
+                        padding: EdgeInsets.only(
+                          top: LOGIN_TEXT_FIELD_TOP_PADDING,
+                          left: HORIZONTAL_PADDING,
+                          right: HORIZONTAL_PADDING,
+                        ),
                       ),
                       Container(
                         child: LoginButton(
-                          text: TEXT_LOGIN,
+                          text: LOGIN_TEXT,
                           textColor: Colors.white,
                           buttonColor: Colors.blue,
                           onPressed: () {
+                            FocusScope.of(context).unfocus();
                             _onLoginPressed(context); // 로그인 버튼 동작
                           },
                         ),
-                        padding: EdgeInsets.all(WIDGET_PADDING),
+                        padding: EdgeInsets.only(
+                          top: LOGIN_BUTTON_TOP_PADDING,
+                          left: HORIZONTAL_PADDING,
+                          right: HORIZONTAL_PADDING,
+                        ),
                       ),
                       Container(
                         child: LoginButton(
-                          text: TEXT_SIGN_UP,
+                          text: SIGN_UP_TEXT,
                           onPressed: () {
-
+                            // TODO 회원가입 페이지로 이동
                           },
                         ),
-                        padding: EdgeInsets.all(WIDGET_PADDING),
+                        padding: EdgeInsets.only(
+                          top: LOGIN_BUTTON_TOP_PADDING,
+                          left: HORIZONTAL_PADDING,
+                          right: HORIZONTAL_PADDING,
+                        ),
+                      ),
+                      Container(
+                        child: SaveEmailCheckbox(
+                          title: SAVE_EMAIL_PASSWORD_TEXT,
+                          value: saveEmail,
+                          onChanged: (bool value) async {
+                            setState(() {
+                              saveEmail = value;
+                            });
+                          },
+                        ),
                       ),
                       Container(
                         child: Row(
                           children: [
-                            Container(
-                              child: Text(
-                                TEXT_FIND_ID,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                ),
+                            FindButton(
+                              text: FIND_ID_TEXT,
+                              fontSize: 16.0,
+                              onPressed: () {
+                                // TODO 아이디 찾기 페이지로 이동
+                              },
+                            ),
+                            Text(
+                              ' | ',
+                              style: TextStyle(
+                                fontSize: 16.0,
                               ),
                             ),
-                            Container(
-                              child: Text(
-                                  ' | '
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                TEXT_FIND_PASSWORD,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                ),
-                              ),
+                            FindButton(
+                              text: FIND_PASSWORD_TEXT,
+                              fontSize: 16.0,
+                              onPressed: () {
+                                // TODO 패스워드 찾기 페이지로 이동
+                              },
                             ),
                           ],
                           mainAxisAlignment: MainAxisAlignment.center,
                         ),
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.only(
+                          left: HORIZONTAL_PADDING,
+                          right: HORIZONTAL_PADDING,
+                        ),
                       ),
                     ],
                   ),
-                  padding: EdgeInsets.all(PAGE_PADDING),
                 ),
               );
             },
           ),
+          resizeToAvoidBottomInset: false,
         ),
         onTap: () {
           FocusScope.of(context).unfocus();
         },
       ),
-      viewModel: UserViewModel(),
+      viewModel: UserViewModel(context),
     );
   }
 
@@ -132,8 +197,8 @@ class LoginPage extends StatelessWidget {
     try {
       // 로그인 데이터
       UserLoginDto userLoginDto = UserLoginDto(
-        userId: emailTextController.text.trim(),
-        password: passwordTextController.text.trim(),
+        userId: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
 
       // validation 확인
@@ -143,7 +208,16 @@ class LoginPage extends StatelessWidget {
       http.Response res = await ViewModelProvider.of<UserViewModel>(context).postUser(userLoginDto);
 
       // 성공여부 확인
-      if (res.statusCode == 200) {
+      if (res.statusCode == HttpStatus.ok) {
+        // 아이디 저장을 선택했을 경우 이메일 저장, 아이디 저장 여부 저장
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool(SAVE_EMAIL_KEY, saveEmail);
+        if (saveEmail) {
+          prefs.setString(EMAIL_KEY, emailController.text);
+        } else {
+          prefs.setString(EMAIL_KEY, null);
+        }
+
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
           builder: (context) {
@@ -154,8 +228,7 @@ class LoginPage extends StatelessWidget {
         Map<String, dynamic> bodyJson = jsonDecode(res.body);
         String message = bodyJson['message'];
 
-        Scaffold.of(context).removeCurrentSnackBar();
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));  // 서버 메시지 출력
+        throw message;
       }
     } catch (err) {
       Scaffold.of(context).removeCurrentSnackBar();
@@ -166,13 +239,13 @@ class LoginPage extends StatelessWidget {
   /// login form의 validation 확인
   void _checkLoginForm(UserLoginDto userLoginDto) {
     if (userLoginDto == null) {
-      throw '개발자에게 문의해주세요 : dto parameter is null';
+      throw '개발자에게 문의해주세요 (dto parameter is null)';
     }
     if (userLoginDto.userId == null || userLoginDto.userId.isEmpty) {
-      throw '$TEXT_EMAIL를 입력해주세요';
+      throw '$EMAIL_TEXT를 입력해주세요';
     }
     if (userLoginDto.password == null || userLoginDto.password.isEmpty) {
-      throw '$TEXT_PASSWORD를 입력해주세요';
+      throw '$PASSWORD_TEXT를 입력해주세요';
     }
   }
 }

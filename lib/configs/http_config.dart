@@ -1,3 +1,4 @@
 class HttpConfig {
-  static const URL_PREFIX = 'http://ec2-15-165-152-104.ap-northeast-2.compute.amazonaws.com/api/mobile';
+//  static const URL_PREFIX = 'http://appstore.dotorimarket.com/api/mobile';
+  static const URL_PREFIX = 'http://localhost:3000/api/mobile';
 }

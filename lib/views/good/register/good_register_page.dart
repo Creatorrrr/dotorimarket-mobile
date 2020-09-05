@@ -45,7 +45,7 @@ class GoodRegisterPage extends StatelessWidget {
           },
         ),
       ),
-      viewModel: DealViewModel(),
+      viewModel: DealViewModel(context),
     );
   }
 }
