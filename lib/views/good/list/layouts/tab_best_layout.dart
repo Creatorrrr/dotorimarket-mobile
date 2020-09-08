@@ -67,7 +67,7 @@ class TabBestLayout extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute<void>(
                               builder: (context) {
-                                return GoodDetailPage();
+                                return GoodDetailPage(deals[index].dealId);
                               }
                           ));
                         },

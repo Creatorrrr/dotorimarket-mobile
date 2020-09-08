@@ -48,8 +48,8 @@ class TabAllLayout extends StatelessWidget {
 
                     // 데이터가 존재할 경우에만 세팅
                     if (snapshot.data != null && snapshot.data.length > 0) {
-                      this.deals.clear();
-                      this.deals.addAll(snapshot.data);
+                      deals.clear();
+                      deals.addAll(snapshot.data);
                     }
 
                     // 위젯 리스트 그리기
@@ -62,11 +62,11 @@ class TabAllLayout extends StatelessWidget {
                       ),
                       itemBuilder: (BuildContext context, int index) => DealGridItem(
                         title: deals[index].title ?? '',
-                        price: deals[index].price ?? '',
+                        price: deals[index].price,
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute<void>(
                               builder: (context) {
-                                return GoodDetailPage();
+                                return GoodDetailPage(deals[index].dealId);
                               }
                           ));
                         },

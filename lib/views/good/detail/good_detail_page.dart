@@ -1,3 +1,5 @@
+import 'package:dotorimarket/viewmodels/deal_view_model.dart';
+import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/good/detail/layouts/body_layout.dart';
 import 'package:dotorimarket/views/good/detail/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/good/detail/layouts/header_layout.dart';
@@ -9,63 +11,72 @@ class GoodDetailPage extends StatelessWidget {
   static const double HEADER_HEIGHT = 50.0;
   static const double BOTTOM_HEIGHT = 70.0;
 
+  final int dealId;
+
+  GoodDetailPage(this.dealId, {
+    Key key,
+  }):super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) {
-          return SafeArea(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    child: BodyLayout(),
-                    top: 0.0,
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                  ),
-                  Positioned(
-                    child: HeaderLayout(
-                      height: HEADER_HEIGHT,
-                    ),
-                    height: HEADER_HEIGHT,
-                    top: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                  ),
-                  Positioned(
-                    height: BOTTOM_HEIGHT,
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: FooterLayout(
-                      height: BOTTOM_HEIGHT,
-                      onSharePressed: () {
+    return ViewModelProvider(
+      child: Scaffold(
+        body: Builder(
+            builder: (context) {
+              return SafeArea(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        child: BodyLayout(dealId),
+                        top: 0.0,
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                      ),
+                      Positioned(
+                        child: HeaderLayout(
+                          height: HEADER_HEIGHT,
+                        ),
+                        height: HEADER_HEIGHT,
+                        top: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                      ),
+                      Positioned(
+                        height: BOTTOM_HEIGHT,
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: FooterLayout(
+                          height: BOTTOM_HEIGHT,
+                          onSharePressed: () {
 
-                      },
-                      onFavoritePressed: () {
+                          },
+                          onFavoritePressed: () {
 
-                      },
-                      onEditPressed: () {
-                        Navigator.push(context, MaterialPageRoute<void>(
-                            builder: (context) {
-                              return GoodModifyPage();
-                            }
-                        ));
-                      },
-                      onChatPressed: () {
+                          },
+                          onEditPressed: () {
+                            Navigator.push(context, MaterialPageRoute<void>(
+                                builder: (context) {
+                                  return GoodModifyPage();
+                                }
+                            ));
+                          },
+                          onChatPressed: () {
 
-                      },
-                    ),
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          );
-        }
+                ),
+              );
+            }
+        ),
       ),
+      viewModel: DealViewModel(context),
     );
   }
 }

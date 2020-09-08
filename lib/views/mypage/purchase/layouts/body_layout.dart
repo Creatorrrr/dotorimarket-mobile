@@ -15,7 +15,7 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodDetailPage();
+                      return GoodDetailPage(1);
                     }
                 ));
               },
@@ -33,7 +33,7 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodDetailPage();
+                      return GoodDetailPage(1);
                     }
                 ));
               },
@@ -51,7 +51,7 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodDetailPage();
+                      return GoodDetailPage(1);
                     }
                 ));
               },

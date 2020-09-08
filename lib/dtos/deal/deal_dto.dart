@@ -4,12 +4,14 @@ part 'deal_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class DealDto {
+  int dealId;
   String title;
   String categoryId;
-  String price;
+  int price;
   String description;
 
   DealDto({
+    this.dealId,
     this.title,
     this.categoryId,
     this.price,

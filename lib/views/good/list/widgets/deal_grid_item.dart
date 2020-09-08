@@ -4,7 +4,7 @@ class DealGridItem extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
 
   final String title;
-  final String price;
+  final int price;
   final Function onPressed;
 
   DealGridItem({
@@ -43,7 +43,7 @@ class DealGridItem extends StatelessWidget {
             ),
             Container(
               child: Text(
-                this.price,
+                this.price.toString(),
                 style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,

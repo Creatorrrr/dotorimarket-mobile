@@ -1,68 +1,66 @@
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
+import 'package:dotorimarket/viewmodels/deal_view_model.dart';
+import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/mypage/favorite/widgets/favorite_list_item.dart';
 import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
+
+  final List<DealDto> deals = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView(
-        children: [
-          Container(
-            child: FavoriteListItem(
-              title: '바바파파시리즈 아동도서',
-              price: '40,000원',
-              favorite: true,
-              onItemPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return GoodDetailPage();
-                    }
-                ));
-              },
-              onFavoritePressed: (bool favorite) {
+      child: FutureBuilder(
+        future: ViewModelProvider.of<DealViewModel>(context).getDealList("", "", "", "", ""),
+        builder: (BuildContext context, AsyncSnapshot<List<DealDto>> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Center(
+                child: Text('Awaiting result...'),
+              );
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+            case ConnectionState.done:
+            // 에러 발생 시 에러메시지 표시
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              }
 
-              },
-            ),
-            padding: const EdgeInsets.all(10.0),
-          ),
-          Divider(),
-          Container(
-            child: FavoriteListItem(
-              title: '바바파파시리즈 아동도서',
-              price: '40,000원',
-              onItemPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return GoodDetailPage();
-                    }
-                ));
-              },
-              onFavoritePressed: (bool favorite) {
+              // 데이터가 존재할 경우에만 세팅
+              if (snapshot.data != null && snapshot.data.length > 0) {
+                deals.clear();
+                deals.addAll(snapshot.data);
+              }
 
-              },
-            ),
-            padding: const EdgeInsets.all(10.0),
-          ),
-          Divider(),
-          Container(
-            child: FavoriteListItem(
-              title: '바바파파시리즈 아동도서',
-              price: '40,000원',
-              onItemPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return GoodDetailPage();
-                    }
-                ));
-              },
-              onFavoritePressed: (bool favorite) {
-
-              },
-            ),
-            padding: const EdgeInsets.all(10.0),
-          ),
-        ],
+              // 관심상품 리스트 그리기
+              return ListView.separated(
+                itemBuilder: (BuildContext context, int index) => FavoriteListItem(
+                  title: deals[index].title,
+                  price: deals[index].price,
+                  onItemPressed: () {
+                    Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (context) {
+                          return GoodDetailPage(deals[index].dealId);
+                        }
+                    ));
+                  },
+                  onFavoritePressed: (bool favorite) {
+                    Scaffold.of(context).removeCurrentSnackBar();
+                    Scaffold.of(context).showSnackBar(SnackBar(content: Text('좋아요!')));
+                  },
+                ),
+                separatorBuilder: (BuildContext context, int index) => Divider(),
+                padding: const EdgeInsets.all(10.0),
+                itemCount: deals.length,
+              );
+            default:
+              return null;
+          }
+        },
       ),
     );
   }

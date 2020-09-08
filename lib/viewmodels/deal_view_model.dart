@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Response;
 import 'package:dotorimarket/dtos/deal/deal_post_dto.dart';
 import 'package:dotorimarket/viewmodels/view_model.dart';
+import 'package:sprintf/sprintf.dart';
 
 class DealViewModel extends ViewModel {
   static const POST_DEAL = '${HttpConfig.URL_PREFIX}/v1/deals';
+  static const GET_DEAL_ONE = '${HttpConfig.URL_PREFIX}/v1/deals/%d';
   static const GET_DEAL_LIST = '${HttpConfig.URL_PREFIX}/v1/deals';
 
   final BuildContext context;
@@ -25,6 +27,17 @@ class DealViewModel extends ViewModel {
       body: dealPostDto.toJson(),
     );
     return res;
+  }
+
+  Future<DealDto> getDealOne(int dealId) async {
+    String url = sprintf(GET_DEAL_ONE, [dealId]);
+
+    Response res = await HttpUtil.get(url, context);
+    Map<String, dynamic> bodyJson = jsonDecode(res.body);
+
+    DealDto deal = new DealDto.fromJson(bodyJson['result']);
+
+    return deal;
   }
 
   Future<List<DealDto>> getDealList(String filter, String field, String keyword, String orders, String paging) async {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class FavoriteListItem extends StatefulWidget {
+class FavoriteListItem extends StatelessWidget {
+  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
   static const bool FAVORITE_DEFAULT = false;
   static const double HEIGHT_DEFAULT = 80.0;
 
   final String title;
-  final String price;
+  final int price;
   final bool favorite;
   final double height;
   final Function onItemPressed;
@@ -20,36 +21,6 @@ class FavoriteListItem extends StatefulWidget {
     @required this.onItemPressed,
     @required this.onFavoritePressed,
   }):super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => FavoriteListItemState(
-    title: this.title,
-    price: this.price,
-    favorite: this.favorite,
-    height: this.height,
-    onItemPressed: this.onItemPressed,
-    onFavoritePressed: this.onFavoritePressed,
-  );
-}
-
-class FavoriteListItemState extends State<FavoriteListItem> {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
-
-  String title;
-  String price;
-  bool favorite;
-  double height;
-  Function onItemPressed;
-  Function(bool favorite) onFavoritePressed;
-
-  FavoriteListItemState({
-    this.title,
-    this.price,
-    this.favorite,
-    this.height,
-    this.onItemPressed,
-    this.onFavoritePressed,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +57,7 @@ class FavoriteListItemState extends State<FavoriteListItem> {
                 ),
                 Container(
                   child: Text(
-                    this.price,
+                    this.price.toString(),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
@@ -108,10 +79,7 @@ class FavoriteListItemState extends State<FavoriteListItem> {
               icon: Icon(Icons.favorite),
               color: favorite ? Colors.red : Colors.black45,
               onPressed: () {
-                setState(() {
-                  favorite = !favorite;
-                  this.onFavoritePressed(favorite);
-                });
+                this.onFavoritePressed(favorite);
               },
             ),
             alignment: Alignment.topCenter,
