@@ -5,8 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpUtil {
+  static const String TOKEN_KEY = 'token';
+  static const String TOKEN_PREFIX = 'Bearer';
+
   static const String CANCEL_TEXT = '취소';
   static const String UPDATE_TEXT = '업데이트';
 
@@ -131,6 +135,11 @@ class HttpUtil {
 
     if (headers == null) headers = {};
     headers['app-version'] = appVersion;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(TOKEN_KEY);
+    if (token != null) {
+      headers['Authorization'] = '$TOKEN_PREFIX $token';
+    }
 
     return headers;
   }

@@ -27,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   static const String SAVE_EMAIL_KEY = 'saveEmail';
   static const String EMAIL_KEY = 'email';
+  static const String TOKEN_KEY = 'token';
 
   static const String EMAIL_TEXT = '이메일';
   static const String PASSWORD_TEXT = '패스워드';
@@ -217,6 +218,9 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           prefs.setString(EMAIL_KEY, null);
         }
+        Map<String, dynamic> body = jsonDecode(res.body);
+        String token = body['result']['token'];
+        prefs.setString(TOKEN_KEY, token);
 
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
