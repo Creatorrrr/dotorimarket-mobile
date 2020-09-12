@@ -1,13 +1,20 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotorimarket/configs/http_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class HttpUtil {
+  static const GET_AND_APK = '${HttpConfig.URL_PREFIX}/download/v1/apps/dotori-android.apk';
+  static const GET_IOS_PLIST = 'itms-services://?action=download-manifest&url=${HttpConfig.URL_PREFIX}/download/v1/apps/dotori-ios.plist';
+
   static const String TOKEN_KEY = 'token';
   static const String TOKEN_PREFIX = 'Bearer';
 
@@ -151,28 +158,48 @@ class HttpUtil {
       Map<String, dynamic> body = jsonDecode(res.body);
       String message = body['message'];
 
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(message),
-              actions: [
-                FlatButton(
-                  child: Text(CANCEL_TEXT),
-                  onPressed: () {
-                    exit(0);
-                  },
-                ),
-                FlatButton(
-                  child: Text(UPDATE_TEXT),
-                  onPressed: () {
-
-                  },
-                ),
-              ],
-            );
-          }
+      await showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text(message),
+            actions: [
+              FlatButton(
+                child: Text(CANCEL_TEXT),
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                },
+              ),
+              FlatButton(
+                child: Text(UPDATE_TEXT),
+                onPressed: () async {
+                  if (Platform.isAndroid) {
+                    await _downloadApp(GET_AND_APK);
+                  } else if (Platform.isIOS) {
+                    await _downloadApp(GET_IOS_PLIST);
+                  } else {
+                    Scaffold.of(context).removeCurrentSnackBar();
+                    Scaffold.of(context).showSnackBar(SnackBar(content: Text('지원하지 않는 OS입니다 (OS: ${Platform.operatingSystem}')));
+                  }
+                  Navigator.pop(dialogContext);
+                },
+              ),
+            ],
+          );
+        }
       );
+
+      Scaffold.of(context).removeCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('업데이트 후 사용하실 수 있습니다')));
+    }
+  }
+
+  /// 앱 다운로드
+  static _downloadApp(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }

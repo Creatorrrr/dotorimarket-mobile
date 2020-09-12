@@ -2,7 +2,7 @@ import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/mypage/favorite/widgets/favorite_list_item.dart';
-import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
+import 'package:dotorimarket/views/good/detail/deal_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
@@ -11,9 +11,11 @@ class BodyLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
+
     return Container(
       child: FutureBuilder(
-        future: ViewModelProvider.of<DealViewModel>(context).getDealList("", "", "", "", ""),
+        future: dealViewModel.getDealList("", "", "", "", "", context),
         builder: (BuildContext context, AsyncSnapshot<List<DealDto>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -44,7 +46,7 @@ class BodyLayout extends StatelessWidget {
                   onItemPressed: () {
                     Navigator.push(context, MaterialPageRoute<void>(
                         builder: (context) {
-                          return GoodDetailPage(deals[index].dealId);
+                          return DealDetailPage(deals[index].dealId);
                         }
                     ));
                   },

@@ -26,7 +26,7 @@ class HeaderLayout extends StatelessWidget {
             child: HeaderLogoImage(
               image: this.logoPath,
             ),
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: HEADER_ROW_PADDING,
             ),
           ),
@@ -37,40 +37,40 @@ class HeaderLayout extends StatelessWidget {
 
                 },
               ),
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: HEADER_ROW_PADDING,
               ),
             ),
           ),
           Container(
             child: HeaderIconButton(
-              icon: Icon(Icons.tune),
+              icon: const Icon(Icons.tune),
               onPressed: () {
 
               },
             ),
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: HEADER_ROW_PADDING,
             ),
           ),
           Container(
             child: HeaderIconButton(
-              icon: Icon(Icons.notifications_none),
+              icon: const Icon(Icons.notifications_none),
               onPressed: () {
 
               },
             ),
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: HEADER_ROW_PADDING,
             ),
           ),
         ],
       ),
       height: this.height,
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: HORIZONTAL_PADDING,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
     );

@@ -3,17 +3,16 @@ import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/good/detail/layouts/body_layout.dart';
 import 'package:dotorimarket/views/good/detail/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/good/detail/layouts/header_layout.dart';
-import 'package:dotorimarket/views/good/modify/good_modify_page.dart';
 import 'package:flutter/material.dart';
 
-class GoodDetailPage extends StatelessWidget {
+class DealDetailPage extends StatelessWidget {
   static const String GOOD_IMAGE_PATH = 'assets/dotori-logo.png';
   static const double HEADER_HEIGHT = 50.0;
-  static const double BOTTOM_HEIGHT = 70.0;
+  static const double BOTTOM_HEIGHT = 60.0;
 
   final int dealId;
 
-  GoodDetailPage(this.dealId, {
+  DealDetailPage(this.dealId, {
     Key key,
   }):super(key: key);
 
@@ -30,8 +29,8 @@ class GoodDetailPage extends StatelessWidget {
                     children: <Widget>[
                       Positioned(
                         child: BodyLayout(dealId),
-                        top: 0.0,
-                        bottom: 0.0,
+                        top: HEADER_HEIGHT,
+                        bottom: BOTTOM_HEIGHT,
                         left: 0.0,
                         right: 0.0,
                       ),
@@ -51,22 +50,6 @@ class GoodDetailPage extends StatelessWidget {
                         right: 0.0,
                         child: FooterLayout(
                           height: BOTTOM_HEIGHT,
-                          onSharePressed: () {
-
-                          },
-                          onFavoritePressed: () {
-
-                          },
-                          onEditPressed: () {
-                            Navigator.push(context, MaterialPageRoute<void>(
-                                builder: (context) {
-                                  return GoodModifyPage();
-                                }
-                            ));
-                          },
-                          onChatPressed: () {
-
-                          },
                         ),
                       ),
                     ],
@@ -76,7 +59,7 @@ class GoodDetailPage extends StatelessWidget {
             }
         ),
       ),
-      viewModel: DealViewModel(context),
+      viewModel: DealViewModel(),
     );
   }
 }

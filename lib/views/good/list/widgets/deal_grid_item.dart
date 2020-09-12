@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DealGridItem extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+
+  static const double IMAGE_BORDER_RADIUS = 5.0;
+  static const double IMAGE_ASPECT_RATIO = 1.0;
+  static const double TITLE_TOP_PADDING = 10.0;
+  static const double TITLE_FONT_SIZE = 16.0;
+  static const double PRICE_TOP_PADDING = 5.0;
+  static const double PRICE_FONT_SIZE = 16.0;
+  static const double TEXT_LEFT_PADDING = 5.0;
 
   final String title;
   final int price;
@@ -16,47 +25,54 @@ class DealGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Container(
+    final NumberFormat numberFormat = NumberFormat();
+
+    return InkWell(
+      child: Container(
         child: Column(
           children: <Widget>[
-            Expanded(
+            Container(
               child: AspectRatio(
-                child: Image.asset(
-                  THUMBNAIL_PATH,
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  child: Image.asset(
+                    THUMBNAIL_PATH,
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
                 ),
-                aspectRatio: 1.0,
+                aspectRatio: IMAGE_ASPECT_RATIO,
               ),
             ),
             Container(
-              child: Text(
-                this.title,
+              child: Text(this.title,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 16.0,
+                style: const TextStyle(
+                  fontSize: TITLE_FONT_SIZE,
                 ),
               ),
-              padding: EdgeInsets.only(
-                top: 10.0,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(
+                top: TITLE_TOP_PADDING,
+                left: TEXT_LEFT_PADDING,
               ),
             ),
             Container(
-              child: Text(
-                this.price.toString(),
-                style: TextStyle(
-                  fontSize: 14.0,
+              child: Text('${numberFormat.format(this.price)}원',
+                style: const TextStyle(
+                  fontSize: PRICE_FONT_SIZE,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              padding: EdgeInsets.only(
-                top: 5.0,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(
+                top: PRICE_TOP_PADDING,
+                left: TEXT_LEFT_PADDING,
               ),
             ),
           ],
         ),
       ),
-      onPressed: this.onPressed,
+      onTap: this.onPressed,
     );
   }
 }

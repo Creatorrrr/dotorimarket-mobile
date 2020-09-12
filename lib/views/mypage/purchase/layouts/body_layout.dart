@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
+import 'package:dotorimarket/views/good/detail/deal_detail_page.dart';
 import 'package:dotorimarket/views/mypage/purchase/widgets/purchase_list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodDetailPage(1);
+                      return DealDetailPage(1);
                     }
                 ));
               },
@@ -33,7 +33,7 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodDetailPage(1);
+                      return DealDetailPage(1);
                     }
                 ));
               },
@@ -51,7 +51,7 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodDetailPage(1);
+                      return DealDetailPage(1);
                     }
                 ));
               },

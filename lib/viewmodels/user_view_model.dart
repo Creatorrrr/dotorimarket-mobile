@@ -6,15 +6,9 @@ import 'package:http/http.dart' show Response;
 import 'package:dotorimarket/viewmodels/view_model.dart';
 
 class UserViewModel extends ViewModel {
-  static const POST_USER = '${HttpConfig.URL_PREFIX}/v1/users';
+  static const POST_USER = '${HttpConfig.URL_MOBILE_PREFIX}/v1/users';
 
-  final BuildContext context;
-
-  UserViewModel(
-    this.context,
-  );
-
-  Future<Response> postUser(UserLoginDto userLoginDto) async {
+  Future<Response> postUser(UserLoginDto userLoginDto, BuildContext context) async {
     Response res = await HttpUtil.post(
       POST_USER,
       context,

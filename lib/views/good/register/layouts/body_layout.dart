@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dotorimarket/views/good/list/good_list_page.dart';
+import 'package:dotorimarket/views/good/list/deal_list_page.dart';
 import 'package:dotorimarket/views/good/register/widgets/good_register_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotorimarket/dtos/deal/deal_post_dto.dart';
@@ -120,6 +120,8 @@ class BodyLayout extends StatelessWidget {
 
   /// 등록 버튼 동작
   void _onRegisterPressed(BuildContext context) async {
+    final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
+
     try {
       // 로그인 데이터
       DealPostDto dealPostDto = DealPostDto(
@@ -132,14 +134,14 @@ class BodyLayout extends StatelessWidget {
       _checkRegisterForm(dealPostDto);
 
       // 로그인 요청
-      http.Response res = await ViewModelProvider.of<DealViewModel>(context).postDeal(dealPostDto);
+      http.Response res = await dealViewModel.postDeal(dealPostDto, context);
 
       // 성공여부 확인
       if (res.statusCode == 200) {
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
             builder: (context) {
-              return GoodListPage();
+              return DealListPage();
             }
         ));
       } else {

@@ -11,7 +11,7 @@ class LoginTextField extends StatelessWidget {
   final FocusNode focusNode;
   final Function onFieldSubmitted;
 
-  LoginTextField({
+  const LoginTextField({
     Key key,
     @required this.labelText,
     @required this.icon,

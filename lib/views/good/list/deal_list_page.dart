@@ -5,7 +5,7 @@ import 'package:dotorimarket/views/good/list/layouts/body_layout.dart';
 import 'package:dotorimarket/views/good/list/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
-class GoodListPage extends StatelessWidget {
+class DealListPage extends StatelessWidget {
   static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
   static const double TAB_BOTTOM_HEIGHT = 50.0;
@@ -54,7 +54,7 @@ class GoodListPage extends StatelessWidget {
           },
         ),
       ),
-      viewModel: DealViewModel(context),
+      viewModel: DealViewModel(),
     );
   }
 }

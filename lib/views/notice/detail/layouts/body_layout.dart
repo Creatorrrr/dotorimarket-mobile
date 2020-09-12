@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/good/detail/good_detail_page.dart';
+import 'package:dotorimarket/views/good/detail/deal_detail_page.dart';
 import 'package:dotorimarket/views/notice/detail/widgets/notice_content.dart';
 import 'package:dotorimarket/views/notice/detail/widgets/notice_title.dart';
 import 'package:dotorimarket/views/notice/list/widgets/notice_list_item.dart';

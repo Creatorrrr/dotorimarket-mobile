@@ -8,7 +8,7 @@ import 'package:dotorimarket/constants/app_constant.dart';
 import 'package:dotorimarket/dtos/user/user_login_dto.dart';
 import 'package:dotorimarket/viewmodels/user_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/good/list/good_list_page.dart';
+import 'package:dotorimarket/views/good/list/deal_list_page.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +21,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   static const double LOGO_HEIGHT = 200.0;
+  static const double APP_TITLE_FONT_SIZE = 28.0;
   static const double HORIZONTAL_PADDING = 10.0;
   static const double LOGIN_TEXT_FIELD_TOP_PADDING = 10.0;
   static const double LOGIN_BUTTON_TOP_PADDING = 10.0;
+  static const double FIND_FONT_SIZE = 16.0;
 
   static const String SAVE_EMAIL_KEY = 'saveEmail';
   static const String EMAIL_KEY = 'email';
@@ -71,10 +73,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        child: Text(
+                        child: const Text(
                           AppConstant.APP_TITLE,
-                          style: TextStyle(
-                            fontSize: 28,
+                          style: const TextStyle(
+                            fontSize: APP_TITLE_FONT_SIZE,
                           ),
                         ),
                         alignment: Alignment.center,
@@ -83,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         child: LoginTextField(
                           labelText: EMAIL_TEXT,
-                          icon: Icon(Icons.email),
+                          icon: const Icon(Icons.email),
                           controller: emailController,
                           onFieldSubmitted: (String value) {
                             FocusScope.of(context).requestFocus(passwordFocusNode);
@@ -96,11 +98,11 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         child: LoginTextField(
                           labelText: PASSWORD_TEXT,
-                          icon: Icon(Icons.lock),
+                          icon: const Icon(Icons.lock),
                           controller: passwordController,
                           focusNode: passwordFocusNode,
                         ),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: LOGIN_TEXT_FIELD_TOP_PADDING,
                           left: HORIZONTAL_PADDING,
                           right: HORIZONTAL_PADDING,
@@ -116,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                             _onLoginPressed(context); // 로그인 버튼 동작
                           },
                         ),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: LOGIN_BUTTON_TOP_PADDING,
                           left: HORIZONTAL_PADDING,
                           right: HORIZONTAL_PADDING,
@@ -129,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                             // TODO 회원가입 페이지로 이동
                           },
                         ),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: LOGIN_BUTTON_TOP_PADDING,
                           left: HORIZONTAL_PADDING,
                           right: HORIZONTAL_PADDING,
@@ -151,20 +153,18 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             FindButton(
                               text: FIND_ID_TEXT,
-                              fontSize: 16.0,
                               onPressed: () {
                                 // TODO 아이디 찾기 페이지로 이동
                               },
                             ),
-                            Text(
+                            const Text(
                               ' | ',
                               style: TextStyle(
-                                fontSize: 16.0,
+                                fontSize: FIND_FONT_SIZE,
                               ),
                             ),
                             FindButton(
                               text: FIND_PASSWORD_TEXT,
-                              fontSize: 16.0,
                               onPressed: () {
                                 // TODO 패스워드 찾기 페이지로 이동
                               },
@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                           mainAxisAlignment: MainAxisAlignment.center,
                         ),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: HORIZONTAL_PADDING,
                           right: HORIZONTAL_PADDING,
                         ),
@@ -189,12 +189,14 @@ class _LoginPageState extends State<LoginPage> {
           FocusScope.of(context).unfocus();
         },
       ),
-      viewModel: UserViewModel(context),
+      viewModel: UserViewModel(),
     );
   }
 
   /// 로그인 버튼 동작
   void _onLoginPressed(BuildContext context) async {
+    final UserViewModel userViewModel = ViewModelProvider.of<UserViewModel>(context);
+
     try {
       // 로그인 데이터
       UserLoginDto userLoginDto = UserLoginDto(
@@ -206,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
       _checkLoginForm(userLoginDto);
 
       // 로그인 요청
-      http.Response res = await ViewModelProvider.of<UserViewModel>(context).postUser(userLoginDto);
+      http.Response res = await userViewModel.postUser(userLoginDto, context);
 
       // 성공여부 확인
       if (res.statusCode == HttpStatus.ok) {
@@ -225,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
           builder: (context) {
-            return GoodListPage();
+            return DealListPage();
           },
         ));
       } else {

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TabAllBannerImage extends StatelessWidget {
+class BannerImage extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 70.0;
+  static const double IMAGE_BORDER_RADIUS = 5.0;
 
   final double height;
   final String image;
 
-  TabAllBannerImage({
+  BannerImage({
     Key key,
     this.height = HEIGHT_DEFAULT,
     @required this.image,
@@ -19,7 +20,7 @@ class TabAllBannerImage extends StatelessWidget {
         this.image,
         height: this.height,
       ),
-      borderRadius: BorderRadius.circular(10.0),
+      borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
     );
   }
 }

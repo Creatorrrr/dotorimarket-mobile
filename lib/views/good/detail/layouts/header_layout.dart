@@ -2,9 +2,10 @@ import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 10.0;
+  static const double HEADER_TEXT_SIZE = 16.0;
+
+  static const String HEADER_TEXT = '상품상세';
 
   final double height;
 
@@ -16,11 +17,24 @@ class HeaderLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
+      child: Stack(
+        children: [
+          Positioned(
+            child: Container(
+              child: const Text(HEADER_TEXT,
+                style: const TextStyle(
+                  fontSize: HEADER_TEXT_SIZE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              alignment: Alignment.center,
+              color: Colors.white,
+              height: this.height,
+            ),
+          ),
+          Positioned(
             child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();
@@ -30,7 +44,6 @@ class HeaderLayout extends StatelessWidget {
           ),
         ],
       ),
-      height: this.height,
     );
   }
 }

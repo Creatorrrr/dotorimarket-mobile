@@ -8,6 +8,7 @@ class BodyTabBar extends StatelessWidget {
   static const double LABEL_FONT_SIZE = 16.0;
   static const FontWeight LABEL_FONT_WEIGHT = FontWeight.bold;
   static const double UNSELECTED_LABEL_FONT_SIZE = 16.0;
+  static const double BOTTOM_BORDER_WIDTH = 1.0;
 
   final double height;
   final MaterialColor indicatorColor;
@@ -47,13 +48,13 @@ class BodyTabBar extends StatelessWidget {
         ),
       ),
       height: this.height,
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: HORIZONTAL_PADDING,
       ),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            width: 1.0,
+            width: BOTTOM_BORDER_WIDTH,
             color: Colors.black12,
           ),
         ),

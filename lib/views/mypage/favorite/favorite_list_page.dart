@@ -46,7 +46,7 @@ class FavoriteListPage extends StatelessWidget {
           },
         ),
       ),
-      viewModel: DealViewModel(context),
+      viewModel: DealViewModel(),
     );
   }
 }
