@@ -62,7 +62,6 @@ class _FooterLayoutState extends State<FooterLayout> {
           ),
         ],
       ),
-      color: Colors.white,
       height: this.height,
       padding: const EdgeInsets.all(PADDING_DEFAULT),
     );

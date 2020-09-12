@@ -2,7 +2,7 @@ import 'package:dotorimarket/views/category/category_list_page.dart';
 import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/common/widgets/menu_item_button.dart';
 import 'package:dotorimarket/views/good/list/deal_list_page.dart';
-import 'package:dotorimarket/views/good/register/good_register_page.dart';
+import 'package:dotorimarket/views/good/register/deal_register_page.dart';
 import 'package:dotorimarket/views/mypage/main/mypage_page.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +73,7 @@ class MenuLayout extends StatelessWidget {
               onPressed: this.onWritePressed ?? () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return GoodRegisterPage();
+                      return DealRegisterPage();
                     }
                 ));
               },

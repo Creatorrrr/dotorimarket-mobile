@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GoodRegisterButton extends StatelessWidget {
+class DealRegisterButton extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 50.0;
 
   static const String BUTTON_NAME_TEXT = '등록완료';
@@ -8,7 +8,7 @@ class GoodRegisterButton extends StatelessWidget {
   final double height;
   final Function onPressed;
 
-  GoodRegisterButton({
+  DealRegisterButton({
     Key key,
     this.height = HEIGHT_DEFAULT,
     @required this.onPressed,

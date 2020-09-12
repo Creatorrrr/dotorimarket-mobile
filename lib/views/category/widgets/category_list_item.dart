@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CategoryListItem extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
 
   final String title;
 

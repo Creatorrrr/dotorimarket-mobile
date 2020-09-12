@@ -28,7 +28,6 @@ class HeaderLayout extends StatelessWidget {
                 ),
               ),
               alignment: Alignment.center,
-              color: Colors.white,
               height: this.height,
             ),
           ),

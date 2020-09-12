@@ -3,7 +3,7 @@ import 'package:dotorimarket/views/setting/widgets/setting_button.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
   static const double VERTICAL_PADDING = 10.0;
   static const double SETTING_ITEM_VERTICAL_PADDING = 15.0;
   static const double SETTING_ITEM_HORIZONTAL_PADDING = 20.0;

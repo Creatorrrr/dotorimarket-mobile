@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CircleButtonsLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
 
   static const String SALE_LIST_BUTTON_TEXT = '판매내역';
   static const String PURCHASE_LIST_BUTTON_TEXT = '구매내역';

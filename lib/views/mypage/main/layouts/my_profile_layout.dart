@@ -2,7 +2,7 @@ import 'package:dotorimarket/views/mypage/main/widgets/my_page_circle_button.dar
 import 'package:flutter/cupertino.dart';
 
 class MyProfileLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/otori-grid-item.png';
   static const double HEIGHT_DEFAULT = 100.0;
 
   static const String SALE_LIST_BUTTON_TEXT = '판매내역';

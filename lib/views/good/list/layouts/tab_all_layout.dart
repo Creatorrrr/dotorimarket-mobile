@@ -7,7 +7,7 @@ import 'package:dotorimarket/views/good/list/widgets/deal_grid_item.dart';
 import 'package:flutter/material.dart';
 
 class TabAllLayout extends StatelessWidget {
-  static const String ALL_BANNER_PATH = 'assets/dotori-banner.png';
+  static const String ALL_BANNER_PATH = 'assets/images/dotori-banner.png';
 
   static const double HORIZONTAL_PADDING = 10.0;
   static const double LAYOUT_BANNER_TOP_PADDING = 10.0;

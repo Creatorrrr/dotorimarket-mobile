@@ -3,7 +3,7 @@ import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_time.d
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
+  static const String HEADER_LOGO_PATH = 'assets/images/dotori-logo.png';
   static const double CHAT_CONTENT_ITEM_VERTICAL_PADDING = 10.0;
   static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 10.0;
 

@@ -2,7 +2,7 @@ import 'package:dotorimarket/views/mypage/sell/widgets/sell_list_item.dart';
 import 'package:flutter/material.dart';
 
 class TabSellingLayout extends StatelessWidget {
-  static const String ALL_BANNER_PATH = 'assets/dotori-banner.png';
+  static const String ALL_BANNER_PATH = 'assets/images/dotori-banner.png';
   static const double LAYOUT_BANNER_TOP_PADDING = 10.0;
   static const double LAYOUT_BANNER_BOTTOM_PADDING = 5.0;
 

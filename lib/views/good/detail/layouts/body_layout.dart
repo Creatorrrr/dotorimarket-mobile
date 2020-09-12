@@ -17,7 +17,7 @@ class BodyLayout extends StatefulWidget {
 }
 
 class _BodyLayoutState extends State<BodyLayout> {
-  static const String DEAL_TEMP_IMAGE_PATH = 'assets/dotori-banner.png';
+  static const String DEAL_TEMP_IMAGE_PATH = 'assets/images/dotori-banner.png';
 
   static const double DEAL_PROFILE_TOP_RADIUS = 30.0;
 
@@ -120,7 +120,6 @@ class _BodyLayoutState extends State<BodyLayout> {
           ),
         ],
       ),
-      color: Colors.white,
     );
   }
 }

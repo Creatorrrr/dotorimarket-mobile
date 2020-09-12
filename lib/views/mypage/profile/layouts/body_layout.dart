@@ -4,7 +4,7 @@ import 'package:dotorimarket/views/mypage/main/layouts/text_buttons_layout.dart'
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
   static const double PROFILE_IMAGE_RADIUS = 80.0;
   static const double PROFILE_VERTICAL_PADDING = 20.0;
   static const double NICKNAME_LABEL_SIZE = 12.0;

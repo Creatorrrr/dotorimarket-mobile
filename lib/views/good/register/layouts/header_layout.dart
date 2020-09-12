@@ -2,27 +2,39 @@ import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 5.0;
+  static const double HEADER_TEXT_SIZE = 16.0;
+
+  static const String HEADER_TEXT = '글쓰기';
 
   final double height;
-  final String title;
 
   HeaderLayout({
     Key key,
     this.height = HEADER_TOP_HEIGHT_DEFAULT,
-    @required this.title,
   }):super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
+      child: Stack(
         children: [
-          Container(
+          Positioned(
+            child: Container(
+              child: const Text(HEADER_TEXT,
+                style: const TextStyle(
+                  fontSize: HEADER_TEXT_SIZE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              alignment: Alignment.center,
+              height: this.height,
+            ),
+          ),
+          Positioned(
             child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();
@@ -30,23 +42,15 @@ class HeaderLayout extends StatelessWidget {
               },
             ),
           ),
-          Expanded(
-            child: Container(
-              child: Text(
-                this.title,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              height: this.height,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(
-                left: 10.0,
-              ),
-            ),
-          )
         ],
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black12,
+            width: 1.0,
+          ),
+        ),
       ),
     );
   }

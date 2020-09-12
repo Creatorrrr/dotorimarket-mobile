@@ -2,7 +2,7 @@ import 'package:dotorimarket/views/chat/content/widgets/chat_profile_image.dart'
 import 'package:flutter/material.dart';
 
 class ChatContentListItem extends StatelessWidget {
-  static const String PROFILE_IMAGE_PATH = 'assets/dotori-logo.png';
+  static const String PROFILE_IMAGE_PATH = 'assets/images/dotori-logo.png';
   static const double HEIGHT_DEFAULT = 35.0;
   static const double PROFILE_IMAGE_RADIUS_DEFAULT = HEIGHT_DEFAULT / 2;
 

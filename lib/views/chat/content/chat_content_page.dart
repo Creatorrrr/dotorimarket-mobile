@@ -4,7 +4,7 @@ import 'package:dotorimarket/views/chat/content/layouts/body_layout.dart';
 import 'package:flutter/material.dart';
 
 class ChatContentPage extends StatelessWidget {
-  static const String HEADER_LOGO_PATH = 'assets/dotori-logo.png';
+  static const String HEADER_LOGO_PATH = 'assets/images/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
   static const double TAB_BOTTOM_HEIGHT = 50.0;
 

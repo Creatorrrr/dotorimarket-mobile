@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DealGridItem extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
 
   static const double IMAGE_BORDER_RADIUS = 5.0;
   static const double IMAGE_ASPECT_RATIO = 1.0;

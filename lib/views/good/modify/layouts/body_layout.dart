@@ -1,10 +1,10 @@
 import 'package:dotorimarket/views/category/widgets/category_list_item.dart';
 import 'package:dotorimarket/views/good/modify/widgets/good_modify_input.dart';
-import 'package:dotorimarket/views/good/register/widgets/good_register_input.dart';
+import 'package:dotorimarket/views/good/register/widgets/deal_register_input.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  static const String IMAGE_PATH = 'assets/dotori-logo.png';
+  static const String IMAGE_PATH = 'assets/images/otori-logo.png';
   static const double IMAGE_SIZE = 100.0;
   static const double IMAGE_LEFT_PADDING = 20.0;
   static const double TEXT_FORM_FIELD_VERTICAL_PADDING = 5.0;

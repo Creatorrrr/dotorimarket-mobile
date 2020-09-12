@@ -70,9 +70,6 @@ class HeaderLayout extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: HORIZONTAL_PADDING,
       ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
     );
   }
 }

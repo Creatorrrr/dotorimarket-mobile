@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HeaderIconButton extends StatelessWidget {
-  static const double WIDTH_DEFAULT = 30.0;
+  static const double WIDTH_DEFAULT = 50.0;
   static const double ICON_SIZE_DEFAULT = 24.0;
 
   final double width;

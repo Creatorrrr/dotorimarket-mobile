@@ -2,7 +2,7 @@ import 'package:dotorimarket/views/chat/list/widgets/chat_profile_image.dart';
 import 'package:flutter/material.dart';
 
 class ChatListItem extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/dotori-grid-item.png';
+  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
   static const double HEIGHT_DEFAULT = 70.0;
   static const double PROFILE_IMAGE_RADIUS = 30.0;
 

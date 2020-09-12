@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class GoodProfileLayout extends StatelessWidget {
-  static const String GOOD_IMAGE_PATH = 'assets/dotori-logo.png';
+  static const String GOOD_IMAGE_PATH = 'assets/images/dotori-logo.png';
 
   static const double HORIZONTAL_PADDING = 25.0;
   static const double CATEGORY_FONT_SIZE = 12.0;
