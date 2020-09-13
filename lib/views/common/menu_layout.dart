@@ -1,8 +1,9 @@
 import 'package:dotorimarket/views/category/category_list_page.dart';
 import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/common/widgets/menu_item_button.dart';
-import 'package:dotorimarket/views/good/list/deal_list_page.dart';
-import 'package:dotorimarket/views/good/register/deal_register_page.dart';
+import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
+import 'package:dotorimarket/views/deal/modify/deal_modify_page.dart';
+import 'package:dotorimarket/views/deal/register/deal_register_page.dart';
 import 'package:dotorimarket/views/mypage/main/mypage_page.dart';
 import 'package:flutter/material.dart';
 

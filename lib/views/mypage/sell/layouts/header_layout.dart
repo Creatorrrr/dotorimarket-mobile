@@ -1,51 +1,45 @@
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 5.0;
+  static const double HEADER_TEXT_SIZE = 16.0;
+
+  static const String HEADER_TEXT = '판매내역';
 
   final double height;
-  final String title;
 
   HeaderLayout({
     Key key,
     this.height = HEADER_TOP_HEIGHT_DEFAULT,
-    @required this.title,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
+      child: Stack(
         children: [
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
+          Positioned(
+            child: Container(
+              child: HeaderTitleText(HEADER_TEXT),
+              alignment: Alignment.center,
             ),
           ),
-          Expanded(
+          Positioned(
             child: Container(
-              child: Text(
-                this.title,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              height: this.height,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(
-                left: 10.0,
+              child: HeaderIconButton(
+                icon: const Icon(Icons.arrow_back_ios),
+                onPressed: () {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.of(context).pop();
+                  }
+                },
               ),
             ),
-          )
+            top: 0.0,
+            bottom: 0.0,
+          ),
         ],
       ),
     );

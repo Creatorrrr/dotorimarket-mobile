@@ -2,7 +2,7 @@ import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/mypage/favorite/widgets/favorite_list_item.dart';
-import 'package:dotorimarket/views/good/detail/deal_detail_page.dart';
+import 'package:dotorimarket/views/deal/detail/deal_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {

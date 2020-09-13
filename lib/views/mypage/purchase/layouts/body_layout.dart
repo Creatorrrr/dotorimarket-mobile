@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/good/detail/deal_detail_page.dart';
+import 'package:dotorimarket/views/deal/detail/deal_detail_page.dart';
 import 'package:dotorimarket/views/mypage/purchase/widgets/purchase_list_item.dart';
 import 'package:flutter/material.dart';
 

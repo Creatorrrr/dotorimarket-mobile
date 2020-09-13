@@ -24,7 +24,6 @@ class SellListPage extends StatelessWidget {
                     right: 0.0,
                     child: HeaderLayout(
                       height: HEADER_TOP_HEIGHT,
-                      title: '판매내역',
                     ),
                   ),
                   Positioned(
@@ -40,6 +39,7 @@ class SellListPage extends StatelessWidget {
           );
         },
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

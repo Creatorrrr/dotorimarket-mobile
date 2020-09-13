@@ -8,7 +8,7 @@ import 'package:dotorimarket/constants/app_constant.dart';
 import 'package:dotorimarket/dtos/user/user_login_dto.dart';
 import 'package:dotorimarket/viewmodels/user_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/good/list/deal_list_page.dart';
+import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
 import 'package:flutter/material.dart';

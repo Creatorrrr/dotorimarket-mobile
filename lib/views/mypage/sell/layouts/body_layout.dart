@@ -1,3 +1,4 @@
+import 'package:dotorimarket/views/deal/list/widgets/body_tab_bar_text.dart';
 import 'package:dotorimarket/views/mypage/sell/layouts/tab_selling_layout.dart';
 import 'package:dotorimarket/views/mypage/sell/widgets/body_tab_bar.dart';
 import 'package:dotorimarket/views/mypage/sell/widgets/body_tab_bar_view.dart';
@@ -37,28 +38,13 @@ class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMi
             tabController: this.tabController,
             tabs: <Tab>[
               Tab(
-                  child: Text(
-                    TAB_SELLING,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )
+                  child: BodyTabBarText(TAB_SELLING),
               ),
               Tab(
-                  child: Text(
-                    TAB_DEALT,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )
+                  child: BodyTabBarText(TAB_DEALT),
               ),
               Tab(
-                  child: Text(
-                    TAB_RESERVING,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )
+                  child: BodyTabBarText(TAB_RESERVING),
               ),
             ],
           ),
