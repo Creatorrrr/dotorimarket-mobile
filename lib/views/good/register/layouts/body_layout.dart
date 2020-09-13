@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dotorimarket/views/good/list/deal_list_page.dart';
 import 'package:dotorimarket/views/good/register/widgets/deal_register_button.dart';
+import 'package:dotorimarket/views/good/register/widgets/deal_register_dropdown_field.dart';
+import 'package:dotorimarket/views/good/register/widgets/picture_preview.dart';
+import 'package:dotorimarket/views/good/register/widgets/picture_selection.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotorimarket/dtos/deal/deal_post_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/good/register/widgets/deal_register_input.dart';
+import 'package:dotorimarket/views/good/register/widgets/deal_register_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -18,30 +22,32 @@ class BodyLayout extends StatefulWidget {
 }
 
 class _BodyLayoutState extends State<BodyLayout> {
-  static const String IMAGE_PATH = 'assets/images/picture-selection.png';
-
   static const double HORIZONTAL_PADDING = 15.0;
-  static const Color PICTURE_SELECTION_ICON_COLOR = Color.fromRGBO(255, 185, 65, 1.0);
-  static const double PICTURE_SELECTION_FONT_SIZE = 12.0;
-  static const double PICTURE_SELECTION_TEXT_TOP_PADDING = 5.0;
-  static const double PICTURE_SELECTION_BORDER_WIDTH = 1.0;
-  static const double PICTURE_SELECTION_BORDER_RADIUS = 10.0;
   static const double PICTURE_SELECTION_SIZE = 70.0;
-  static const double PICTURE_SELECTION_TOP_PADDING = 15.0;
+  static const double PICTURE_SELECTION_TOP_MARGIN = 7.0;
+  static const double PICTURE_PREVIEW_LEFT_MARGIN = 5.0;
+  static const double PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE = 8.0;
   static const double TITLE_TOP_PADDING = 30.0;
   static const double TEXT_FORM_FIELD_TOP_PADDING = 15.0;
   static const double REGISTER_BUTTON_HEIGHT = 70.0;
 
-  static const String PICTURE_SELECTION_TEXT = '사진선택';
+  static const String CAMERA_SELECTION_TEXT = '촬영하기';
+  static const String GALLERY_SELECTION_TEXT = '갤러리에서 선택하기';
   static const String GOOD_NAME_HINT_TEXT = '상품 이름';
   static const String CATEGORY_HINT_TEXT = '카테고리';
   static const String PRICE_HINT_TEXT = '₩ 가격';
-  static const String DESCRIPTION_HINT_TEXT = '설명';
+  static const String DESCRIPTION_HINT_TEXT = '판매할 상품의 설명을 작성해주세요';
+  static const String CONFIRM_DIALOG_TITLE = '등록하시겠습니까?';
+  static const String CONFIRM_DIALOG_CANCEL = '취소';
+  static const String CONFIRM_DIALOG_REGISTER = '등록하기';
+
 
   final TextEditingController titleTextEditingController = TextEditingController();
   final TextEditingController categoryTextEditingController = TextEditingController();
   final TextEditingController priceTextEditingController = TextEditingController();
   final TextEditingController descriptionTextEditingController = TextEditingController();
+
+  final List<File> pictureList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,54 +62,102 @@ class _BodyLayoutState extends State<BodyLayout> {
                 child: Column(
                   children: [
                     Container(
-                      child: InkWell(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                IMAGE_PATH,
-                                color: PICTURE_SELECTION_ICON_COLOR,
-                              ),
-                              Container(
-                                child: const Text(PICTURE_SELECTION_TEXT,
-                                  style: const TextStyle(
-                                    fontSize: PICTURE_SELECTION_FONT_SIZE,
-                                  ),
-                                ),
-                                padding: const EdgeInsets.only(
-                                  top: PICTURE_SELECTION_TEXT_TOP_PADDING,
-                                ),
-                              )
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                          ),
-                          height: PICTURE_SELECTION_SIZE,
-                          width: PICTURE_SELECTION_SIZE,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black12,
-                              width: PICTURE_SELECTION_BORDER_WIDTH,
+                      child: Row(
+                        children: [
+                          Container(
+                            child: PictureSelection(
+                              height: PICTURE_SELECTION_SIZE,
+                              width: PICTURE_SELECTION_SIZE,
+                              onPressed: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (BuildContext dialogContext) {
+                                      return SimpleDialog(
+                                        children: [
+                                          SimpleDialogOption(
+                                            child: const Text(CAMERA_SELECTION_TEXT),
+                                            onPressed: () async {
+                                              // 카메라 화면 띄우기
+                                              PickedFile pickedFile = await imagePicker.getImage(
+                                                source: ImageSource.camera,
+                                              );
+                                              if (pickedFile != null) {
+                                                setState(() {
+                                                  pictureList.add(File(pickedFile.path));
+                                                });
+                                              }
+
+                                              Navigator.pop(dialogContext);
+                                            },
+                                          ),
+                                          SimpleDialogOption(
+                                            child: const Text(GALLERY_SELECTION_TEXT),
+                                            onPressed: () async {
+                                              // 갤러리 화면 띄우기
+                                              PickedFile pickedFile = await imagePicker.getImage(
+                                                source: ImageSource.gallery,
+                                              );
+                                              if (pickedFile != null) {
+                                                setState(() {
+                                                  pictureList.add(File(pickedFile.path));
+                                                });
+                                              }
+
+                                              Navigator.pop(dialogContext);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                );
+                              },
                             ),
-                            borderRadius: BorderRadius.circular(PICTURE_SELECTION_BORDER_RADIUS),
+                            margin: const EdgeInsets.only(
+                              top: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                              right: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                            ),
                           ),
-                        ),
-                        onTap: () async {
-                          PickedFile pickedFile = await imagePicker.getImage(
-                            source: ImageSource.gallery
-                          );
-                          print(pickedFile.path);
-                        },
+                          Expanded(
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  child: PicturePreview(
+                                    image: Image.file(pictureList[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                    height: PICTURE_SELECTION_SIZE,
+                                    width: PICTURE_SELECTION_SIZE,
+                                    closeButtonOverflowSize: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                                    onPressed: () {
+                                      // 이미지 제거
+                                      setState(() {
+                                        pictureList.removeAt(index);
+                                      });
+                                    },
+                                  ),
+                                  margin: const EdgeInsets.only(
+                                    left: PICTURE_PREVIEW_LEFT_MARGIN,
+                                  ),
+                                );
+                              },
+                              itemCount: pictureList.length,
+                            ),
+                          ),
+                        ],
                       ),
+                      height: PICTURE_SELECTION_SIZE + PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
                       alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(
+                        top: PICTURE_SELECTION_TOP_MARGIN,
+                      ),
                       padding: const EdgeInsets.only(
-                        top: PICTURE_SELECTION_TOP_PADDING,
                         left: HORIZONTAL_PADDING,
                         right: HORIZONTAL_PADDING,
                       ),
                     ),
                     Container(
-                      child: DealRegisterInput(
+                      child: DealRegisterTextField(
                         controller: titleTextEditingController,
                         hintText: GOOD_NAME_HINT_TEXT,
                       ),
@@ -114,7 +168,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DropdownButtonFormField(
+                      child: DealRegisterDropdownField(
                         items: [
                           DropdownMenuItem(
                             child: Text('카테고리1'),
@@ -129,13 +183,10 @@ class _BodyLayoutState extends State<BodyLayout> {
                             value: 3,
                           ),
                         ],
+                        hintText: CATEGORY_HINT_TEXT,
                         onChanged: (value) {
 
                         },
-                        decoration: InputDecoration(
-                          hintText: CATEGORY_HINT_TEXT,
-                          contentPadding: const EdgeInsets.all(10.0),
-                        ),
                       ),
                       padding: const EdgeInsets.only(
                         top: TEXT_FORM_FIELD_TOP_PADDING,
@@ -144,7 +195,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterInput(
+                      child: DealRegisterTextField(
                         controller: priceTextEditingController,
                         hintText: PRICE_HINT_TEXT,
                         keyboardType: TextInputType.number,
@@ -159,7 +210,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterInput(
+                      child: DealRegisterTextField(
                         controller: descriptionTextEditingController,
                         hintText: DESCRIPTION_HINT_TEXT,
                         keyboardType: TextInputType.multiline,
@@ -201,6 +252,31 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   /// 등록 버튼 동작
   void _onRegisterPressed(BuildContext context) async {
+    bool confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return  AlertDialog(
+          title: Text(CONFIRM_DIALOG_TITLE),
+          actions: [
+            FlatButton(
+              child: Text(CONFIRM_DIALOG_CANCEL),
+              onPressed: () {
+                Navigator.pop(dialogContext, false);
+              },
+            ),
+            FlatButton(
+              child: Text(CONFIRM_DIALOG_REGISTER),
+              onPressed: () {
+                Navigator.pop(dialogContext, true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == null || !confirmed) return;
+
     final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
 
     try {

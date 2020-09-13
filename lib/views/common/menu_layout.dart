@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 
 class MenuLayout extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 50.0;
-  static const double HORIZONTAL_PADDING = 15.0;
+  static const double HEADER_TOP_BORDER_WIDTH = 1.0;
+
   static const String MENU_ITEM_HOME = '홈';
   static const String MENU_ITEM_CATEGORY = '카테고리';
   static const String MENU_ITEM_WRITE = '글쓰기';
@@ -42,11 +43,10 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.home,
               name: MENU_ITEM_HOME,
-              onPressed: this.onHomePressed ?? () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return DealListPage();
-                    }
+              onPressed: onHomePressed ?? () {
+                Navigator.pushReplacement(context, PageRouteBuilder(
+                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+                    => DealListPage(),
                 ));
               },
             ),
@@ -56,11 +56,10 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.menu,
               name: MENU_ITEM_CATEGORY,
-              onPressed: this.onCategoryPressed ?? () {
-                Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return CategoryListPage();
-                    }
+              onPressed: onCategoryPressed ?? () {
+                Navigator.pushReplacement(context, PageRouteBuilder(
+                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+                    => CategoryListPage(),
                 ));
               },
             ),
@@ -70,11 +69,26 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.add_circle_outline,
               name: MENU_ITEM_WRITE,
-              onPressed: this.onWritePressed ?? () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return DealRegisterPage();
-                    }
+              onPressed: onWritePressed ?? () {
+                Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+                    => DealRegisterPage(),
+                  transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                    Offset begin = Offset(0.0, 1.0);
+                    Offset end = Offset.zero;
+                    var curve = Curves.ease;
+
+                    var tween = Tween(begin: begin, end: end);
+                    var curvedAnimation = CurvedAnimation(
+                      parent: animation,
+                      curve: curve,
+                    );
+
+                    return SlideTransition(
+                      position: tween.animate(curvedAnimation),
+                      child: child,
+                    );
+                  },
                 ));
               },
             ),
@@ -84,11 +98,10 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.chat_bubble_outline,
               name: MENU_ITEM_CHAT,
-              onPressed: this.onChatPressed ?? () {
-                Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return ChatListPage();
-                    }
+              onPressed: onChatPressed ?? () {
+                Navigator.pushReplacement(context, PageRouteBuilder(
+                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+                    => ChatListPage(),
                 ));
               },
             ),
@@ -98,11 +111,10 @@ class MenuLayout extends StatelessWidget {
             child: MenuItemButton(
               icon: Icons.perm_identity,
               name: MENU_ITEM_MY_PAGE,
-              onPressed: this.onMyPagePressed ?? () {
-                Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                  builder: (context) {
-                    return MyPagePage();
-                  }
+              onPressed: onMyPagePressed ?? () {
+                Navigator.pushReplacement(context, PageRouteBuilder(
+                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+                    => MyPagePage(),
                 ));
               },
             ),
@@ -111,13 +123,10 @@ class MenuLayout extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
       ),
       height: this.height,
-      padding: EdgeInsets.symmetric(
-        horizontal: HORIZONTAL_PADDING,
-      ),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            width: 1.0,
+            width: HEADER_TOP_BORDER_WIDTH,
             color: Colors.black12,
           ),
         ),

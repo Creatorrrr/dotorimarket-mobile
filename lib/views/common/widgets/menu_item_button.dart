@@ -27,30 +27,32 @@ class MenuItemButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Icon(
-              this.icon,
-              size: this.iconSize,
-            ),
-          ),
-          Container(
-            child: Text(
-              this.name,
-              style: TextStyle(
-                fontSize: this.fontSize,
+    return InkWell(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Icon(
+                this.icon,
+                size: this.iconSize,
               ),
             ),
-            padding: EdgeInsets.only(
-              top: this.iconFontDistance,
+            Container(
+              child: Text(
+                this.name,
+                style: TextStyle(
+                  fontSize: this.fontSize,
+                ),
+              ),
+              padding: EdgeInsets.only(
+                top: this.iconFontDistance,
+              ),
             ),
-          ),
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
+          ],
+          mainAxisAlignment: MainAxisAlignment.center,
+        ),
       ),
-      onPressed: this.onPressed,
+      onTap: this.onPressed,
     );
   }
 }
