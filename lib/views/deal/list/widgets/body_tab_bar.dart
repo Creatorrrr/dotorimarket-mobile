@@ -5,9 +5,9 @@ class BodyTabBar extends StatelessWidget {
   static const double HORIZONTAL_PADDING = 15.0;
   static const MaterialColor INDICATOR_COLOR_DEFAULT = Colors.amber;
   static const double INDICATOR_WEIGHT_DEFAULT = 4.0;
-  static const double LABEL_FONT_SIZE = 14.0;
+  static const double LABEL_FONT_SIZE = 16.0;
   static const FontWeight LABEL_FONT_WEIGHT = FontWeight.bold;
-  static const double UNSELECTED_LABEL_FONT_SIZE = 14.0;
+  static const double UNSELECTED_LABEL_FONT_SIZE = 16.0;
   static const double BOTTOM_BORDER_WIDTH = 1.0;
 
   final double height;

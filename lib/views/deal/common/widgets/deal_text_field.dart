@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DealModifyTextField extends StatelessWidget {
+class DealTextField extends StatelessWidget {
   static const double CONTENT_PADDING_DEFAULT = 10.0;
 
   final String hintText;
@@ -17,7 +17,7 @@ class DealModifyTextField extends StatelessWidget {
 
   final TextEditingController controller;
 
-  DealModifyTextField({
+  DealTextField({
     Key key,
     @required this.controller,
     this.hintText,

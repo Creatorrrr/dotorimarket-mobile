@@ -15,7 +15,9 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return DealDetailPage(1);
+                      return DealDetailPage(
+                        dealId: 1,
+                      );
                     }
                 ));
               },
@@ -33,7 +35,9 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return DealDetailPage(1);
+                      return DealDetailPage(
+                        dealId: 1,
+                      );
                     }
                 ));
               },
@@ -51,7 +55,9 @@ class BodyLayout extends StatelessWidget {
               onItemPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                     builder: (context) {
-                      return DealDetailPage(1);
+                      return DealDetailPage(
+                        dealId: 1,
+                      );
                     }
                 ));
               },

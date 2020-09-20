@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 class DealDetailPage extends StatelessWidget {
   static const String GOOD_IMAGE_PATH = 'assets/images/dotori-logo.png';
   static const double HEADER_HEIGHT = 50.0;
-  static const double BOTTOM_HEIGHT = 60.0;
+  static const double FOOTER_HEIGHT = 60.0;
 
   final int dealId;
 
-  DealDetailPage(this.dealId, {
+  DealDetailPage({
     Key key,
+    @required this.dealId,
   }):super(key: key);
 
   @override
@@ -28,9 +29,11 @@ class DealDetailPage extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       Positioned(
-                        child: BodyLayout(dealId),
+                        child: BodyLayout(
+                          dealId: dealId,
+                        ),
                         top: HEADER_HEIGHT,
-                        bottom: BOTTOM_HEIGHT,
+                        bottom: FOOTER_HEIGHT,
                         left: 0.0,
                         right: 0.0,
                       ),
@@ -44,12 +47,12 @@ class DealDetailPage extends StatelessWidget {
                         right: 0.0,
                       ),
                       Positioned(
-                        height: BOTTOM_HEIGHT,
+                        height: FOOTER_HEIGHT,
                         bottom: 0.0,
                         left: 0.0,
                         right: 0.0,
                         child: FooterLayout(
-                          height: BOTTOM_HEIGHT,
+                          height: FOOTER_HEIGHT,
                         ),
                       ),
                     ],
@@ -60,7 +63,9 @@ class DealDetailPage extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
       ),
-      viewModel: DealViewModel(),
+      viewModels: [
+        DealViewModel(),
+      ],
     );
   }
 }

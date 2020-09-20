@@ -1,20 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotorimarket/dtos/category/category_dto.dart';
+import 'package:dotorimarket/viewmodels/category_view_model.dart';
+import 'package:dotorimarket/views/common/widgets/permission_setting_dialog.dart';
+import 'package:dotorimarket/views/common/formatters/currency_formatter.dart';
+import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_bottom_button.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_dropdown_button_form_field.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_dropdown_menu_item.dart';
+import 'package:dotorimarket/views/deal/common/widgets/picture_preview.dart';
+import 'package:dotorimarket/views/deal/common/widgets/picture_selection.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:dotorimarket/dtos/deal/deal_post_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
-import 'package:dotorimarket/views/deal/modify/widgets/deal_modify_button.dart';
-import 'package:dotorimarket/views/deal/modify/widgets/deal_modify_dropdown_field.dart';
-import 'package:dotorimarket/views/deal/modify/widgets/picture_preview.dart';
-import 'package:dotorimarket/views/deal/modify/widgets/picture_selection.dart';
-import 'package:dotorimarket/views/deal/register/widgets/deal_register_text_field.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
 class BodyLayout extends StatefulWidget {
   @override
@@ -25,11 +30,11 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double HORIZONTAL_PADDING = 15.0;
   static const double PICTURE_SELECTION_SIZE = 70.0;
   static const double PICTURE_SELECTION_TOP_MARGIN = 7.0;
-  static const double PICTURE_PREVIEW_LEFT_MARGIN = 5.0;
+  static const double PICTURE_PREVIEW_RIGHT_MARGIN = 5.0;
   static const double PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE = 8.0;
   static const double TITLE_TOP_PADDING = 30.0;
   static const double TEXT_FORM_FIELD_TOP_PADDING = 15.0;
-  static const double REGISTER_BUTTON_HEIGHT = 70.0;
+  static const double MODIFY_BUTTON_HEIGHT = 70.0;
 
   static const String CAMERA_SELECTION_TEXT = '촬영하기';
   static const String GALLERY_SELECTION_TEXT = '갤러리에서 선택하기';
@@ -37,21 +42,25 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String CATEGORY_HINT_TEXT = '카테고리';
   static const String PRICE_HINT_TEXT = '₩ 가격';
   static const String DESCRIPTION_HINT_TEXT = '판매할 상품의 설명을 작성해주세요';
-  static const String CONFIRM_DIALOG_TITLE = '수정하시겠습니까?';
+  static const String BOTTOM_BUTTON_TEXT = '수정하기';
+  static const String CONFIRM_DIALOG_TITLE = '등록하시겠습니까?';
   static const String CONFIRM_DIALOG_CANCEL = '취소';
-  static const String CONFIRM_DIALOG_REGISTER = '수정하기';
-
+  static const String CONFIRM_DIALOG_MODIFY = '수정하기';
+  static const String CAMERA_PERMISSION_DIALOG_TITLE = '카메라 접근 권한이 필요합니다';
+  static const String GALLERY_PERMISSION_DIALOG_TITLE = '갤러리 접근 권한이 필요합니다';
 
   final TextEditingController titleTextEditingController = TextEditingController();
   final TextEditingController categoryTextEditingController = TextEditingController();
   final TextEditingController priceTextEditingController = TextEditingController();
   final TextEditingController descriptionTextEditingController = TextEditingController();
 
-  final List<File> pictureList = [];
+  List<CategoryDto> categories = [];
+  CategoryDto selectedCategory;
+  List<File> pictureList = [];
 
   @override
   Widget build(BuildContext context) {
-    final ImagePicker imagePicker = ImagePicker();
+    final CategoryViewModel categoryViewModel = ViewModelProvider.of<CategoryViewModel>(context);
 
     return Container(
       child: Stack(
@@ -69,52 +78,13 @@ class _BodyLayoutState extends State<BodyLayout> {
                               height: PICTURE_SELECTION_SIZE,
                               width: PICTURE_SELECTION_SIZE,
                               onPressed: () async {
-                                await showDialog(
-                                    context: context,
-                                    builder: (BuildContext dialogContext) {
-                                      return SimpleDialog(
-                                        children: [
-                                          SimpleDialogOption(
-                                            child: const Text(CAMERA_SELECTION_TEXT),
-                                            onPressed: () async {
-                                              // 카메라 화면 띄우기
-                                              PickedFile pickedFile = await imagePicker.getImage(
-                                                source: ImageSource.camera,
-                                              );
-                                              if (pickedFile != null) {
-                                                setState(() {
-                                                  pictureList.add(File(pickedFile.path));
-                                                });
-                                              }
-
-                                              Navigator.pop(dialogContext);
-                                            },
-                                          ),
-                                          SimpleDialogOption(
-                                            child: const Text(GALLERY_SELECTION_TEXT),
-                                            onPressed: () async {
-                                              // 갤러리 화면 띄우기
-                                              PickedFile pickedFile = await imagePicker.getImage(
-                                                source: ImageSource.gallery,
-                                              );
-                                              if (pickedFile != null) {
-                                                setState(() {
-                                                  pictureList.add(File(pickedFile.path));
-                                                });
-                                              }
-
-                                              Navigator.pop(dialogContext);
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                );
+                                // 사진 선택 모달 열기
+                                _openPictureSelectionModal();
                               },
                             ),
                             margin: const EdgeInsets.only(
                               top: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
-                              right: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                              right: PICTURE_PREVIEW_RIGHT_MARGIN + PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
                             ),
                           ),
                           Expanded(
@@ -137,7 +107,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                                     },
                                   ),
                                   margin: const EdgeInsets.only(
-                                    left: PICTURE_PREVIEW_LEFT_MARGIN,
+                                    right: PICTURE_PREVIEW_RIGHT_MARGIN,
                                   ),
                                 );
                               },
@@ -157,7 +127,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterTextField(
+                      child: DealTextField(
                         controller: titleTextEditingController,
                         hintText: GOOD_NAME_HINT_TEXT,
                       ),
@@ -168,24 +138,43 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealModifyDropdownField(
-                        items: [
-                          DropdownMenuItem(
-                            child: Text('카테고리1'),
-                            value: 1,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('카테고리2'),
-                            value: 2,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('카테고리3'),
-                            value: 3,
-                          ),
-                        ],
-                        hintText: CATEGORY_HINT_TEXT,
-                        onChanged: (value) {
+                      child: FutureBuilder(
+                        future: categoryViewModel.getCategoryList("", "", "", "", "", context),
+                        builder: (BuildContext context, AsyncSnapshot<List<CategoryDto>> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return Center(
+                                child: Text('Awaiting result...'),
+                              );
+                            case ConnectionState.waiting:
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                            // 에러 발생 시 에러메시지 표시
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              }
 
+                              // 데이터가 존재할 경우에만 세팅
+                              if (snapshot.data != null && snapshot.data.length > 0) {
+                                categories.clear();
+                                categories.addAll(snapshot.data);
+                              }
+
+                              return DealDropdownButtonFormField(
+                                hintText: CATEGORY_HINT_TEXT,
+                                items: List.generate(categories.length, (index) => DealDropdownMenuItem(
+                                  text: categories[index].name,
+                                  value: categories[index],
+                                )),
+                                onChanged: (CategoryDto categoryDto) {
+                                  selectedCategory = categoryDto;
+                                },
+                              );
+                            default:
+                              return null;
+                          }
                         },
                       ),
                       padding: const EdgeInsets.only(
@@ -195,12 +184,12 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterTextField(
+                      child: DealTextField(
                         controller: priceTextEditingController,
                         hintText: PRICE_HINT_TEXT,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          _CurrencyFormat(),
+                          CurrencyFormatter(),
                         ],
                       ),
                       padding: const EdgeInsets.only(
@@ -210,7 +199,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterTextField(
+                      child: DealTextField(
                         controller: descriptionTextEditingController,
                         hintText: DESCRIPTION_HINT_TEXT,
                         keyboardType: TextInputType.multiline,
@@ -227,18 +216,19 @@ class _BodyLayoutState extends State<BodyLayout> {
               ),
             ),
             top: 0.0,
-            bottom: REGISTER_BUTTON_HEIGHT,
+            bottom: MODIFY_BUTTON_HEIGHT,
             left: 0.0,
             right: 0.0,
           ),
           Positioned(
             child: Container(
-              child: DealModifyButton(
+              child: DealBottomButton(
+                text: BOTTOM_BUTTON_TEXT,
                 onPressed: () {
-                  _onRegisterPressed(context);
+                  _onModifyPressed(context);
                 },
               ),
-              height: REGISTER_BUTTON_HEIGHT,
+              height: MODIFY_BUTTON_HEIGHT,
               width: double.infinity,
             ),
             bottom: 0.0,
@@ -250,8 +240,8 @@ class _BodyLayoutState extends State<BodyLayout> {
     );
   }
 
-  /// 등록 버튼 동작
-  void _onRegisterPressed(BuildContext context) async {
+  /// 수정 버튼 동작
+  void _onModifyPressed(BuildContext context) async {
     bool confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext dialogContext) {
@@ -265,7 +255,7 @@ class _BodyLayoutState extends State<BodyLayout> {
               },
             ),
             FlatButton(
-              child: Text(CONFIRM_DIALOG_REGISTER),
+              child: Text(CONFIRM_DIALOG_MODIFY),
               onPressed: () {
                 Navigator.pop(dialogContext, true);
               },
@@ -288,7 +278,7 @@ class _BodyLayoutState extends State<BodyLayout> {
       );
 
       // validation 확인
-      _checkRegisterForm(dealPostDto);
+      _checkModifyForm(dealPostDto);
 
       // 로그인 요청
       http.Response res = await dealViewModel.postDeal(dealPostDto, context);
@@ -316,7 +306,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   }
 
   /// register form의 validation 확인
-  void _checkRegisterForm(DealPostDto dealPostDto) {
+  void _checkModifyForm(DealPostDto dealPostDto) {
     const String POSTFIX = '을(를) 입력해주세요';
     if (dealPostDto == null) {
       throw '개발자에게 문의해주세요 : dto parameter is null';
@@ -334,32 +324,108 @@ class _BodyLayoutState extends State<BodyLayout> {
       throw '$DESCRIPTION_HINT_TEXT$POSTFIX';
     }
   }
-}
 
-class _CurrencyFormat extends TextInputFormatter {
-  static const int VALUE_LENGTH_LIMIT = 14;
-  static const String WON = '₩';
+  /// 사진 선택 모달 열기
+  void _openPictureSelectionModal() async {
+    final ImagePicker imagePicker = ImagePicker();
 
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.length > VALUE_LENGTH_LIMIT) return oldValue;
+    return await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                  leading: const Icon(Icons.camera_alt),
+                  title: const Text(CAMERA_SELECTION_TEXT),
+                  onTap: () async {
+                    // 카메라 화면 띄우기
+                    try {
+                      PickedFile pickedFile = await imagePicker.getImage(
+                        source: ImageSource.camera,
+                      );
+                      if (pickedFile != null) {
+                        setState(() {
+                          pictureList.add(File(pickedFile.path));
+                        });
+                      }
+                    } catch (e) {
+                      // 카메라 권한 확인
+                      _checkCameraPermission();
+                    }
 
-    if (newValue.text.trim() == WON) {
-      return newValue.copyWith(text: '');
-    } else {
-      final currencyNumberFormat = NumberFormat.currency(
-        decimalDigits: 0,
-        symbol: '$WON ',
+                    Navigator.pop(dialogContext);
+                  }
+              ),
+              ListTile(
+                leading: const Icon(Icons.image),
+                title: const Text(GALLERY_SELECTION_TEXT),
+                onTap: () async {
+                  // 갤러리 화면 띄우기
+                  try {
+                    PickedFile pickedFile = await imagePicker.getImage(
+                      source: ImageSource.gallery,
+                    );
+                    if (pickedFile != null) {
+                      setState(() {
+                        pictureList.add(File(pickedFile.path));
+                      });
+                    }
+                  } catch (e) {
+                    // 갤러리 권한 확인
+                    _checkGalleryPermission();
+                  }
+
+                  Navigator.pop(dialogContext);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  /// 카메라 권한 확인
+  void _checkCameraPermission() async {
+    PermissionStatus cameraStatus = await Permission.camera.status;
+
+    if (cameraStatus != PermissionStatus.granted) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext permissionDialogContext) {
+            return PermissionSettingDialog(
+                title: CAMERA_PERMISSION_DIALOG_TITLE,
+                onCancel: () {
+                  Navigator.pop(context);
+                },
+                onOk: () {
+                  Navigator.pop(context);
+                }
+            );
+          }
       );
+    }
+  }
 
-      int num = int.parse(newValue.text.replaceAll(RegExp(r'[^\d]'), ''));
-      final newString = currencyNumberFormat.format(num);
+  /// 갤러리 권한 확인
+  void _checkGalleryPermission() async {
+    PermissionStatus photosStatus = await Permission.photos.status;
 
-      return TextEditingValue(
-          selection: TextSelection.fromPosition(TextPosition(
-            offset: newString.length,
-          )),
-          text: newString
+    if (photosStatus != PermissionStatus.granted) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext permissionDialogContext) {
+            return PermissionSettingDialog(
+                title: GALLERY_PERMISSION_DIALOG_TITLE,
+                onCancel: () {
+                  Navigator.pop(context);
+                },
+                onOk: () {
+                  Navigator.pop(context);
+                }
+            );
+          }
       );
     }
   }

@@ -189,7 +189,9 @@ class _LoginPageState extends State<LoginPage> {
           FocusScope.of(context).unfocus();
         },
       ),
-      viewModel: UserViewModel(),
+      viewModels: [
+        UserViewModel(),
+      ],
     );
   }
 

@@ -49,6 +49,7 @@ class HeaderLayout extends StatelessWidget {
           ),
         ),
       ),
+      height: height,
     );
   }
 }

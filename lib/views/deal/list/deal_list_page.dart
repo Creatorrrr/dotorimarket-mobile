@@ -55,7 +55,9 @@ class DealListPage extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
       ),
-      viewModel: DealViewModel(),
+      viewModels: [
+        DealViewModel(),
+      ],
     );
   }
 }

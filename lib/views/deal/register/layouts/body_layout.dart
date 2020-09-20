@@ -1,18 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotorimarket/dtos/category/category_dto.dart';
+import 'package:dotorimarket/viewmodels/category_view_model.dart';
 import 'package:dotorimarket/views/common/widgets/permission_setting_dialog.dart';
+import 'package:dotorimarket/views/common/formatters/currency_formatter.dart';
 import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
-import 'package:dotorimarket/views/deal/register/widgets/deal_register_button.dart';
-import 'package:dotorimarket/views/deal/register/widgets/deal_register_dropdown_field.dart';
-import 'package:dotorimarket/views/deal/register/widgets/picture_preview.dart';
-import 'package:dotorimarket/views/deal/register/widgets/picture_selection.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_bottom_button.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_dropdown_button_form_field.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_dropdown_menu_item.dart';
+import 'package:dotorimarket/views/deal/common/widgets/picture_preview.dart';
+import 'package:dotorimarket/views/deal/common/widgets/picture_selection.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotorimarket/dtos/deal/deal_post_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/deal/register/widgets/deal_register_text_field.dart';
+import 'package:dotorimarket/views/deal/common/widgets/deal_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -39,22 +43,26 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String CATEGORY_HINT_TEXT = '카테고리';
   static const String PRICE_HINT_TEXT = '₩ 가격';
   static const String DESCRIPTION_HINT_TEXT = '판매할 상품의 설명을 작성해주세요';
+  static const String BOTTOM_BUTTON_TEXT = '등록하기';
   static const String CONFIRM_DIALOG_TITLE = '등록하시겠습니까?';
   static const String CONFIRM_DIALOG_CANCEL = '취소';
   static const String CONFIRM_DIALOG_REGISTER = '등록하기';
   static const String CAMERA_PERMISSION_DIALOG_TITLE = '카메라 접근 권한이 필요합니다';
   static const String GALLERY_PERMISSION_DIALOG_TITLE = '갤러리 접근 권한이 필요합니다';
 
-
   final TextEditingController titleTextEditingController = TextEditingController();
   final TextEditingController categoryTextEditingController = TextEditingController();
   final TextEditingController priceTextEditingController = TextEditingController();
   final TextEditingController descriptionTextEditingController = TextEditingController();
 
+  List<CategoryDto> categories = [];
+  CategoryDto selectedCategory;
   List<File> pictureList = [];
 
   @override
   Widget build(BuildContext context) {
+    final CategoryViewModel categoryViewModel = ViewModelProvider.of<CategoryViewModel>(context);
+
     return Container(
       child: Stack(
         children: [
@@ -64,61 +72,63 @@ class _BodyLayoutState extends State<BodyLayout> {
                 child: Column(
                   children: [
                     Container(
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        children: List<Container>.generate(pictureList.length + 1, (index) {
-                          if (index == 0) {
-                            return Container(
-                              child: PictureSelection(
-                                height: PICTURE_SELECTION_SIZE,
-                                width: PICTURE_SELECTION_SIZE,
-                                onPressed: () async {
-                                  // 사진 선택 모달 열기
-                                  _openPictureSelectionModal();
-                                },
-                              ),
-                              margin: const EdgeInsets.only(
-                                top: PICTURE_SELECTION_TOP_MARGIN + PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
-                                right: PICTURE_PREVIEW_RIGHT_MARGIN + PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
-                              ),
-                            );
-                          } else {
-                            int pictureIndex = index - 1;
-
-                            return Container(
-                              child: PicturePreview(
-                                image: Image.file(pictureList[pictureIndex],
-                                  fit: BoxFit.cover,
-                                ),
-                                height: PICTURE_SELECTION_SIZE,
-                                width: PICTURE_SELECTION_SIZE,
-                                closeButtonOverflowSize: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
-                                onPressed: () {
-                                  // 이미지 제거
-                                  setState(() {
-                                    pictureList.removeAt(pictureIndex);
-                                  });
-                                },
-                              ),
-                              margin: const EdgeInsets.only(
-                                top: PICTURE_SELECTION_TOP_MARGIN,
-                                right: PICTURE_PREVIEW_RIGHT_MARGIN,
-                              ),
-                            );
-                          }
-                        }),
+                      child: Row(
+                        children: [
+                          Container(
+                            child: PictureSelection(
+                              height: PICTURE_SELECTION_SIZE,
+                              width: PICTURE_SELECTION_SIZE,
+                              onPressed: () async {
+                                // 사진 선택 모달 열기
+                                _openPictureSelectionModal();
+                              },
+                            ),
+                            margin: const EdgeInsets.only(
+                              top: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                              right: PICTURE_PREVIEW_RIGHT_MARGIN + PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  child: PicturePreview(
+                                    image: Image.file(pictureList[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                    height: PICTURE_SELECTION_SIZE,
+                                    width: PICTURE_SELECTION_SIZE,
+                                    closeButtonOverflowSize: PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
+                                    onPressed: () {
+                                      // 이미지 제거
+                                      setState(() {
+                                        pictureList.removeAt(index);
+                                      });
+                                    },
+                                  ),
+                                  margin: const EdgeInsets.only(
+                                    right: PICTURE_PREVIEW_RIGHT_MARGIN,
+                                  ),
+                                );
+                              },
+                              itemCount: pictureList.length,
+                            ),
+                          ),
+                        ],
                       ),
+                      height: PICTURE_SELECTION_SIZE + PICTURE_PREVIEW_CLOSE_BUTTON_OVERFLOW_SIZE,
                       alignment: Alignment.centerLeft,
-                      // margin: const EdgeInsets.only(
-                      //   top: PICTURE_SELECTION_TOP_MARGIN,
-                      // ),
+                      margin: const EdgeInsets.only(
+                        top: PICTURE_SELECTION_TOP_MARGIN,
+                      ),
                       padding: const EdgeInsets.only(
                         left: HORIZONTAL_PADDING,
                         right: HORIZONTAL_PADDING,
                       ),
                     ),
                     Container(
-                      child: DealRegisterTextField(
+                      child: DealTextField(
                         controller: titleTextEditingController,
                         hintText: GOOD_NAME_HINT_TEXT,
                       ),
@@ -129,24 +139,43 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterDropdownField(
-                        items: [
-                          DropdownMenuItem(
-                            child: Text('카테고리1'),
-                            value: 1,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('카테고리2'),
-                            value: 2,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('카테고리3'),
-                            value: 3,
-                          ),
-                        ],
-                        hintText: CATEGORY_HINT_TEXT,
-                        onChanged: (value) {
+                      child: FutureBuilder(
+                        future: categoryViewModel.getCategoryList("", "", "", "", "", context),
+                        builder: (BuildContext context, AsyncSnapshot<List<CategoryDto>> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return Center(
+                                child: Text('Awaiting result...'),
+                              );
+                            case ConnectionState.waiting:
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              // 에러 발생 시 에러메시지 표시
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              }
 
+                              // 데이터가 존재할 경우에만 세팅
+                              if (snapshot.data != null && snapshot.data.length > 0) {
+                                categories.clear();
+                                categories.addAll(snapshot.data);
+                              }
+
+                              return DealDropdownButtonFormField(
+                                hintText: CATEGORY_HINT_TEXT,
+                                items: List.generate(categories.length, (index) => DealDropdownMenuItem(
+                                  text: categories[index].name,
+                                  value: categories[index],
+                                )),
+                                onChanged: (CategoryDto categoryDto) {
+                                  selectedCategory = categoryDto;
+                                },
+                              );
+                            default:
+                              return null;
+                          }
                         },
                       ),
                       padding: const EdgeInsets.only(
@@ -156,12 +185,12 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterTextField(
+                      child: DealTextField(
                         controller: priceTextEditingController,
                         hintText: PRICE_HINT_TEXT,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          _CurrencyFormat(),
+                          CurrencyFormatter(),
                         ],
                       ),
                       padding: const EdgeInsets.only(
@@ -171,7 +200,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: DealRegisterTextField(
+                      child: DealTextField(
                         controller: descriptionTextEditingController,
                         hintText: DESCRIPTION_HINT_TEXT,
                         keyboardType: TextInputType.multiline,
@@ -194,7 +223,8 @@ class _BodyLayoutState extends State<BodyLayout> {
           ),
           Positioned(
             child: Container(
-              child: DealRegisterButton(
+              child: DealBottomButton(
+                text: BOTTOM_BUTTON_TEXT,
                 onPressed: () {
                   _onRegisterPressed(context);
                 },
@@ -397,36 +427,6 @@ class _BodyLayoutState extends State<BodyLayout> {
                 }
             );
           }
-      );
-    }
-  }
-}
-
-/// 원화 단위 표시 Formatter
-class _CurrencyFormat extends TextInputFormatter {
-  static const int VALUE_LENGTH_LIMIT = 14;
-  static const String WON = '₩';
-
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.length > VALUE_LENGTH_LIMIT) return oldValue;
-
-    if (newValue.text.trim() == WON) {
-      return newValue.copyWith(text: '');
-    } else {
-      final currencyNumberFormat = new NumberFormat.currency(
-        decimalDigits: 0,
-        symbol: '$WON ',
-      );
-
-      int num = int.parse(newValue.text.replaceAll(RegExp(r'[^\d]'), ''));
-      final newString = currencyNumberFormat.format(num);
-
-      return TextEditingValue(
-        selection: TextSelection.fromPosition(TextPosition(
-          offset: newString.length,
-        )),
-        text: newString
       );
     }
   }

@@ -22,6 +22,7 @@ class GoodProfileLayout extends StatelessWidget {
   final int price;
   final String creatorName;
   final String description;
+  final ScrollController scrollController;
 
   GoodProfileLayout({
     Key key,
@@ -30,6 +31,7 @@ class GoodProfileLayout extends StatelessWidget {
     @required this.price,
     @required this.creatorName,
     this.description,
+    @required this.scrollController,
   }): super(key: key);
 
   @override
@@ -118,15 +120,22 @@ class GoodProfileLayout extends StatelessWidget {
             ),
           ),
           Divider(),
-          Container(
-            child: Text(
-              this.description ?? '',
-              overflow: TextOverflow.ellipsis,
-            ),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: DESCRIPTION_VERTICAL_PADDING,
-              horizontal: HORIZONTAL_PADDING,
+          Expanded(
+            child: Container(
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Container(
+                  child: Text(
+                    this.description ?? '',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  alignment: Alignment.centerLeft,
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: DESCRIPTION_VERTICAL_PADDING,
+                horizontal: HORIZONTAL_PADDING,
+              ),
             ),
           ),
         ],

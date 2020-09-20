@@ -11,22 +11,28 @@ class BodyLayout extends StatefulWidget {
   }):super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BodyLayoutState();
+  State<StatefulWidget> createState() => _BodyLayoutState();
 }
 
-class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMixin {
+class _BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMixin {
   static const String TAB_ALL = '전체';
   static const String TAB_BEST = '베스트';
 
   TabController tabController;
 
-  @override
-  void initState() {
-    super.initState();
+  /// state 초기화
+  void _init() {
     tabController = TabController(
       length: 2,
       vsync: this,
     );
+  }
+
+  @override
+  void initState() {
+    _init();
+
+    super.initState();
   }
 
   @override

@@ -12,22 +12,27 @@ class FooterLayout extends StatefulWidget {
   }):super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _FooterLayoutState(height);
+  State<StatefulWidget> createState() => _FooterLayoutState();
 }
 
 class _FooterLayoutState extends State<FooterLayout> {
   static const double PADDING_DEFAULT = 10.0;
   static const double CHAT_BUTTON_LEFT_PADDING = 5.0;
 
-  final double height;
+  double height;
 
   bool favorite;
 
-  _FooterLayoutState(this.height);
+  /// state 초기화
+  void _init() {
+    height = widget.height;
+    favorite = false;
+  }
 
   @override
   void initState() {
-    favorite = false;
+    _init();
+
     super.initState();
   }
 

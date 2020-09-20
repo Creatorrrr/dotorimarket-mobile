@@ -47,7 +47,9 @@ class DealModifyPage extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
       ),
-      viewModel: DealViewModel(),
+      viewModels: [
+        DealViewModel(),
+      ],
     );
   }
 }
