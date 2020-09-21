@@ -13,7 +13,7 @@ class ChatListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(
-        builder: (context) {
+        builder: (BuildContext context) {
           return SafeArea(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -26,7 +26,6 @@ class ChatListPage extends StatelessWidget {
                     right: 0.0,
                     child: HeaderLayout(
                       height: HEADER_TOP_HEIGHT,
-                      title: '채팅',
                     ),
                   ),
                   Positioned(
@@ -51,6 +50,7 @@ class ChatListPage extends StatelessWidget {
           );
         },
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

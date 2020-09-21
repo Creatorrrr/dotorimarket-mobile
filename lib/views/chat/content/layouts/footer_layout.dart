@@ -1,7 +1,7 @@
 import 'package:dotorimarket/views/chat/content/widgets/chat_content_input_text_field.dart';
 import 'package:flutter/material.dart';
 
-class ChatInputLayout extends StatelessWidget {
+class FooterLayout extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 50.0;
   static const double HORIZONTAL_PADDING = 15.0;
   static const String MENU_ITEM_HOME = '홈';
@@ -13,7 +13,7 @@ class ChatInputLayout extends StatelessWidget {
   final double height;
   final TextEditingController controller;
 
-  ChatInputLayout({
+  FooterLayout({
     Key key,
     this.height = HEIGHT_DEFAULT,
     @required this.controller,

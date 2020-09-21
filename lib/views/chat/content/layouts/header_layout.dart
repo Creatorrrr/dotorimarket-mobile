@@ -1,19 +1,20 @@
 import 'package:dotorimarket/views/chat/content/widgets/header_title.dart';
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
-  static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 10.0;
+  static const double HEIGHT_DEFAULT = 50.0;
+  static const double HEADER_TITLE_LEFT_PADDING = 15.0;
+  static const double HEADER_BOTTOM_BORDER_WIDTH = 1.0;
 
   final double height;
-  final String logoPath;
+  final String text;
 
   HeaderLayout({
     Key key,
-    this.height = HEADER_TOP_HEIGHT_DEFAULT,
-    @required this.logoPath,
+    this.height = HEIGHT_DEFAULT,
+    @required this.text,
   }):super(key: key);
 
   @override
@@ -33,13 +34,7 @@ class HeaderLayout extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              child: HeaderTitle(
-                title: '을지로짱',
-                time: 10,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: HEADER_ROW_PADDING,
-              ),
+              child: HeaderTitleText(text),
             ),
           ),
           Container(
@@ -48,9 +43,6 @@ class HeaderLayout extends StatelessWidget {
               onPressed: () {
 
               },
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: HEADER_ROW_PADDING,
             ),
           ),
         ],

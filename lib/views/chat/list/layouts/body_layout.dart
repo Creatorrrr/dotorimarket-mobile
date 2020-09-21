@@ -12,7 +12,6 @@ class BodyLayout extends StatelessWidget {
             child: ChatListItem(
               nickName: '도토리',
               description: '안녕하세요! 아이패드 사고 싶어요!',
-              place: '페럼타워',
               time: '7월 15일 17시',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
@@ -22,13 +21,18 @@ class BodyLayout extends StatelessWidget {
                 ));
               },
             ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 5.0,
+              horizontal: 15.0,
+            ),
           ),
-          Divider(),
+          Divider(
+            height: 0.0,
+          ),
           Container(
             child: ChatListItem(
               nickName: '도토리',
               description: '안녕하세요! 아이패드 사고 싶어요!',
-              place: '페럼타워',
               time: '7월 15일 17시',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
@@ -38,8 +42,14 @@ class BodyLayout extends StatelessWidget {
                 ));
               },
             ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 5.0,
+              horizontal: 15.0,
+            ),
           ),
-          Divider(),
+          Divider(
+            height: 0.0,
+          ),
         ],
       ),
     );

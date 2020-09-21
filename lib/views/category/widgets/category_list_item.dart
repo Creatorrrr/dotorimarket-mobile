@@ -1,46 +1,49 @@
 import 'package:flutter/material.dart';
 
 class CategoryListItem extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
+  static const double VERTICAL_PADDING = 15.0;
+  static const double TEXT_FONT_SIZE = 16.0;
+  static const double TEXT_LEFT_PADDING = 15.0;
 
-  final String title;
+  final String text;
+  final Function onPressed;
 
   CategoryListItem({
     Key key,
-    @required this.title,
+    @required this.text,
+    @required this.onPressed,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ClipRRect(
-              child: Image.asset(
-                THUMBNAIL_PATH,
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-          ),
-          Container(
-            child: Text(
-              this.title,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+    return InkWell(
+      child: Container(
+        child: Row(
+          children: [
+            Container(
+              child: Icon(Icons.circle,
+                color: Colors.black26,
               ),
             ),
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(
-              top: 10.0,
+            Expanded(
+                child: Container(
+                  child: Text(text,
+                    style: const TextStyle(
+                      fontSize: TEXT_FONT_SIZE,
+                    ),
+                  ),
+                  padding: const EdgeInsets.only(
+                    left: TEXT_LEFT_PADDING,
+                  ),
+                )
             ),
-          ),
-        ],
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: VERTICAL_PADDING,
+        ),
       ),
+      onTap: onPressed,
     );
   }
 }

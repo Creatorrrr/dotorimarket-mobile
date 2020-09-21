@@ -1,74 +1,64 @@
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:dotorimarket/views/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
-  static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 10.0;
+  static const double HEIGHT_DEFAULT = 50.0;
+  static const double HEADER_TITLE_LEFT_PADDING = 15.0;
+  static const double HEADER_BOTTOM_BORDER_WIDTH = 1.0;
 
-  static const String HEADER_TITLE_TEXT = '나의 도토리';
+  static const String HEADER_TEXT = '마이 페이지';
 
   final double height;
 
   HeaderLayout({
     Key key,
-    this.height = HEADER_TOP_HEIGHT_DEFAULT,
+    this.height = HEIGHT_DEFAULT,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ),
-          Expanded(
+      child: Stack(
+        children: [
+          Positioned(
             child: Container(
-              child: Text(
-                HEADER_TITLE_TEXT,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              height: this.height,
+              child: HeaderTitleText(HEADER_TEXT),
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.only(
-                left: 10.0,
+                left: HEADER_TITLE_LEFT_PADDING,
               ),
             ),
           ),
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.more_horiz),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return SettingPage();
-                    }
-                ));
-              },
+          Positioned(
+            child: Row(
+              children: [
+                Container(
+                  child: HeaderIconButton(
+                    icon: Icon(Icons.more_horiz),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (context) {
+                          return SettingPage();
+                        }
+                      ));
+                    },
+                  ),
+                ),
+              ],
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: HEADER_ROW_PADDING,
-            ),
+            top: 0.0,
+            bottom: 0.0,
+            right: 0.0,
           ),
         ],
       ),
-      height: this.height,
+      height: height,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            width: 1.0,
+            width: HEADER_BOTTOM_BORDER_WIDTH,
             color: Colors.black12,
           ),
         ),

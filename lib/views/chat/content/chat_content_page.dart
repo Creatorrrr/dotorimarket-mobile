@@ -1,4 +1,4 @@
-import 'package:dotorimarket/views/chat/content/layouts/chat_input_layout.dart';
+import 'package:dotorimarket/views/chat/content/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/chat/content/layouts/header_layout.dart';
 import 'package:dotorimarket/views/chat/content/layouts/body_layout.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class ChatContentPage extends StatelessWidget {
                       right: 0.0,
                       child: HeaderLayout(
                         height: HEADER_TOP_HEIGHT,
-                        logoPath: HEADER_LOGO_PATH,
+                        text: '닉네임',
                       ),
                     ),
                     Positioned(
@@ -43,7 +43,7 @@ class ChatContentPage extends StatelessWidget {
                       bottom: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: ChatInputLayout(
+                      child: FooterLayout(
                         height: TAB_BOTTOM_HEIGHT,
                         controller: controller,
                       ),

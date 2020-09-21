@@ -1,75 +1,67 @@
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
-  static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 10.0;
+  static const double HEIGHT_DEFAULT = 50.0;
+  static const double HEADER_TITLE_LEFT_PADDING = 15.0;
+  static const double HEADER_BOTTOM_BORDER_WIDTH = 1.0;
 
-  static const String HEADER_HINT_TEXT = '어떤 상품이 궁금하세요?';
+  static const String HEADER_TEXT = '카테고리';
 
   final double height;
-  final TextEditingController controller;
 
   HeaderLayout({
     Key key,
-    this.height = HEADER_TOP_HEIGHT_DEFAULT,
-    @required this.controller,
+    this.height = HEIGHT_DEFAULT,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ),
-          Expanded(
+      child: Stack(
+        children: [
+          Positioned(
             child: Container(
-              child: TextField(
-                controller: this.controller,
-                decoration: InputDecoration(
-                  hintText: HEADER_HINT_TEXT,
-                  hintStyle: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black54
-                  ),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(10.0),
-                ),
-              )
+              child: HeaderTitleText(HEADER_TEXT),
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(
+                left: HEADER_TITLE_LEFT_PADDING,
+              ),
             ),
           ),
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
+          Positioned(
+            child: Row(
+              children: [
+                Container(
+                  child: HeaderIconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
 
-              },
+                    },
+                  ),
+                ),
+                Container(
+                  child: HeaderIconButton(
+                    icon: Icon(Icons.notifications_none),
+                    onPressed: () {
+
+                    },
+                  ),
+                ),
+              ],
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: HEADER_ROW_PADDING,
-            ),
+            top: 0.0,
+            bottom: 0.0,
+            right: 0.0,
           ),
         ],
       ),
-      height: this.height,
+      height: height,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            width: 1.0,
+            width: HEADER_BOTTOM_BORDER_WIDTH,
             color: Colors.black12,
           ),
         ),
