@@ -1,6 +1,7 @@
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/good_profile_layout.dart';
 import 'package:dotorimarket/views/deal/detail/widgets/main_image.dart';
 import 'package:flutter/material.dart';
@@ -67,45 +68,17 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Container(
-                          child: FutureBuilder(
+                          child: CheckedFutureBuilder(
                             future: dealViewModel.getDealOne(dealId, context),
                             builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return Center(
-                                    child: Text('Awaiting result...'),
-                                  );
-                                case ConnectionState.waiting:
-                                case ConnectionState.active:
-                                case ConnectionState.done:
-                                // 에러 발생 시 에러메시지 표시
-                                  if (snapshot.hasError) {
-                                    return Center(
-                                      child: Text('Error: ${snapshot.error}'),
-                                    );
-                                  }
-                                  // 결과값이 없을 경우 에러메시지 표시
-                                  if (snapshot.data == null) {
-                                    return Center(
-                                      child: Text('Error: 데이터가 없습니다'),
-                                    );
-                                  }
-
-                                  // 데이터 세팅
-                                  deal = snapshot.data;
-
-                                  // 위젯 리스트 그리기
-                                  return GoodProfileLayout(
-                                    category: '디지털/핸드폰 > 갤럭시 케이스',
-                                    title: deal.title,
-                                    price: deal.price,
-                                    creatorName: '레코더팩토리',
-                                    description: deal.description,
-                                    scrollController: scrollController,
-                                  );
-                                default:
-                                  return null;
-                              }
+                              return GoodProfileLayout(
+                                category: '디지털/핸드폰 > 갤럭시 케이스',
+                                title: deal.title,
+                                price: deal.price,
+                                creatorName: '레코더팩토리',
+                                description: deal.description,
+                                scrollController: scrollController,
+                              );
                             },
                           ),
                           decoration: const BoxDecoration(

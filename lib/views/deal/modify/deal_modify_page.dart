@@ -1,3 +1,4 @@
+import 'package:dotorimarket/viewmodels/category_view_model.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/modify/layouts/body_layout.dart';
@@ -48,6 +49,7 @@ class DealModifyPage extends StatelessWidget {
         },
       ),
       viewModels: [
+        CategoryViewModel(),
         DealViewModel(),
       ],
     );

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dotorimarket/dtos/category/category_dto.dart';
 import 'package:dotorimarket/viewmodels/category_view_model.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/common/widgets/permission_setting_dialog.dart';
 import 'package:dotorimarket/views/common/formatters/currency_formatter.dart';
 import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
@@ -54,7 +55,6 @@ class _BodyLayoutState extends State<BodyLayout> {
   final TextEditingController priceTextEditingController = TextEditingController();
   final TextEditingController descriptionTextEditingController = TextEditingController();
 
-  List<CategoryDto> categories = [];
   CategoryDto selectedCategory;
   List<File> pictureList = [];
 
@@ -138,43 +138,19 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                     ),
                     Container(
-                      child: FutureBuilder(
+                      child: CheckedFutureBuilder(
                         future: categoryViewModel.getCategoryList("", "", "", "", "", context),
                         builder: (BuildContext context, AsyncSnapshot<List<CategoryDto>> snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return Center(
-                                child: Text('Awaiting result...'),
-                              );
-                            case ConnectionState.waiting:
-                            case ConnectionState.active:
-                            case ConnectionState.done:
-                            // 에러 발생 시 에러메시지 표시
-                              if (snapshot.hasError) {
-                                return Center(
-                                  child: Text('Error: ${snapshot.error}'),
-                                );
-                              }
-
-                              // 데이터가 존재할 경우에만 세팅
-                              if (snapshot.data != null && snapshot.data.length > 0) {
-                                categories.clear();
-                                categories.addAll(snapshot.data);
-                              }
-
-                              return DealDropdownButtonFormField(
-                                hintText: CATEGORY_HINT_TEXT,
-                                items: List.generate(categories.length, (index) => DealDropdownMenuItem(
-                                  text: categories[index].name,
-                                  value: categories[index],
-                                )),
-                                onChanged: (CategoryDto categoryDto) {
-                                  selectedCategory = categoryDto;
-                                },
-                              );
-                            default:
-                              return null;
-                          }
+                          return DealDropdownButtonFormField(
+                            hintText: CATEGORY_HINT_TEXT,
+                            items: List.generate(snapshot.data.length, (index) => DealDropdownMenuItem(
+                              text: snapshot.data[index].name,
+                              value: snapshot.data[index],
+                            )),
+                            onChanged: (CategoryDto categoryDto) {
+                              selectedCategory = categoryDto;
+                            },
+                          );
                         },
                       ),
                       padding: const EdgeInsets.only(
