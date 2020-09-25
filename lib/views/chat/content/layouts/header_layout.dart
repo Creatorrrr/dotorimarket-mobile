@@ -1,4 +1,3 @@
-import 'package:dotorimarket/views/chat/content/widgets/header_title.dart';
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
 import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +37,29 @@ class HeaderLayout extends StatelessWidget {
             ),
           ),
           Container(
-            child: HeaderIconButton(
+            child: PopupMenuButton(
               icon: Icon(Icons.more_horiz),
-              onPressed: () {
+              onSelected: (value) {
 
               },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                const PopupMenuItem(
+                  value: 1,
+                  child: Text('신고하기'),
+                ),
+                const PopupMenuItem(
+                  value: 2,
+                  child: Text('알림끄기'),
+                ),
+                const PopupMenuItem(
+                  value: 3,
+                  child: Text('중요 채팅방으로 표시'),
+                ),
+                const PopupMenuItem(
+                  value: 4,
+                  child: Text('채팅방 나가기'),
+                ),
+              ],
             ),
           ),
         ],
@@ -51,7 +68,7 @@ class HeaderLayout extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            width: 1.0,
+            width: HEADER_BOTTOM_BORDER_WIDTH,
             color: Colors.black12,
           ),
         ),

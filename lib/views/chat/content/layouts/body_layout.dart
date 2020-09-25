@@ -1,7 +1,8 @@
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/chat/content/layouts/deal_profile_layout.dart';
-import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_item.dart';
+import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_left_item.dart';
+import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_right_item.dart';
 import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_time.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
@@ -12,7 +13,7 @@ class BodyLayout extends StatelessWidget {
   static const double DEAL_PROFILE_VERTICAL_PADDING = 15.0;
   static const double DEAL_PROFILE_HORIZONTAL_PADDING = 15.0;
   static const double CHAT_CONTENT_ITEM_VERTICAL_PADDING = 10.0;
-  static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 10.0;
+  static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 15.0;
 
   final int dealId;
 
@@ -52,47 +53,52 @@ class BodyLayout extends StatelessWidget {
             height: 0.0,
           ),
           Container(
-            child: ChatContentListItem(
-              mode: ChatContentListItem.MESSAGE_LEFT,
-              image: AssetImage(THUMBNAIL_PATH),
-              content: 'test',
+            child: Column(
+              children: [
+                Container(
+                  child: ChatContentListRightItem(
+                    text: 'test\nasfgasdfasdf\nsfda',
+                    time: '16:23',
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                  ),
+                ),
+                Container(
+                  child: ChatContentListLeftItem(
+                    image: AssetImage(THUMBNAIL_PATH),
+                    text: 'test',
+                    time: '16:23',
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                  ),
+                ),
+                Container(
+                  child: ChatContentListRightItem(
+                    text: 'test',
+                    time: '16:23',
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                  ),
+                ),
+                Container(
+                  child: ChatContentListLeftItem(
+                    image: AssetImage(THUMBNAIL_PATH),
+                    text: 'test',
+                    time: '16:23',
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                  ),
+                ),
+              ],
             ),
             padding: const EdgeInsets.symmetric(
-              vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
               horizontal: CHAT_CONTENT_ITEM_HORIZONTAL_PADDING,
             ),
-          ),
-          Container(
-            child: ChatContentListTime(
-              time: '16:57',
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-              horizontal: CHAT_CONTENT_ITEM_HORIZONTAL_PADDING,
-            ),
-          ),
-          Container(
-            child: ChatContentListItem(
-              mode: ChatContentListItem.MESSAGE_RIGHT,
-              image: AssetImage(THUMBNAIL_PATH),
-              content: 'test',
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-              horizontal: CHAT_CONTENT_ITEM_HORIZONTAL_PADDING,
-            ),
-          ),
-          Container(
-            child: ChatContentListItem(
-              mode: ChatContentListItem.MESSAGE_RIGHT,
-              image: AssetImage(THUMBNAIL_PATH),
-              content: 'test',
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-              horizontal: CHAT_CONTENT_ITEM_HORIZONTAL_PADDING,
-            ),
-          ),
+          )
         ],
       ),
       decoration: BoxDecoration(
