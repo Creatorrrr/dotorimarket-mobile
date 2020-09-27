@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dotorimarket/configs/http_config.dart';
+import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
+import 'package:dotorimarket/views/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -189,8 +191,12 @@ class HttpUtil {
         }
       );
 
-      Scaffold.of(context).removeCurrentSnackBar();
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('업데이트 후 사용하실 수 있습니다')));
+      Navigator.pushReplacement(context, PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+          => LoginPage(
+            showUpdateMessage: true,
+          ),
+      ));
     }
   }
 

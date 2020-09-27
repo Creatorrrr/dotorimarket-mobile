@@ -1,6 +1,8 @@
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/login/login_page.dart';
 import 'package:dotorimarket/views/setting/widgets/setting_button.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 class BodyLayout extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
@@ -53,11 +55,15 @@ class BodyLayout extends StatelessWidget {
             height: 30.0,
           ),
           Container(
-            child: Text(
-              VERSION_PREFIX_TEXT + ' ' + '1.1.1',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+            child: CheckedFutureBuilder(
+              future: PackageInfo.fromPlatform(),
+              builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+                return Text('$VERSION_PREFIX_TEXT ${snapshot.data.version}',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                );
+              },
             ),
             padding: const EdgeInsets.symmetric(
               vertical: SETTING_ITEM_VERTICAL_PADDING,
