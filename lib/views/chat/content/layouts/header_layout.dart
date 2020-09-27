@@ -19,52 +19,66 @@ class HeaderLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ),
-          Expanded(
-            child: Container(
-              child: HeaderTitleText(text),
-            ),
-          ),
-          Container(
-            child: PopupMenuButton(
-              icon: Icon(Icons.more_horiz),
-              onSelected: (value) {
-
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                const PopupMenuItem(
-                  value: 1,
-                  child: Text('신고하기'),
+      child: Stack(
+        children: [
+          Positioned(
+            child: Row(
+              children: [
+                Container(
+                  child: HeaderIconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  ),
                 ),
-                const PopupMenuItem(
-                  value: 2,
-                  child: Text('알림끄기'),
-                ),
-                const PopupMenuItem(
-                  value: 3,
-                  child: Text('중요 채팅방으로 표시'),
-                ),
-                const PopupMenuItem(
-                  value: 4,
-                  child: Text('채팅방 나가기'),
+                Container(
+                  child: HeaderTitleText(text),
+                  alignment: Alignment.centerLeft,
                 ),
               ],
             ),
           ),
+          Positioned(
+            child: Row(
+              children: [
+                Container(
+                  child: PopupMenuButton(
+                    icon: Icon(Icons.more_horiz),
+                    onSelected: (value) {
+
+                    },
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      const PopupMenuItem(
+                        value: 1,
+                        child: Text('신고하기'),
+                      ),
+                      const PopupMenuItem(
+                        value: 2,
+                        child: Text('알림끄기'),
+                      ),
+                      const PopupMenuItem(
+                        value: 3,
+                        child: Text('중요 채팅방으로 표시'),
+                      ),
+                      const PopupMenuItem(
+                        value: 4,
+                        child: Text('채팅방 나가기'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            top: 0.0,
+            bottom: 0.0,
+            right: 0.0,
+          ),
         ],
       ),
-      height: this.height,
+      height: height,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(

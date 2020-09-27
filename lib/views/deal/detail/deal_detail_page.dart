@@ -1,4 +1,5 @@
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
+import 'package:dotorimarket/viewmodels/view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/body_layout.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/footer_layout.dart';
@@ -63,7 +64,7 @@ class DealDetailPage extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
       ),
-      viewModels: [
+      viewModels: <ViewModel>[
         DealViewModel(),
       ],
     );
