@@ -1,27 +1,8 @@
 import 'package:flutter/material.dart';
 
-class NoticeListHeaderItem extends StatefulWidget {
+class NoticeListHeaderItem extends StatelessWidget {
   static const bool IS_EXPANDED_DEFAULT = false;
 
-  final String title;
-  final String type;
-  final String time;
-  final bool isExpanded;
-  final void Function(bool isExpanded) onPressed;
-
-  NoticeListHeaderItem({
-    Key key,
-    @required this.title,
-    @required this.type,
-    @required this.time,
-    this.isExpanded = IS_EXPANDED_DEFAULT,
-    this.onPressed,
-  }):super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _NoticeListHeaderItemState();
-}
-class _NoticeListHeaderItemState extends State<NoticeListHeaderItem> {
   static const double TITLE_FONT_SIZE = 16.0;
   static const double TYPE_FONT_SIZE = 14.0;
   static const double TIME_FONT_SIZE = 14.0;
@@ -34,13 +15,20 @@ class _NoticeListHeaderItemState extends State<NoticeListHeaderItem> {
 
   static const String TYPE_TIME_SEPARATOR = '|';
 
-  bool isExpanded;
+  final String title;
+  final String type;
+  final String time;
+  final bool isExpanded;
+  final void Function() onPressed;
 
-  @override
-  void initState() {
-    isExpanded = widget.isExpanded;
-    super.initState();
-  }
+  NoticeListHeaderItem({
+    Key key,
+    @required this.title,
+    @required this.type,
+    @required this.time,
+    this.isExpanded = IS_EXPANDED_DEFAULT,
+    this.onPressed,
+  }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +40,9 @@ class _NoticeListHeaderItemState extends State<NoticeListHeaderItem> {
               child: Column(
                 children: [
                   Container(
-                    child: Text(widget.title,
+                    child: Text(title,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: TITLE_FONT_SIZE,
                       ),
                     ),
@@ -64,8 +52,8 @@ class _NoticeListHeaderItemState extends State<NoticeListHeaderItem> {
                     child: Row(
                       children: [
                         Container(
-                          child: Text(widget.type,
-                            style: TextStyle(
+                          child: Text(type,
+                            style: const TextStyle(
                               fontSize: TYPE_FONT_SIZE,
                               color: TYPE_COLOR,
                             ),
@@ -84,8 +72,8 @@ class _NoticeListHeaderItemState extends State<NoticeListHeaderItem> {
                           ),
                         ),
                         Container(
-                          child: Text(widget.time,
-                            style: TextStyle(
+                          child: Text(time,
+                            style: const TextStyle(
                               fontSize: TIME_FONT_SIZE,
                               color: TIME_COLOR,
                             ),
@@ -106,12 +94,7 @@ class _NoticeListHeaderItemState extends State<NoticeListHeaderItem> {
           Container(
             child: IconButton(
               icon: Icon(isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
-              onPressed: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                });
-                if (widget.onPressed != null) widget.onPressed(isExpanded);
-              },
+              onPressed: onPressed,
             ),
           )
         ],

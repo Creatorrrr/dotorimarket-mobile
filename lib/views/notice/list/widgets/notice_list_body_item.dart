@@ -13,7 +13,9 @@ class NoticeListBodyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(content),
+      child: SingleChildScrollView(
+        child: Text(content),
+      ),
       alignment: Alignment.topLeft,
     );
   }

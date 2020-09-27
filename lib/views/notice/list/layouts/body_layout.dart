@@ -17,6 +17,9 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double BODY_ITEM_VERTICAL_PADDING = 15.0;
   static const double BODY_ITEM_HORIZONTAL_PADDING = 15.0;
   static const Color BODY_ITEM_BACKGROUND_COLOR = Color.fromRGBO(250, 250, 250, 1.0);
+  static const double BODY_ITEM_BOTTOM_WIDTH = 1.0;
+  static const int BODY_ITEM_ANIMATION_DURATION = 500;
+  static const double BODY_ITEM_HEIGHT = 250.0;
   static const double DIVIDER_HEIGHT = 0.0;
   static const double DIVIDER_THICKNESS = 1.0;
   static const Color DIVIDER_COLOR = Color.fromRGBO(216, 216, 216, 1.0);
@@ -31,13 +34,10 @@ class _BodyLayoutState extends State<BodyLayout> {
       child: CheckedFutureBuilder(
         future: noticeViewModel.getNoticeList("", "", "", "", "", context),
         builder: (BuildContext context, AsyncSnapshot<List<NoticeDto>> snapshot) {
-          return ListView.separated(
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              height: DIVIDER_HEIGHT,
-              thickness: DIVIDER_THICKNESS,
-              color: DIVIDER_COLOR,
-            ),
+          return ListView.builder(
             itemBuilder: (BuildContext context, int index) {
+              bool isExpanded = isExpandedMap[snapshot.data[index].noticeId] ?? false;
+
               return Container(
                 child: Column(
                   children: [
@@ -46,9 +46,10 @@ class _BodyLayoutState extends State<BodyLayout> {
                         title: snapshot.data[index].title,
                         type: snapshot.data[index].type,
                         time: snapshot.data[index].time,
-                        onPressed: (isExpanded) {
+                        isExpanded: isExpanded,
+                        onPressed: () {
                           setState(() {
-                            isExpandedMap[snapshot.data[index].noticeId] = isExpanded;
+                            isExpandedMap[snapshot.data[index].noticeId] = !isExpanded;
                           });
                         },
                       ),
@@ -62,16 +63,28 @@ class _BodyLayoutState extends State<BodyLayout> {
                       thickness: DIVIDER_THICKNESS,
                       color: DIVIDER_COLOR,
                     ),
-                    Container(
+                    AnimatedContainer(
+                      duration: Duration(
+                        milliseconds: BODY_ITEM_ANIMATION_DURATION,
+                      ),
+                      curve: Curves.fastOutSlowIn,
                       child: NoticeListBodyItem(
                         content: snapshot.data[index].content,
                       ),
-                      color: BODY_ITEM_BACKGROUND_COLOR,
+                      decoration: const BoxDecoration(
+                        color: BODY_ITEM_BACKGROUND_COLOR,
+                        border: Border(
+                          bottom: BorderSide(
+                            width: BODY_ITEM_BOTTOM_WIDTH,
+                            color: DIVIDER_COLOR,
+                          ),
+                        ),
+                      ),
                       padding: const EdgeInsets.symmetric(
                         vertical: BODY_ITEM_VERTICAL_PADDING,
                         horizontal: BODY_ITEM_HORIZONTAL_PADDING,
                       ),
-                      height: isExpandedMap[snapshot.data[index].noticeId] != null && isExpandedMap[snapshot.data[index].noticeId] ? null : 0.0,
+                      height: isExpanded ? BODY_ITEM_HEIGHT : 0.0,
                     ),
                   ],
                 ),

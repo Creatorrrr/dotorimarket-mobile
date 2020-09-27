@@ -33,7 +33,7 @@ class NoticeViewModel extends ViewModel {
         title: '디지털/가전',
         type: '서비스소식',
         time: '2020.08.11',
-        content: 'ㅁ니ㅏㅇ럼닝ㄹㄴㅁㅇㄹㅁㄴㄹㅁㄴ\n\n\asena\sdsn\asn\dnsan\dnnasdfas',
+        content: 'ㅁ니ㅏㅇ럼닝ㄹㄴㅁㅇㄹㅁㄴㄹㅁㄴ\n\n\asena\sdsn\asn\d\n\n\n\n\n\n\n\n\n\n\\n\nn\gs\fn\gfdn\dfgn\fdgndf\\n\nnsan\dnnasdfas',
       ),
       NoticeDto(
         noticeId: 2,
