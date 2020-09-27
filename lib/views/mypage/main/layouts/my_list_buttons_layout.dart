@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/mypage/favorite/favorite_list_page.dart';
 import 'package:dotorimarket/views/mypage/main/widgets/my_list_button.dart';
 import 'package:dotorimarket/views/mypage/purchase/purchase_list_page.dart';
@@ -36,6 +37,7 @@ class MyListButtonsLayout extends StatelessWidget {
             ),
             VerticalDivider(
               width: VERTICAL_DIVIDER_WIDTH,
+              color: ColorConstant.BACKGROUND_GREY,
             ),
             Expanded(
               child: Container(
@@ -52,6 +54,7 @@ class MyListButtonsLayout extends StatelessWidget {
             ),
             VerticalDivider(
               width: VERTICAL_DIVIDER_WIDTH,
+              color: ColorConstant.BACKGROUND_GREY,
             ),
             Expanded(
               child: Container(

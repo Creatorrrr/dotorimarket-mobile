@@ -1,8 +1,11 @@
 
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class LoginTextField extends StatelessWidget {
   static const bool AUTO_FOCUS_DEFAULT = false;
+  static const double VERTICAL_CONTENT_PADDING = 18.0;
+  static const double HORIZONTAL_CONTENT_PADDING = 12.0;
 
   final String labelText;
   final Icon icon;
@@ -27,7 +30,11 @@ class LoginTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: this.labelText,
-        icon: this.icon,
+        contentPadding: const  EdgeInsets.symmetric(
+          vertical: VERTICAL_CONTENT_PADDING,
+          horizontal: HORIZONTAL_CONTENT_PADDING,
+        ),
+        border: OutlineInputBorder(),
       ),
       autofocus: this.autoFocus,
       focusNode: this.focusNode ?? FocusNode(),

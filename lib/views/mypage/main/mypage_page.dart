@@ -49,6 +49,7 @@ class MyPagePage extends StatelessWidget {
           );
         },
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

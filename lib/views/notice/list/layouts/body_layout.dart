@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/notice/notice_dto.dart';
 import 'package:dotorimarket/viewmodels/notice_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -16,13 +17,13 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double HEADER_ITEM_HORIZONTAL_PADDING = 15.0;
   static const double BODY_ITEM_VERTICAL_PADDING = 15.0;
   static const double BODY_ITEM_HORIZONTAL_PADDING = 15.0;
-  static const Color BODY_ITEM_BACKGROUND_COLOR = Color.fromRGBO(250, 250, 250, 1.0);
+  static const Color BODY_ITEM_BACKGROUND_COLOR = ColorConstant.BACKGROUND_LIGHT_GREY;
   static const double BODY_ITEM_BOTTOM_WIDTH = 1.0;
   static const int BODY_ITEM_ANIMATION_DURATION = 500;
   static const double BODY_ITEM_HEIGHT = 250.0;
   static const double DIVIDER_HEIGHT = 0.0;
   static const double DIVIDER_THICKNESS = 1.0;
-  static const Color DIVIDER_COLOR = Color.fromRGBO(216, 216, 216, 1.0);
+  static const Color DIVIDER_COLOR = ColorConstant.BACKGROUND_GREY;
 
   Map<int, bool> isExpandedMap = {};
 

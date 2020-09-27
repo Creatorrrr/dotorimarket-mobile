@@ -16,8 +16,8 @@ class BodyTabBarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: TabBarView(
-        controller: this.tabController,
-        children: this.views,
+        controller: tabController,
+        children: views,
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: HORIZONTAL_PADDING,

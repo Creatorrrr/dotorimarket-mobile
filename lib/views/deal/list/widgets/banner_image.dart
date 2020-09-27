@@ -16,9 +16,8 @@ class BannerImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      child: Image.asset(
-        this.image,
-        height: this.height,
+      child: Image.asset(image,
+        height: height,
       ),
       borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
     );

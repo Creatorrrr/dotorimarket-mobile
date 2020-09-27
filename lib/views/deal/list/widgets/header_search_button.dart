@@ -32,17 +32,16 @@ class HeaderSearchButton extends StatelessWidget {
       height: this.height,
       child: FlatButton(
         child: Container(
-          child: Icon(
-            Icons.search,color:
-            this.iconColor,
+          child: Icon(Icons.search,
+            color: iconColor,
           ),
           alignment: Alignment.centerLeft,
         ),
-        color:  this.buttonColor,
+        color:  buttonColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(this.borderRadius),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
-        onPressed: this.onPressed,
+        onPressed: onPressed,
       ),
     );
   }

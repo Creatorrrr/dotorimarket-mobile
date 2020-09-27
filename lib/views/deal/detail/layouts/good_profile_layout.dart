@@ -1,10 +1,14 @@
+import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class GoodProfileLayout extends StatelessWidget {
+  static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
   static const String GOOD_IMAGE_PATH = 'assets/images/dotori-logo.png';
 
+  static const ImageProvider DEFAULT_PROFILE_IMAGE = AssetImage(DEFAULT_PROFILE_IMAGE_PATH);
   static const double HORIZONTAL_PADDING = 25.0;
   static const double CATEGORY_FONT_SIZE = 12.0;
   static const double CATEGORY_TOP_PADDING = 20.0;
@@ -48,7 +52,7 @@ class GoodProfileLayout extends StatelessWidget {
                   child: Text(category,
                     style: const TextStyle(
                       fontSize: CATEGORY_FONT_SIZE,
-                      color: Colors.black54,
+                      color: ColorConstant.TEXT_GREY,
                     ),
                   ),
                   padding: const EdgeInsets.only(
@@ -89,9 +93,8 @@ class GoodProfileLayout extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  child: const CircleAvatar(
-                    backgroundImage: const AssetImage(GOOD_IMAGE_PATH),
-                    backgroundColor: Colors.transparent,
+                  child: CircleImage(
+                    image: DEFAULT_PROFILE_IMAGE,
                     radius: CREATOR_IMAGE_RADIUS,
                   ),
                 ),

@@ -1,10 +1,11 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class ChatButton extends StatelessWidget {
   static const double CHAT_BUTTON_HEIGHT = 40.0;
   static const double CHAT_BUTTON_BORDER_RADIUS = 5.0;
 
-  static const Color BUTTON_BACKGROUND_COLOR = Color.fromRGBO(250, 187, 65, 1.0);
+  static const Color BUTTON_BACKGROUND_COLOR = ColorConstant.DEEP_YELLOW;
 
   static const String CHAT_BUTTON_TEXT = '채팅으로 거래하기';
 

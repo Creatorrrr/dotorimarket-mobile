@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
 import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 class HeaderLayout extends StatelessWidget {
   static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
   static const double HEADER_TEXT_SIZE = 16.0;
+  static const double BOTTOM_BORDER_WIDTH = 1.0;
 
   static const String HEADER_TEXT = '수정하기';
 
@@ -44,11 +46,12 @@ class HeaderLayout extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.black12,
-            width: 1.0,
+            color: ColorConstant.BACKGROUND_GREY,
+            width: BOTTOM_BORDER_WIDTH,
           ),
         ),
       ),
+      height: height,
     );
   }
 }

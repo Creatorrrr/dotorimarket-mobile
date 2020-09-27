@@ -1,7 +1,11 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
-  static const double HEIGHT_DEFAULT = 45.0;
+  static const double HEIGHT_DEFAULT = 50.0;
+  static const Color TEXT_COLOR_DEFAULT = Colors.white;
+  static const Color BUTTON_COLOR_DEFAULT = ColorConstant.DEEP_YELLOW;
+  static const Color BORDER_COLOR_DEFAULT = Colors.white;
   static const double BORDER_RADIUS_DEFAULT = 10.0;
   static const double FONT_SIZE_DEFAULT = 16.0;
 
@@ -18,9 +22,9 @@ class LoginButton extends StatelessWidget {
   LoginButton({
     Key key,
     @required this.text,
-    this.textColor = Colors.blue,
-    this.buttonColor = Colors.white,
-    this.borderColor = Colors.blue,
+    this.textColor = TEXT_COLOR_DEFAULT,
+    this.buttonColor = BUTTON_COLOR_DEFAULT,
+    this.borderColor = BORDER_COLOR_DEFAULT,
     this.fontSize = FONT_SIZE_DEFAULT,
     this.height = HEIGHT_DEFAULT,
     this.width = double.infinity,

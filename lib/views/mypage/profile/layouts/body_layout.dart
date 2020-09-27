@@ -1,12 +1,17 @@
-import 'package:dotorimarket/views/mypage/main/layouts/my_list_buttons_layout.dart';
-import 'package:dotorimarket/views/mypage/main/layouts/my_profile_layout.dart';
-import 'package:dotorimarket/views/mypage/main/layouts/text_buttons_layout.dart';
+import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
-  static const double PROFILE_IMAGE_RADIUS = 80.0;
-  static const double PROFILE_VERTICAL_PADDING = 20.0;
+  static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
+  static const String PICTURE_SELECTION_IMAGE_PATH = 'assets/images/picture-selection.png';
+
+  static const double PROFILE_IMAGE_RADIUS = 90.0;
+  static const ImageProvider DEFAULT_PROFILE_IMAGE = AssetImage(DEFAULT_PROFILE_IMAGE_PATH);
+  static const Color PICTURE_SELECTION_IMAGE_COLOR = ColorConstant.DEEP_YELLOW;
+  static const double PICTURE_SELECTION_RADIUS = 25.0;
+  static const double PICTURE_SELECTION_BORDER_WIDTH = 1.0;
+  static const double PROFILE_VERTICAL_PADDING = 50.0;
   static const double NICKNAME_LABEL_SIZE = 12.0;
   static const double NICKNAME_HINT_SIZE = 14.0;
   static const double NICKNAME_WIDTH = 200.0;
@@ -20,9 +25,32 @@ class BodyLayout extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            child: CircleAvatar(
-              backgroundImage: AssetImage(THUMBNAIL_PATH),
-              radius: PROFILE_IMAGE_RADIUS,
+            child: Stack(
+              children: [
+                CircleImage(
+                  image: DEFAULT_PROFILE_IMAGE,
+                  radius: PROFILE_IMAGE_RADIUS,
+                  border: Border.all(
+                    width: PICTURE_SELECTION_BORDER_WIDTH,
+                    color: ColorConstant.BACKGROUND_GREY,
+                  ),
+                ),
+                Positioned(
+                  child: CircleImage(
+                    child: Image.asset(PICTURE_SELECTION_IMAGE_PATH,
+                      color: PICTURE_SELECTION_IMAGE_COLOR,
+                    ),
+                    backgroundColor: Colors.white,
+                    radius: PICTURE_SELECTION_RADIUS,
+                    border: Border.all(
+                      width: PICTURE_SELECTION_BORDER_WIDTH,
+                      color: ColorConstant.BACKGROUND_GREY,
+                    ),
+                  ),
+                  bottom: 0.0,
+                  right: 0.0,
+                ),
+              ],
             ),
             padding: const EdgeInsets.symmetric(
               vertical: PROFILE_VERTICAL_PADDING,

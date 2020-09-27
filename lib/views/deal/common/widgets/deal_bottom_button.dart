@@ -1,8 +1,9 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class DealBottomButton extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 50.0;
-  static const Color BACKGROUND_COLOR_DEFAULT = Color.fromRGBO(250, 187, 65, 1.0);
+  static const Color BACKGROUND_COLOR_DEFAULT = ColorConstant.DEEP_YELLOW;
   static const Color FONT_COLOR_DEFAULT = Colors.white;
   static const double FONT_SIZE_DEFAULT = 18.0;
 

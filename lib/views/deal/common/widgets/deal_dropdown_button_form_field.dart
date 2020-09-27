@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_dropdown_menu_item.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,7 @@ class _DtrDropdownButtonFormField<T> extends State<DealDropdownButtonFormField<T
             border: const Border(
               bottom: const BorderSide(
                 width: BORDER_BOTTOM_WIDTH,
-                color: Colors.black12,
+                color: ColorConstant.BACKGROUND_GREY,
               ),
             ),
           ),

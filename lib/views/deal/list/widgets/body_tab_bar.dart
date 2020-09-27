@@ -1,9 +1,10 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class BodyTabBar extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 45.0;
   static const double HORIZONTAL_PADDING = 15.0;
-  static const MaterialColor INDICATOR_COLOR_DEFAULT = Colors.amber;
+  static const Color INDICATOR_COLOR_DEFAULT = ColorConstant.DEEP_YELLOW;
   static const double INDICATOR_WEIGHT_DEFAULT = 4.0;
   static const double LABEL_FONT_SIZE = 16.0;
   static const FontWeight LABEL_FONT_WEIGHT = FontWeight.bold;
@@ -11,7 +12,7 @@ class BodyTabBar extends StatelessWidget {
   static const double BOTTOM_BORDER_WIDTH = 1.0;
 
   final double height;
-  final MaterialColor indicatorColor;
+  final Color indicatorColor;
   final double indicatorWeight;
   final double labelFontSize;
   final FontWeight labelFontWeight;
@@ -35,19 +36,19 @@ class BodyTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: TabBar(
-        tabs: this.tabs,
-        controller: this.tabController,
-        indicatorColor: this.indicatorColor,
-        indicatorWeight: this.indicatorWeight,
+        tabs: tabs,
+        controller: tabController,
+        indicatorColor: indicatorColor,
+        indicatorWeight: indicatorWeight,
         labelStyle: TextStyle(
-          fontSize: this.labelFontSize,
-          fontWeight: this.labelFontWeight,
+          fontSize: labelFontSize,
+          fontWeight: labelFontWeight,
         ),
         unselectedLabelStyle: TextStyle(
           fontSize: this.unselectedLabelFontSize,
         ),
       ),
-      height: this.height,
+      height: height,
       padding: const EdgeInsets.symmetric(
         horizontal: HORIZONTAL_PADDING,
       ),
@@ -55,7 +56,7 @@ class BodyTabBar extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             width: BOTTOM_BORDER_WIDTH,
-            color: Colors.black12,
+            color: ColorConstant.BACKGROUND_GREY,
           ),
         ),
         color: Colors.white,

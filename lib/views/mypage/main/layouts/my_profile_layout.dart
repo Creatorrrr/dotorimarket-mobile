@@ -1,9 +1,12 @@
+import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyProfileLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
-  static const double IMAGE_RADIUS = 40.0;
+  static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
+
+  static const double PROFILE_IMAGE_RADIUS = 40.0;
+  static const ImageProvider PROFILE_IMAGE_DEFAULT = AssetImage(DEFAULT_PROFILE_IMAGE_PATH);
   static const double NAME_FONT_SIZE = 20.0;
   static const double DESCRIPTION_FONT_SIZE = 16.0;
   static const double DESCRIPTION_TOP_MARGIN = 5.0;
@@ -19,7 +22,7 @@ class MyProfileLayout extends StatelessWidget {
 
   MyProfileLayout({
     Key key,
-    this.image,
+    this.image = PROFILE_IMAGE_DEFAULT,
     @required this.name,
     this.description = '',
   }): super(key: key);
@@ -29,9 +32,9 @@ class MyProfileLayout extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          CircleAvatar(
-            backgroundImage: image,
-            radius: IMAGE_RADIUS,
+          CircleImage(
+            image: image,
+            radius: PROFILE_IMAGE_RADIUS,
           ),
           Expanded(
             child: Container(

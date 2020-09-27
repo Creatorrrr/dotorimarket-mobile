@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class NoticeListHeaderItem extends StatelessWidget {
@@ -6,12 +7,13 @@ class NoticeListHeaderItem extends StatelessWidget {
   static const double TITLE_FONT_SIZE = 16.0;
   static const double TYPE_FONT_SIZE = 14.0;
   static const double TIME_FONT_SIZE = 14.0;
-  static const Color TYPE_COLOR = Color.fromRGBO(248, 176, 36, 1.0);
+  static const Color TYPE_COLOR = ColorConstant.DEEP_YELLOW;
   static const double TYPE_TIME_SEPARATOR_HORIZONTAL_MARGIN = 5.0;
   static const double TYPE_TIME_TOP_MARGIN = 5.0;
   static const double TYPE_TIME_SEPARATOR_FONT_SIZE = 14.0;
-  static const Color TIME_COLOR = Color.fromRGBO(172, 172, 172, 1.0);
-  static const Color TIME_SEPARATOR_COLOR = Color.fromRGBO(172, 172, 172, 1.0);
+  static const Color TIME_COLOR = ColorConstant.TEXT_GREY;
+  static const Color TIME_SEPARATOR_COLOR = ColorConstant.TEXT_LIGHT_GREY;
+  static const Color ICON_COLOR = ColorConstant.TEXT_LIGHT_GREY;
 
   static const String TYPE_TIME_SEPARATOR = '|';
 
@@ -93,7 +95,9 @@ class NoticeListHeaderItem extends StatelessWidget {
           ),
           Container(
             child: IconButton(
-              icon: Icon(isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
+              icon: Icon(isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                color: ICON_COLOR,
+              ),
               onPressed: onPressed,
             ),
           )

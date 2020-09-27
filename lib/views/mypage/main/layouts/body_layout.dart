@@ -1,10 +1,10 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/mypage/main/layouts/my_list_buttons_layout.dart';
 import 'package:dotorimarket/views/mypage/main/layouts/my_profile_layout.dart';
 import 'package:dotorimarket/views/mypage/main/layouts/text_buttons_layout.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
   static const double VERTICAL_PADDING = 10.0;
   static const double MY_PROFILE_VERTICAL_PADDING = 20.0;
   static const double MY_PROFILE_HORIZONTAL_PADDING = 15.0;
@@ -21,7 +21,6 @@ class BodyLayout extends StatelessWidget {
         children: <Widget>[
           Container(
             child: MyProfileLayout(
-              image: AssetImage(THUMBNAIL_PATH),
               name: '을지로짱',
               description: '페럼타워',
             ),
@@ -32,12 +31,14 @@ class BodyLayout extends StatelessWidget {
           ),
           Divider(
             height: DIVIDER_HEIGHT,
+            color: ColorConstant.BACKGROUND_GREY,
           ),
           Container(
             child: MyListButtonsLayout(),
           ),
           Divider(
             height: DIVIDER_HEIGHT,
+            color: ColorConstant.BACKGROUND_GREY,
           ),
           Container(
             child: TextButtonsLayout(),
@@ -46,15 +47,6 @@ class BodyLayout extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1.0,
-            color: Colors.black12,
-          ),
-        ),
-        color: Colors.white,
       ),
     );
   }

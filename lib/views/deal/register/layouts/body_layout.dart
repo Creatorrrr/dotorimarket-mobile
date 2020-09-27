@@ -20,7 +20,6 @@ import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BodyLayout extends StatefulWidget {

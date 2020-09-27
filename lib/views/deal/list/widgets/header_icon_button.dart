@@ -21,15 +21,15 @@ class HeaderIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: IconButton(
-        icon: this.icon,
-        iconSize: this.iconSize,
+        icon: icon,
+        iconSize: iconSize,
         color: Colors.black,
         alignment: Alignment.center,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
-        onPressed: this.onPressed,
+        onPressed: onPressed,
       ),
-      width: this.width,
+      width: width,
     );
   }
 }

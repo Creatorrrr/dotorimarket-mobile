@@ -1,17 +1,19 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/chat/content/layouts/deal_profile_layout.dart';
 import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_left_item.dart';
 import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_right_item.dart';
-import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_time.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
+
   static const double DEAL_PROFILE_VERTICAL_PADDING = 15.0;
   static const double DEAL_PROFILE_HORIZONTAL_PADDING = 15.0;
+  static const double DIVIDER_HEIGHT = 0.0;
   static const double CHAT_CONTENT_ITEM_VERTICAL_PADDING = 10.0;
   static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 15.0;
 
@@ -50,7 +52,8 @@ class BodyLayout extends StatelessWidget {
             ),
           ),
           Divider(
-            height: 0.0,
+            height: DIVIDER_HEIGHT,
+            color: ColorConstant.BACKGROUND_GREY,
           ),
           Container(
             child: Column(
@@ -66,7 +69,6 @@ class BodyLayout extends StatelessWidget {
                 ),
                 Container(
                   child: ChatContentListLeftItem(
-                    image: AssetImage(THUMBNAIL_PATH),
                     text: 'test',
                     time: '16:23',
                   ),
@@ -85,7 +87,6 @@ class BodyLayout extends StatelessWidget {
                 ),
                 Container(
                   child: ChatContentListLeftItem(
-                    image: AssetImage(THUMBNAIL_PATH),
                     text: 'test',
                     time: '16:23',
                   ),
@@ -100,15 +101,6 @@ class BodyLayout extends StatelessWidget {
             ),
           )
         ],
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1.0,
-            color: Colors.black12,
-          ),
-        ),
-        color: Colors.white,
       ),
     );
   }

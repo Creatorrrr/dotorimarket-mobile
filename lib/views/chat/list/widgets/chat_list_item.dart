@@ -1,11 +1,14 @@
-import 'package:dotorimarket/views/chat/list/widgets/chat_profile_image.dart';
+import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ChatListItem extends StatelessWidget {
-  static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
+  static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
+
   static const double HEIGHT_DEFAULT = 70.0;
   static const double PROFILE_IMAGE_RADIUS = 30.0;
+  static const ImageProvider DEFAULT_PROFILE_IMAGE = AssetImage(DEFAULT_PROFILE_IMAGE_PATH);
   static const double ACTION_EXTENT_RATIO = 0.25;
   static const double NICK_NAME_FONT_SIZE = 16.0;
   static const double TIME_FONT_SIZE = 12.0;
@@ -40,10 +43,8 @@ class ChatListItem extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                child: ChatProfileImage(
-                  image: AssetImage(
-                    THUMBNAIL_PATH,
-                  ),
+                child: CircleImage(
+                  image: DEFAULT_PROFILE_IMAGE,
                   radius: PROFILE_IMAGE_RADIUS,
                 ),
               ),
@@ -68,6 +69,7 @@ class ChatListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: TIME_FONT_SIZE,
+                                  color: ColorConstant.TEXT_LIGHT_GREY,
                                 ),
                               ),
                               padding: const EdgeInsets.only(

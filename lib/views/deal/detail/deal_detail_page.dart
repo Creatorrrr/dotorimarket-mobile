@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class DealDetailPage extends StatelessWidget {
   static const String GOOD_IMAGE_PATH = 'assets/images/dotori-logo.png';
+
   static const double HEADER_HEIGHT = 50.0;
   static const double FOOTER_HEIGHT = 60.0;
 

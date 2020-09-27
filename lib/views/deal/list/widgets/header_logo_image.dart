@@ -17,10 +17,9 @@ class HeaderLogoImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      this.image,
-      height: this.height,
-      width: this.width,
+    return Image.asset(image,
+      height: height,
+      width: width,
     );
   }
 }

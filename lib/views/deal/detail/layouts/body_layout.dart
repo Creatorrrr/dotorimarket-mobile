@@ -23,22 +23,6 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   static const double DEAL_PROFILE_TOP_RADIUS = 30.0;
 
-  int dealId;
-
-  DealDto deal;
-
-  /// state 초기화
-  void _init() {
-    dealId = widget.dealId;
-  }
-
-  @override
-  void initState() {
-    _init();
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
@@ -69,14 +53,14 @@ class _BodyLayoutState extends State<BodyLayout> {
                         controller: scrollController,
                         child: Container(
                           child: CheckedFutureBuilder(
-                            future: dealViewModel.getDealOne(dealId, context),
+                            future: dealViewModel.getDealOne(widget.dealId, context),
                             builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
                               return GoodProfileLayout(
                                 category: '디지털/핸드폰 > 갤럭시 케이스',
-                                title: deal.title,
-                                price: deal.price,
+                                title: snapshot.data.title,
+                                price: snapshot.data.price,
                                 creatorName: '레코더팩토리',
-                                description: deal.description,
+                                description: snapshot.data.description,
                                 scrollController: scrollController,
                               );
                             },

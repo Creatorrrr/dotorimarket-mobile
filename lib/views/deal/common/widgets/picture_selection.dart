@@ -1,10 +1,11 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class PictureSelection extends StatelessWidget {
   static const String PICTURE_SELECTION_ICON_PATH = 'assets/images/picture-selection.png';
 
   static const double PICTURE_SELECTION_SIZE_DEFAULT = 70.0;
-  static const Color PICTURE_SELECTION_ICON_COLOR = Color.fromRGBO(255, 185, 65, 1.0);
+  static const Color PICTURE_SELECTION_ICON_COLOR = ColorConstant.DEEP_YELLOW;
   static const double PICTURE_SELECTION_FONT_SIZE = 12.0;
   static const double PICTURE_SELECTION_TEXT_TOP_PADDING = 5.0;
   static const double PICTURE_SELECTION_BORDER_WIDTH = 1.0;
@@ -53,7 +54,7 @@ class PictureSelection extends StatelessWidget {
           width: width,
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.black12,
+              color: ColorConstant.BACKGROUND_GREY,
               width: PICTURE_SELECTION_BORDER_WIDTH,
             ),
             borderRadius: BorderRadius.circular(PICTURE_SELECTION_BORDER_RADIUS),

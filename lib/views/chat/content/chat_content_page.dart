@@ -63,6 +63,7 @@ class ChatContentPage extends StatelessWidget {
             );
           },
         ),
+        backgroundColor: Colors.white,
       ),
       viewModels: [
         DealViewModel(),

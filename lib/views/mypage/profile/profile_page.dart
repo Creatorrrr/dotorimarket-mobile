@@ -24,7 +24,6 @@ class ProfilePage extends StatelessWidget {
                     left: 0.0,
                     right: 0.0,
                     child: HeaderLayout(
-
                       height: HEADER_TOP_HEIGHT,
                     ),
                   ),
@@ -35,21 +34,13 @@ class ProfilePage extends StatelessWidget {
                     right: 0.0,
                     child: BodyLayout(),
                   ),
-                  Positioned(
-                    height: TAB_BOTTOM_HEIGHT,
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: MenuLayout(
-                      height: TAB_BOTTOM_HEIGHT,
-                    ),
-                  ),
                 ],
               ),
             ),
           );
         },
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

@@ -1,8 +1,8 @@
-import 'package:dotorimarket/views/chat/content/widgets/chat_profile_image.dart';
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class ChatContentListRightItem extends StatelessWidget {
-  static const Color TEXT_BOX_COLOR_DEFAULT = Color.fromRGBO(250, 187, 65, 1.0);
+  static const Color TEXT_BOX_COLOR_DEFAULT = ColorConstant.DEEP_YELLOW;
   static const double PROFILE_IMAGE_RADIUS = 20.0;
   static const double TEXT_BOX_RIGHT_MARGIN = 15.0;
   static const double TEXT_BOX_PADDING = 10.0;
@@ -34,6 +34,7 @@ class ChatContentListRightItem extends StatelessWidget {
                   child: Text(time,
                     style: const TextStyle(
                       fontSize: TIME_FONT_SIZE,
+                      color: ColorConstant.TEXT_GREY,
                     ),
                   ),
                   alignment: Alignment.bottomCenter,

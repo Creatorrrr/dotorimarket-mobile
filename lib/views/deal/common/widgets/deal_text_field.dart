@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -42,12 +43,12 @@ class DealTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(
-          color: Colors.black54,
+          color: ColorConstant.TEXT_GREY,
         ),
         contentPadding: EdgeInsets.all(contentPadding),
         enabledBorder: enabledBorder ?? const UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Colors.black12,
+            color: ColorConstant.BACKGROUND_GREY,
           ),
         ),
         focusedBorder: focusedBorder,

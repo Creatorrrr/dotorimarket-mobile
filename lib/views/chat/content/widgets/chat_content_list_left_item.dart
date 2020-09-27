@@ -1,10 +1,12 @@
-import 'package:dotorimarket/views/chat/content/widgets/chat_profile_image.dart';
+import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 
 class ChatContentListLeftItem extends StatelessWidget {
-  static const String PROFILE_IMAGE_PATH = 'assets/images/dotori-logo.png';
+  static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
 
-  static const Color TEXT_BOX_COLOR_DEFAULT = Color.fromRGBO(242, 242, 242, 1.0);
+  static const Color TEXT_BOX_COLOR_DEFAULT = ColorConstant.BACKGROUND_LIGHT_GREY;
+  static const ImageProvider PROFILE_IMAGE_DEFAULT = const AssetImage(DEFAULT_PROFILE_IMAGE_PATH);
   static const double PROFILE_IMAGE_RADIUS = 20.0;
   static const double TEXT_BOX_LEFT_MARGIN = 15.0;
   static const double TEXT_BOX_PADDING = 10.0;
@@ -24,7 +26,7 @@ class ChatContentListLeftItem extends StatelessWidget {
     @required this.text,
     this.backgroundColor = TEXT_BOX_COLOR_DEFAULT,
     this.time = '',
-    this.image = const AssetImage(PROFILE_IMAGE_PATH),
+    this.image = PROFILE_IMAGE_DEFAULT,
   }): super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class ChatContentListLeftItem extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          ChatProfileImage(
+          CircleImage(
             image: this.image,
             radius: PROFILE_IMAGE_RADIUS,
           ),
@@ -59,6 +61,7 @@ class ChatContentListLeftItem extends StatelessWidget {
                   child: Text(time,
                     style: const TextStyle(
                       fontSize: TIME_FONT_SIZE,
+                      color: ColorConstant.TEXT_GREY,
                     ),
                   ),
                   alignment: Alignment.bottomCenter,

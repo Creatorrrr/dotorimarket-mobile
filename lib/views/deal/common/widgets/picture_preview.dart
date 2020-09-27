@@ -1,3 +1,5 @@
+import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 
 class PicturePreview extends StatelessWidget {
@@ -7,7 +9,7 @@ class PicturePreview extends StatelessWidget {
   static const double CLOSE_BUTTON_OVERFLOW_SIZE_DEFAULT = 8.0;
   static const double CLOSE_BUTTON_RADIUS = 10.0;
   static const double CLOSE_BUTTON_ICON_SIZE = 16.0;
-  static const Color CLOSE_BUTTON_BACKGROUND_COLOR = Color.fromRGBO(205, 205, 205, 1.0);
+  static const Color CLOSE_BUTTON_BACKGROUND_COLOR = ColorConstant.BACKGROUND_GREY;
 
   final Image image;
   final double height;
@@ -35,7 +37,7 @@ class PicturePreview extends StatelessWidget {
             width: width,
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.black12,
+                color: ColorConstant.BACKGROUND_GREY,
                 width: PICTURE_PREVIEW_BORDER_WIDTH,
               ),
               borderRadius: BorderRadius.circular(PICTURE_PREVIEW_BORDER_RADIUS),
@@ -49,13 +51,13 @@ class PicturePreview extends StatelessWidget {
             child: GestureDetector(
               child: Align(
                 alignment: Alignment.topRight,
-                child: CircleAvatar(
-                  radius: CLOSE_BUTTON_RADIUS,
-                  backgroundColor: CLOSE_BUTTON_BACKGROUND_COLOR,
+                child: CircleImage(
                   child: Icon(Icons.close,
                     size: CLOSE_BUTTON_ICON_SIZE,
                     color: Colors.white,
                   ),
+                  radius: CLOSE_BUTTON_RADIUS,
+                  backgroundColor: CLOSE_BUTTON_BACKGROUND_COLOR,
                 ),
               ),
               onTap: onPressed,

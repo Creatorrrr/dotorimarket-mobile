@@ -1,3 +1,4 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
 import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:dotorimarket/views/setting/setting_page.dart';
@@ -36,7 +37,7 @@ class HeaderLayout extends StatelessWidget {
               children: [
                 Container(
                   child: HeaderIconButton(
-                    icon: Icon(Icons.more_horiz),
+                    icon: Icon(Icons.settings),
                     onPressed: () {
 
                     },
@@ -55,7 +56,7 @@ class HeaderLayout extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             width: HEADER_BOTTOM_BORDER_WIDTH,
-            color: Colors.black12,
+            color: ColorConstant.BACKGROUND_GREY,
           ),
         ),
         color: Colors.white,

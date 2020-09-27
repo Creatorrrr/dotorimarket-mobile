@@ -34,8 +34,7 @@ class DealGridItem extends StatelessWidget {
             Container(
               child: AspectRatio(
                 child: ClipRRect(
-                  child: Image.asset(
-                    THUMBNAIL_PATH,
+                  child: Image.asset(THUMBNAIL_PATH,
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
@@ -44,7 +43,7 @@ class DealGridItem extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text(this.title,
+              child: Text(title,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: TITLE_FONT_SIZE,
@@ -57,7 +56,7 @@ class DealGridItem extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text('${numberFormat.format(this.price)}원',
+              child: Text('${numberFormat.format(price)}원',
                 style: const TextStyle(
                   fontSize: PRICE_FONT_SIZE,
                   fontWeight: FontWeight.bold,
@@ -72,7 +71,7 @@ class DealGridItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: this.onPressed,
+      onTap: onPressed,
     );
   }
 }
