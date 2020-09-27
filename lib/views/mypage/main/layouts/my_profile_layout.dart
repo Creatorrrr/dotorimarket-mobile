@@ -1,23 +1,27 @@
-import 'package:dotorimarket/views/mypage/main/widgets/my_page_circle_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MyProfileLayout extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
-  static const double HEIGHT_DEFAULT = 100.0;
+  static const double IMAGE_RADIUS = 40.0;
+  static const double NAME_FONT_SIZE = 20.0;
+  static const double DESCRIPTION_FONT_SIZE = 16.0;
+  static const double DESCRIPTION_TOP_MARGIN = 5.0;
+  static const double TEXT_LEFT_MARGIN = 15.0;
 
   static const String SALE_LIST_BUTTON_TEXT = '판매내역';
   static const String PURCHASE_LIST_BUTTON_TEXT = '구매내역';
   static const String FAVORITE_LIST_BUTTON_TEXT = '관심목록';
 
+  final ImageProvider image;
   final String name;
   final String description;
-  final double height;
 
   MyProfileLayout({
     Key key,
+    this.image,
     @required this.name,
-    this.description,
-    this.height = HEIGHT_DEFAULT,
+    this.description = '',
   }): super(key: key);
 
   @override
@@ -25,53 +29,44 @@ class MyProfileLayout extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          ClipRRect(
-            child: Image.asset(
-              THUMBNAIL_PATH,
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.circular(0.0),
+          CircleAvatar(
+            backgroundImage: image,
+            radius: IMAGE_RADIUS,
           ),
           Expanded(
-            child: Column(
-              children: [
-                Container(
-                  child: Text(
-                    this.name,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 24.0,
+            child: Container(
+              child: Column(
+                children: [
+                  Container(
+                    child: Text(name,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: NAME_FONT_SIZE,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  padding: EdgeInsets.only(
-                    top: 10.0,
-                    bottom: 0.0,
-                    left: 10.0,
-                    right: 10.0,
-                  ),
-                  alignment: Alignment.centerLeft,
-                ),
-                Container(
-                  child: Text(
-                    this.description ?? '',
-                    style: TextStyle(
-                      fontSize: 14.0,
+                  Container(
+                    child: Text(description,
+                      style: const TextStyle(
+                        fontSize: DESCRIPTION_FONT_SIZE,
+                      ),
+                    ),
+                    margin: const EdgeInsets.only(
+                      top: DESCRIPTION_TOP_MARGIN,
                     ),
                   ),
-                  padding: EdgeInsets.only(
-                    top: 10.0,
-                    bottom: 0.0,
-                    left: 10.0,
-                    right: 10.0,
-                  ),
-                  alignment: Alignment.centerLeft,
-                ),
-              ],
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              margin: const EdgeInsets.only(
+                left: TEXT_LEFT_MARGIN,
+              ),
             ),
           ),
         ],
       ),
-      height: this.height,
     );
   }
 }

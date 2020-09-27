@@ -1,19 +1,14 @@
-import 'package:dotorimarket/views/mypage/main/widgets/my_page_circle_button.dart';
 import 'package:dotorimarket/views/mypage/main/widgets/my_page_text_button.dart';
-import 'package:dotorimarket/views/mypage/profile/profile_page.dart';
 import 'package:dotorimarket/views/notice/list/notice_list_page.dart';
+import 'package:dotorimarket/views/setting/setting_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextButtonsLayout extends StatelessWidget {
-  static const double VERTICAL_PADDING = 5.0;
-
-  static const String LOGIN_BUTTON_TEXT = '로그인';
-  static const String GOOD_MODIFY_BUTTON_TEXT = '상품 수정';
-  static const String GOOD_REMOVE_BUTTON_TEXT = '상품 삭제';
-  static const String MY_ACCOUNT_BUTTON_TEXT = '내 계정보기';
-  static const String NICK_NAME_BUTTON_TEXT = '닉네임변경';
+  static const String PROFILE_BUTTON_TEXT = '프로필 보기';
   static const String NOTICE_BUTTON_TEXT = '공지사항';
+  static const String FAQ_BUTTON_TEXT = '자주 묻는 질문';
+  static const String SETTING_BUTTON_TEXT = '앱 설정';
 
   @override
   Widget build(BuildContext context) {
@@ -22,71 +17,37 @@ class TextButtonsLayout extends StatelessWidget {
         children: [
           Container(
             child: MyPageTextButton(
-              text: LOGIN_BUTTON_TEXT,
+              text: PROFILE_BUTTON_TEXT,
             ),
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING,
-            ),
-          ),
-          Container(
-            child: MyPageTextButton(
-              text: GOOD_MODIFY_BUTTON_TEXT,
-            ),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING,
-            ),
-          ),
-          Container(
-            child: MyPageTextButton(
-              text: GOOD_REMOVE_BUTTON_TEXT,
-            ),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING,
-            ),
-          ),
-          Container(
-            child: MyPageTextButton(
-                text: MY_ACCOUNT_BUTTON_TEXT
-            ),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING,
-            ),
-          ),
-          Container(
-            child: MyPageTextButton(
-              text: NICK_NAME_BUTTON_TEXT,
-              onTab: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return ProfilePage();
-                    }
-                ));
-              },
-            ),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING,
-            ),
           ),
           Container(
             child: MyPageTextButton(
               text: NOTICE_BUTTON_TEXT,
-              onTab: () {
+              onPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
-                  builder: (context) {
-                    return NoticeListPage();
-                  }
-                ));
+                  builder: (BuildContext context) => NoticeListPage())
+                );
               },
             ),
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING,
+          ),
+          Container(
+            child: MyPageTextButton(
+              text: FAQ_BUTTON_TEXT,
             ),
+            alignment: Alignment.centerLeft,
+          ),
+          Container(
+            child: MyPageTextButton(
+              text: SETTING_BUTTON_TEXT,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (BuildContext context) => SettingPage())
+                );
+              },
+            ),
+            alignment: Alignment.centerLeft,
           ),
         ],
       ),

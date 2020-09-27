@@ -38,11 +38,7 @@ class HeaderLayout extends StatelessWidget {
                   child: HeaderIconButton(
                     icon: Icon(Icons.more_horiz),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute<void>(
-                        builder: (context) {
-                          return SettingPage();
-                        }
-                      ));
+
                     },
                   ),
                 ),
