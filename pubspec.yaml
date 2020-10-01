@@ -11,7 +11,7 @@ description: Dotorimarket Mobile
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.2
+version: 1.0.3
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -33,7 +33,12 @@ dependencies:
   sprintf: ^4.0.0
   url_launcher: ^5.5.3
   flutter_svg: ^0.19.0
-  image_picker: ^0.6.7+7
+#  image_picker: ^0.6.7+11
+# 스레드 권한 문제 핫픽스 (공식 패키지 수정 후 원복할 것)
+  image_picker:
+    git:
+      url: https://github.com/knaeckeKami/plugins.git
+      path: packages/image_picker/image_picker
   permission_handler: ^5.0.1+1
   flutter_slidable: ^0.5.7
 
