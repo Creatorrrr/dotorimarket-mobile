@@ -9,8 +9,6 @@ class FavoriteListPage extends StatelessWidget {
   static const double HEADER_TOP_HEIGHT = 50.0;
   static const double TAB_BOTTOM_HEIGHT = 50.0;
 
-  static const String HEADER_TITLE = '관심목록';
-
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider(
@@ -23,21 +21,20 @@ class FavoriteListPage extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Positioned(
+                      child: HeaderLayout(
+                        height: HEADER_TOP_HEIGHT,
+                      ),
                       height: HEADER_TOP_HEIGHT,
                       top: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: HeaderLayout(
-                        height: HEADER_TOP_HEIGHT,
-                        title: HEADER_TITLE,
-                      ),
                     ),
                     Positioned(
+                      child: BodyLayout(),
                       top: HEADER_TOP_HEIGHT,
                       bottom: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: BodyLayout(),
                     ),
                   ],
                 ),
@@ -45,6 +42,7 @@ class FavoriteListPage extends StatelessWidget {
             );
           },
         ),
+        backgroundColor: Colors.white,
       ),
       viewModels: [
         DealViewModel(),

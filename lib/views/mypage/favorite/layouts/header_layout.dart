@@ -1,52 +1,58 @@
+import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/common/widgets/header_icon_button.dart';
+import 'package:dotorimarket/views/common/widgets/header_title_text.dart';
 import 'package:flutter/material.dart';
 
 class HeaderLayout extends StatelessWidget {
-  static const double HORIZONTAL_PADDING = 15.0;
-  static const double HEADER_TOP_HEIGHT_DEFAULT = 50.0;
-  static const double HEADER_ROW_PADDING = 5.0;
+  static const double HEIGHT_DEFAULT = 50.0;
+  static const double HEADER_TITLE_LEFT_PADDING = 15.0;
+  static const double HEADER_BOTTOM_BORDER_WIDTH = 1.0;
+
+  static const String HEADER_TEXT = '관심목록';
 
   final double height;
-  final String title;
 
   HeaderLayout({
     Key key,
-    this.height = HEADER_TOP_HEIGHT_DEFAULT,
-    @required this.title,
+    this.height = HEIGHT_DEFAULT,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
+      child: Stack(
         children: [
-          Container(
-            child: HeaderIconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
+          Positioned(
+            child: Row(
+              children: [
+                Container(
+                  child: HeaderIconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  child: HeaderTitleText(HEADER_TEXT),
+                  alignment: Alignment.centerLeft,
+                ),
+              ],
             ),
           ),
-          Expanded(
-            child: Container(
-              child: Text(
-                this.title,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              height: this.height,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(
-                left: 10.0,
-              ),
-            ),
-          )
         ],
+      ),
+      height: height,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: HEADER_BOTTOM_BORDER_WIDTH,
+            color: ColorConstant.BACKGROUND_GREY,
+          ),
+        ),
+        color: Colors.white,
       ),
     );
   }

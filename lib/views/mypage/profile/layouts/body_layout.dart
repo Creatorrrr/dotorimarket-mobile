@@ -1,8 +1,16 @@
+import 'dart:io';
+
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
+import 'package:dotorimarket/views/common/widgets/picture_selection_dialog.dart';
 import 'package:flutter/material.dart';
 
-class BodyLayout extends StatelessWidget {
+class BodyLayout extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _BodyLayoutState();
+}
+
+class _BodyLayoutState extends State<BodyLayout> {
   static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
   static const String PICTURE_SELECTION_IMAGE_PATH = 'assets/images/picture-selection.png';
 
@@ -19,6 +27,8 @@ class BodyLayout extends StatelessWidget {
   static const String NICKNAME_LABEL_TEXT = '닉네임';
   static const String NICKNAME_HINT_TEXT = '닉네임을 입력해주세요';
 
+  File picture;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +38,7 @@ class BodyLayout extends StatelessWidget {
             child: Stack(
               children: [
                 CircleImage(
-                  image: DEFAULT_PROFILE_IMAGE,
+                  image: picture == null ? DEFAULT_PROFILE_IMAGE : Image.file(picture).image,
                   radius: PROFILE_IMAGE_RADIUS,
                   border: Border.all(
                     width: PICTURE_SELECTION_BORDER_WIDTH,
@@ -46,6 +56,21 @@ class BodyLayout extends StatelessWidget {
                       width: PICTURE_SELECTION_BORDER_WIDTH,
                       color: ColorConstant.BACKGROUND_GREY,
                     ),
+                    onPressed: () async {
+                      // 사진 선택 모달 열기
+                      PictureSelectionDialog.openDialog(context,
+                        onCameraPressed: (pickedFile) {
+                          setState(() {
+                            picture = File(pickedFile.path);
+                          });
+                        },
+                        onGalleryPressed: (pickedFile) {
+                          setState(() {
+                            picture = File(pickedFile.path);
+                          });
+                        },
+                      );
+                    },
                   ),
                   bottom: 0.0,
                   right: 0.0,

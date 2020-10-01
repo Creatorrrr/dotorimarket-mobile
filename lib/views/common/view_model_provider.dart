@@ -5,7 +5,8 @@ class ViewModelProvider extends InheritedWidget {
   final Map<String, ViewModel> viewModelMap = {};
 
   ViewModelProvider({
-    Key key, Widget child,
+    Key key,
+    @required Widget child,
     @required List<ViewModel> viewModels,
   }): super(key: key, child: child) {
     for(ViewModel viewModel in viewModels) {

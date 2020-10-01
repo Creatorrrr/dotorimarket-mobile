@@ -10,34 +10,35 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(
-          builder: (context) {
-            return SafeArea(
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: BodyLayout(),
-                      top: HEADER_HEIGHT,
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                    ),
-                    Positioned(
-                      child: HeaderLayout(
-                        height: HEADER_HEIGHT,
-                      ),
+        builder: (context) {
+          return SafeArea(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    child: BodyLayout(),
+                    top: HEADER_HEIGHT,
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                  ),
+                  Positioned(
+                    child: HeaderLayout(
                       height: HEADER_HEIGHT,
-                      top: 0.0,
-                      left: 0.0,
-                      right: 0.0,
                     ),
-                  ],
-                ),
+                    height: HEADER_HEIGHT,
+                    top: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                  ),
+                ],
               ),
-            );
-          }
+            ),
+          );
+        },
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

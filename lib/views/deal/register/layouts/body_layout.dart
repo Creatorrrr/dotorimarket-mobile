@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:dotorimarket/dtos/category/category_dto.dart';
 import 'package:dotorimarket/viewmodels/category_view_model.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
-import 'package:dotorimarket/views/common/widgets/permission_setting_dialog.dart';
 import 'package:dotorimarket/views/common/formatters/currency_formatter.dart';
+import 'package:dotorimarket/views/common/widgets/picture_selection_dialog.dart';
 import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_bottom_button.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_dropdown_button_form_field.dart';
@@ -19,8 +19,6 @@ import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class BodyLayout extends StatefulWidget {
   @override
@@ -37,8 +35,6 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double TEXT_FORM_FIELD_TOP_PADDING = 15.0;
   static const double REGISTER_BUTTON_HEIGHT = 70.0;
 
-  static const String CAMERA_SELECTION_TEXT = '촬영하기';
-  static const String GALLERY_SELECTION_TEXT = '갤러리에서 선택하기';
   static const String GOOD_NAME_HINT_TEXT = '상품 이름';
   static const String CATEGORY_HINT_TEXT = '카테고리';
   static const String PRICE_HINT_TEXT = '₩ 가격';
@@ -47,8 +43,6 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String CONFIRM_DIALOG_TITLE = '등록하시겠습니까?';
   static const String CONFIRM_DIALOG_CANCEL = '취소';
   static const String CONFIRM_DIALOG_REGISTER = '등록하기';
-  static const String CAMERA_PERMISSION_DIALOG_TITLE = '카메라 접근 권한이 필요합니다';
-  static const String GALLERY_PERMISSION_DIALOG_TITLE = '갤러리 접근 권한이 필요합니다';
 
   final TextEditingController titleTextEditingController = TextEditingController();
   final TextEditingController categoryTextEditingController = TextEditingController();
@@ -79,7 +73,18 @@ class _BodyLayoutState extends State<BodyLayout> {
                               width: PICTURE_SELECTION_SIZE,
                               onPressed: () async {
                                 // 사진 선택 모달 열기
-                                _openPictureSelectionModal();
+                                PictureSelectionDialog.openDialog(context,
+                                  onCameraPressed: (pickedFile) {
+                                    setState(() {
+                                      pictureList.add(pickedFile);
+                                    });
+                                  },
+                                  onGalleryPressed: (pickedFile) {
+                                    setState(() {
+                                      pictureList.add(pickedFile);
+                                    });
+                                  },
+                                );
                               },
                             ),
                             margin: const EdgeInsets.only(
@@ -298,111 +303,6 @@ class _BodyLayoutState extends State<BodyLayout> {
     }
     if (dealPostDto.description == null || dealPostDto.description.isEmpty) {
       throw '$DESCRIPTION_HINT_TEXT$POSTFIX';
-    }
-  }
-
-  /// 사진 선택 모달 열기
-  void _openPictureSelectionModal() async {
-    final ImagePicker imagePicker = ImagePicker();
-
-    return await showModalBottomSheet(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                  leading: const Icon(Icons.camera_alt),
-                  title: const Text(CAMERA_SELECTION_TEXT),
-                  onTap: () async {
-                    // 카메라 화면 띄우기
-                    try {
-                      PickedFile pickedFile = await imagePicker.getImage(
-                        source: ImageSource.camera,
-                      );
-                      if (pickedFile != null) {
-                        setState(() {
-                          pictureList.add(File(pickedFile.path));
-                        });
-                      }
-                    } catch (e) {
-                      // 카메라 권한 확인
-                      _checkCameraPermission();
-                    }
-
-                    Navigator.pop(dialogContext);
-                  }
-              ),
-              ListTile(
-                leading: const Icon(Icons.image),
-                title: const Text(GALLERY_SELECTION_TEXT),
-                onTap: () async {
-                  // 갤러리 화면 띄우기
-                  try {
-                    PickedFile pickedFile = await imagePicker.getImage(
-                      source: ImageSource.gallery,
-                    );
-                    if (pickedFile != null) {
-                      setState(() {
-                        pictureList.add(File(pickedFile.path));
-                      });
-                    }
-                  } catch (e) {
-                    // 갤러리 권한 확인
-                    _checkGalleryPermission();
-                  }
-
-                  Navigator.pop(dialogContext);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  /// 카메라 권한 확인
-  void _checkCameraPermission() async {
-    PermissionStatus cameraStatus = await Permission.camera.status;
-
-    if (cameraStatus != PermissionStatus.granted) {
-      await showDialog(
-          context: context,
-          builder: (BuildContext permissionDialogContext) {
-            return PermissionSettingDialog(
-                title: CAMERA_PERMISSION_DIALOG_TITLE,
-                onCancel: () {
-                  Navigator.pop(context);
-                },
-                onOk: () {
-                  Navigator.pop(context);
-                }
-            );
-          }
-      );
-    }
-  }
-
-  /// 갤러리 권한 확인
-  void _checkGalleryPermission() async {
-    PermissionStatus photosStatus = await Permission.photos.status;
-
-    if (photosStatus != PermissionStatus.granted) {
-      await showDialog(
-          context: context,
-          builder: (BuildContext permissionDialogContext) {
-            return PermissionSettingDialog(
-                title: GALLERY_PERMISSION_DIALOG_TITLE,
-                onCancel: () {
-                  Navigator.pop(context);
-                },
-                onOk: () {
-                  Navigator.pop(context);
-                }
-            );
-          }
-      );
     }
   }
 }

@@ -1,3 +1,7 @@
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
+import 'package:dotorimarket/viewmodels/deal_view_model.dart';
+import 'package:dotorimarket/views/common/view_model_provider.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/deal/detail/deal_detail_page.dart';
 import 'package:dotorimarket/views/mypage/purchase/widgets/purchase_list_item.dart';
 import 'package:flutter/material.dart';
@@ -5,69 +9,35 @@ import 'package:flutter/material.dart';
 class BodyLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
+
     return Container(
-      child: ListView(
-        children: [
-          Container(
-            child: PurchaseListItem(
-              title: '바바파파시리즈 아동도서',
-              price: '40,000원',
-              onItemPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return DealDetailPage(
-                        dealId: 1,
-                      );
-                    }
-                ));
-              },
-              onFavoritePressed: () {
+      child: CheckedFutureBuilder(
+        future: dealViewModel.getDealList("", "", "", "", "", context),
+        builder: (BuildContext context, AsyncSnapshot<List<DealDto>> snapshot) {
+          return ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return PurchaseListItem(
+                title: snapshot.data[index].title,
+                price: snapshot.data[index].price,
+                onItemPressed: () {
+                  Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) => DealDetailPage(
+                        dealId: snapshot.data[index].dealId,
+                      )
+                  ));
+                },
+                onToReservingPressed: () {
 
-              },
-            ),
-            padding: const EdgeInsets.all(10.0),
-          ),
-          Divider(),
-          Container(
-            child: PurchaseListItem(
-              title: '바바파파시리즈 아동도서',
-              price: '40,000원',
-              onItemPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return DealDetailPage(
-                        dealId: 1,
-                      );
-                    }
-                ));
-              },
-              onFavoritePressed: () {
+                },
+                onToDealtPressed: () {
 
-              },
-            ),
-            padding: const EdgeInsets.all(10.0),
-          ),
-          Divider(),
-          Container(
-            child: PurchaseListItem(
-              title: '바바파파시리즈 아동도서',
-              price: '40,000원',
-              onItemPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (context) {
-                      return DealDetailPage(
-                        dealId: 1,
-                      );
-                    }
-                ));
-              },
-              onFavoritePressed: () {
-
-              },
-            ),
-            padding: const EdgeInsets.all(10.0),
-          ),
-        ],
+                },
+              );
+            },
+            itemCount: snapshot.data.length,
+          );
+        },
       ),
     );
   }

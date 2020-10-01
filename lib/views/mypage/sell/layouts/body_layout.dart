@@ -1,8 +1,11 @@
-import 'package:dotorimarket/views/deal/list/widgets/body_tab_bar_text.dart';
-import 'package:dotorimarket/views/mypage/sell/layouts/tab_selling_layout.dart';
-import 'package:dotorimarket/views/mypage/sell/widgets/body_tab_bar.dart';
-import 'package:dotorimarket/views/mypage/sell/widgets/body_tab_bar_view.dart';
+import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
+import 'package:dotorimarket/viewmodels/deal_view_model.dart';
+import 'package:dotorimarket/views/common/view_model_provider.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
+import 'package:dotorimarket/views/deal/detail/deal_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:dotorimarket/views/mypage/sell/widgets/sell_list_item.dart';
 
 class BodyLayout extends StatefulWidget {
   BodyLayout({
@@ -14,51 +17,37 @@ class BodyLayout extends StatefulWidget {
 }
 
 class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMixin {
-  static const String TAB_SELLING = '판매중';
-  static const String TAB_DEALT = '거래완료';
-  static const String TAB_RESERVING = '예약중';
-
-  TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(
-      length: 3,
-      vsync: this,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
+
     return Container(
-      child: Column(
-        children: <Widget>[
-          BodyTabBar(
-            tabController: this.tabController,
-            tabs: <Tab>[
-              Tab(
-                  child: BodyTabBarText(TAB_SELLING),
-              ),
-              Tab(
-                  child: BodyTabBarText(TAB_DEALT),
-              ),
-              Tab(
-                  child: BodyTabBarText(TAB_RESERVING),
-              ),
-            ],
-          ),
-          Expanded(
-            child: BodyTabBarView(
-              tabController: this.tabController,
-              views: <Widget>[
-                TabSellingLayout(),
-                TabSellingLayout(),
-                TabSellingLayout(),
-              ],
-            ),
-          ),
-        ],
+      child: CheckedFutureBuilder(
+        future: dealViewModel.getDealList("", "", "", "", "", context),
+        builder: (BuildContext context, AsyncSnapshot<List<DealDto>> snapshot) {
+          return ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return SellListItem(
+                title: snapshot.data[index].title,
+                price: snapshot.data[index].price,
+                onItemPressed: () {
+                  Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) => DealDetailPage(
+                        dealId: snapshot.data[index].dealId,
+                      )
+                  ));
+                },
+                onToReservingPressed: () {
+
+                },
+                onToDealtPressed: () {
+
+                },
+              );
+            },
+            itemCount: snapshot.data.length,
+          );
+        },
       ),
     );
   }
