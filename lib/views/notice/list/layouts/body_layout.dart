@@ -46,7 +46,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: NoticeListHeaderItem(
                         title: snapshot.data[index].title,
                         type: snapshot.data[index].type,
-                        time: snapshot.data[index].time,
+                        time: snapshot.data[index].createdAt,
                         isExpanded: isExpanded,
                         onPressed: () {
                           setState(() {

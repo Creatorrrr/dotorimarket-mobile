@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dotorimarket/configs/http_config.dart';
-import 'package:dotorimarket/dtos/category/category_dto.dart';
 import 'package:dotorimarket/dtos/notice/notice_dto.dart';
 import 'package:dotorimarket/utils/http_util.dart';
 import 'package:flutter/material.dart';
@@ -22,39 +21,17 @@ class NoticeViewModel extends ViewModel {
       paging: paging,
     };
 
-    // Response res = await HttpUtil.get(url, context,
-    //   queryParams: queryParams,
-    // );
-    // Map<String, dynamic> bodyJson = jsonDecode(res.body);
+    Response res = await HttpUtil.get(url, context,
+      queryParams: queryParams,
+    );
 
-    List<NoticeDto> categoryList = [
-      NoticeDto(
-        noticeId: 1,
-        title: '디지털/가전',
-        type: '서비스소식',
-        time: '2020.08.11',
-        content: 'ㅁ니ㅏㅇ럼닝ㄹㄴㅁㅇㄹㅁㄴㄹㅁㄴ\n\n\asena\sdsn\asn\d\n\n\n\n\n\n\n\n\n\n\\n\nn\gs\fn\gfdn\dfgn\fdgndf\\n\nnsan\dnnasdfas',
-      ),
-      NoticeDto(
-        noticeId: 2,
-        title: '디지털/가전',
-        type: '서비스소식',
-        time: '2020.08.11',
-        content: 'ㅁ니ㅏㅇ럼닝ㄹㄴㅁㅇㄹㅁㄴㄹㅁㄴ\n\n\asena\sdsn\asn\dnsan\dnnasdfas',
-      ),
-      NoticeDto(
-        noticeId: 3,
-        title: '디지털/가전',
-        type: '서비스소식',
-        time: '2020.08.11',
-        content: 'ㅁ니ㅏㅇ럼닝ㄹㄴㅁㅇㄹㅁㄴㄹㅁㄴ\n\n\asena\sdsn\asn\dnsan\dnnasdfas',
-      ),
-    ];
-    // for (dynamic json in bodyJson['result']) {
-    //   CategoryDto categoryDto = new CategoryDto.fromJson(json);
-    //   categoryList.add(categoryDto);
-    // }
+    List<NoticeDto> noticeList = [];
+    Map<String, dynamic> bodyJson = jsonDecode(res.body);
+    for (dynamic json in bodyJson['result']) {
+      NoticeDto noticeDto = new NoticeDto.fromJson(json);
+      noticeList.add(noticeDto);
+    }
 
-    return categoryList;
+    return noticeList;
   }
 }

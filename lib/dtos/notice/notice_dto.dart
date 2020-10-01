@@ -7,15 +7,17 @@ class NoticeDto {
   int noticeId;
   String title;
   String type;
-  String time;
   String content;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   NoticeDto({
     this.noticeId,
     this.title,
     this.type,
-    this.time,
     this.content,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory NoticeDto.fromJson(Map<String, dynamic> json) => _$NoticeDtoFromJson(json);

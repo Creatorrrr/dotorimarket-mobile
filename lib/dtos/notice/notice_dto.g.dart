@@ -11,8 +11,13 @@ NoticeDto _$NoticeDtoFromJson(Map<String, dynamic> json) {
     noticeId: json['noticeId'] as int,
     title: json['title'] as String,
     type: json['type'] as String,
-    time: json['time'] as String,
     content: json['content'] as String,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
+    updatedAt: json['updatedAt'] == null
+        ? null
+        : DateTime.parse(json['updatedAt'] as String),
   );
 }
 
@@ -28,7 +33,8 @@ Map<String, dynamic> _$NoticeDtoToJson(NoticeDto instance) {
   writeNotNull('noticeId', instance.noticeId);
   writeNotNull('title', instance.title);
   writeNotNull('type', instance.type);
-  writeNotNull('time', instance.time);
   writeNotNull('content', instance.content);
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('updatedAt', instance.updatedAt?.toIso8601String());
   return val;
 }

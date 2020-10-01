@@ -1,5 +1,6 @@
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NoticeListHeaderItem extends StatelessWidget {
   static const bool IS_EXPANDED_DEFAULT = false;
@@ -16,10 +17,11 @@ class NoticeListHeaderItem extends StatelessWidget {
   static const Color ICON_COLOR = ColorConstant.TEXT_LIGHT_GREY;
 
   static const String TYPE_TIME_SEPARATOR = '|';
+  static const String TIME_FORMAT = 'yyyy년 MM월 dd일';
 
   final String title;
   final String type;
-  final String time;
+  final DateTime time;
   final bool isExpanded;
   final void Function() onPressed;
 
@@ -74,7 +76,7 @@ class NoticeListHeaderItem extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          child: Text(time,
+                          child: Text(DateFormat(TIME_FORMAT).format(time),
                             style: const TextStyle(
                               fontSize: TIME_FONT_SIZE,
                               color: TIME_COLOR,
