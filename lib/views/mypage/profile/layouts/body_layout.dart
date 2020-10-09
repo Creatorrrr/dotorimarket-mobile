@@ -6,6 +6,17 @@ import 'package:dotorimarket/views/common/widgets/picture_selection_dialog.dart'
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatefulWidget {
+  final File picture;
+  final String nickName;
+  final void Function(File picture, String nickName) onChanged;
+
+  BodyLayout({
+    Key key,
+    this.picture,
+    this.nickName,
+    this.onChanged,
+  }):super(key: key);
+
   @override
   State<StatefulWidget> createState() => _BodyLayoutState();
 }
@@ -28,6 +39,16 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String NICKNAME_HINT_TEXT = '닉네임을 입력해주세요';
 
   File picture;
+  String nickName;
+
+  TextEditingController nickNameController;
+
+  @override
+  void initState() {
+    picture = widget.picture;
+    nickName = widget.nickName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +80,16 @@ class _BodyLayoutState extends State<BodyLayout> {
                     onPressed: () async {
                       // 사진 선택 모달 열기
                       PictureSelectionDialog.openDialog(context,
-                        onCameraPressed: (pickedFile) {
+                        onCameraPressed: (File pickedFile) {
                           setState(() {
                             picture = File(pickedFile.path);
+                            widget.onChanged(picture, nickName);
                           });
                         },
-                        onGalleryPressed: (pickedFile) {
+                        onGalleryPressed: (File pickedFile) {
                           setState(() {
                             picture = File(pickedFile.path);
+                            widget.onChanged(picture, nickName);
                           });
                         },
                       );
@@ -83,6 +106,12 @@ class _BodyLayoutState extends State<BodyLayout> {
           ),
           Container(
             child: TextFormField(
+              onChanged: (String value) {
+                setState(() {
+                  nickName = value;
+                  widget.onChanged(picture, nickName);
+                });
+              },
               decoration: InputDecoration(
                 labelText: NICKNAME_LABEL_TEXT,
                 labelStyle: TextStyle(
@@ -91,6 +120,12 @@ class _BodyLayoutState extends State<BodyLayout> {
                 hintText: NICKNAME_HINT_TEXT,
                 hintStyle: TextStyle(
                   fontSize: NICKNAME_HINT_SIZE,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.shuffle),
+                  onPressed: () {
+                    widget.onChanged(picture, nickName);
+                  },
                 ),
               ),
             ),

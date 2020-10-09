@@ -3,8 +3,8 @@ import 'package:dotorimarket/dtos/notice/notice_dto.dart';
 import 'package:dotorimarket/viewmodels/notice_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
-import 'package:dotorimarket/views/notice/list/widgets/notice_list_body_item.dart';
-import 'package:dotorimarket/views/notice/list/widgets/notice_list_header_item.dart';
+import 'package:dotorimarket/views/faq/list/widgets/faq_list_body_item.dart';
+import 'package:dotorimarket/views/faq/list/widgets/faq_list_header_item.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatefulWidget {
@@ -44,7 +44,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   children: [
                     InkWell(
                       child: Container(
-                        child: NoticeListHeaderItem(
+                        child: FaqListHeaderItem(
                           title: snapshot.data[index].title,
                           type: snapshot.data[index].type,
                           time: snapshot.data[index].createdAt,
@@ -71,7 +71,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                         milliseconds: BODY_ITEM_ANIMATION_DURATION,
                       ),
                       curve: Curves.fastOutSlowIn,
-                      child: NoticeListBodyItem(
+                      child: FaqListBodyItem(
                         content: snapshot.data[index].content,
                       ),
                       decoration: const BoxDecoration(

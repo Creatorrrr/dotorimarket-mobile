@@ -2,7 +2,7 @@ import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class NoticeListHeaderItem extends StatelessWidget {
+class FaqListHeaderItem extends StatelessWidget {
   static const bool IS_EXPANDED_DEFAULT = false;
 
   static const double TITLE_FONT_SIZE = 16.0;
@@ -25,7 +25,7 @@ class NoticeListHeaderItem extends StatelessWidget {
   final bool isExpanded;
   final void Function() onPressed;
 
-  NoticeListHeaderItem({
+  FaqListHeaderItem({
     Key key,
     @required this.title,
     @required this.type,

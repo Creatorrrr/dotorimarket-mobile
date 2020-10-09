@@ -24,9 +24,9 @@ class NoticeViewModel extends ViewModel {
     Response res = await HttpUtil.get(url, context,
       queryParams: queryParams,
     );
+    Map<String, dynamic> bodyJson = jsonDecode(res.body);
 
     List<NoticeDto> noticeList = [];
-    Map<String, dynamic> bodyJson = jsonDecode(res.body);
     for (dynamic json in bodyJson['result']) {
       NoticeDto noticeDto = new NoticeDto.fromJson(json);
       noticeList.add(noticeDto);

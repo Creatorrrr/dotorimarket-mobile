@@ -1,3 +1,4 @@
+import 'package:dotorimarket/views/faq/list/faq_list_page.dart';
 import 'package:dotorimarket/views/mypage/main/widgets/my_page_text_button.dart';
 import 'package:dotorimarket/views/mypage/profile/profile_page.dart';
 import 'package:dotorimarket/views/notice/list/notice_list_page.dart';
@@ -41,6 +42,11 @@ class TextButtonsLayout extends StatelessWidget {
           Container(
             child: MyPageTextButton(
               text: FAQ_BUTTON_TEXT,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (BuildContext context) => FaqListPage())
+                );
+              },
             ),
             alignment: Alignment.centerLeft,
           ),

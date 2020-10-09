@@ -1,21 +1,15 @@
-import 'dart:io';
 
-import 'package:dotorimarket/viewmodels/user_view_model.dart';
+import 'package:dotorimarket/viewmodels/notice_view_model.dart';
+import 'package:dotorimarket/viewmodels/view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/mypage/profile/layouts/body_layout.dart';
-import 'package:dotorimarket/views/mypage/profile/layouts/header_layout.dart';
+import 'package:dotorimarket/views/faq/list/layouts/body_layout.dart';
+import 'package:dotorimarket/views/faq/list/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
+class FaqListPage extends StatelessWidget {
+  static const String HEADER_LOGO_PATH = 'assets/images/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
-
-  File picture;
-  String nickName;
+  static const double TAB_BOTTOM_HEIGHT = 50.0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +27,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       top: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: HeaderLayout(
-                        height: HEADER_TOP_HEIGHT,
-                        onComplete: () => _onComplete(context),
-                      ),
+                      child: HeaderLayout(),
                     ),
                     Positioned(
                       top: HEADER_TOP_HEIGHT,
                       bottom: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: BodyLayout(
-                        onChanged: (File picture, String nickName) {
-                          this.picture = picture;
-                          this.nickName = nickName;
-                        },
-                      ),
+                      child: BodyLayout(),
                     ),
                   ],
                 ),
@@ -58,14 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         backgroundColor: Colors.white,
       ),
-      viewModels: [
-        UserViewModel(),
+      viewModels: <ViewModel>[
+        NoticeViewModel(),
       ],
     );
-  }
-
-  /// 닉네임 변경 완료
-  void _onComplete(BuildContext context) {
-
   }
 }

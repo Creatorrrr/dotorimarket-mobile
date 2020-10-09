@@ -7,19 +7,14 @@ class HeaderLayout extends StatelessWidget {
   static const double HEIGHT_DEFAULT = 50.0;
   static const double HEADER_TITLE_LEFT_PADDING = 15.0;
   static const double HEADER_BOTTOM_BORDER_WIDTH = 1.0;
-  static const double HEADER_RIGHT_BUTTON_FONT_SIZE = 16.0;
-  static const double HEADER_RIGHT_BUTTON_RIGHT_PADDING = 15.0;
 
-  static const String HEADER_TEXT = '프로필';
-  static const String COMPLETE_TEXT = '완료';
+  static const String HEADER_TEXT = '자주 묻는 질문';
 
   final double height;
-  final Function onComplete;
 
   HeaderLayout({
     Key key,
     this.height = HEIGHT_DEFAULT,
-    @required this.onComplete,
   }):super(key: key);
 
   @override
@@ -50,19 +45,13 @@ class HeaderLayout extends StatelessWidget {
           Positioned(
             child: Row(
               children: [
-                InkWell(
-                  child: Container(
-                    child: Text(COMPLETE_TEXT,
-                      style: const TextStyle(
-                        fontSize: HEADER_RIGHT_BUTTON_FONT_SIZE,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    padding: const EdgeInsets.only(
-                      right: HEADER_RIGHT_BUTTON_RIGHT_PADDING,
-                    ),
+                Container(
+                  child: HeaderIconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+
+                    },
                   ),
-                  onTap: onComplete,
                 ),
               ],
             ),
