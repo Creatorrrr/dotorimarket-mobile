@@ -1,6 +1,7 @@
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChatContentListLeftItem extends StatelessWidget {
   static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
@@ -16,16 +17,18 @@ class ChatContentListLeftItem extends StatelessWidget {
   static const double TIME_RIGHT_MARGIN = 50.0;
   static const double TIME_WIDTH = 40.0;
 
+  static const String TIME_FORMAT = 'HH:mm';
+
   final String text;
   final Color backgroundColor;
-  final String time;
+  final DateTime time;
   final ImageProvider image;
 
   ChatContentListLeftItem({
     Key key,
     @required this.text,
     this.backgroundColor = TEXT_BOX_COLOR_DEFAULT,
-    this.time = '',
+    this.time,
     this.image = PROFILE_IMAGE_DEFAULT,
   }): super(key: key);
 
@@ -58,7 +61,7 @@ class ChatContentListLeftItem extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: Text(time,
+                  child: Text(DateFormat(TIME_FORMAT).format(time),
                     style: const TextStyle(
                       fontSize: TIME_FONT_SIZE,
                       color: ColorConstant.TEXT_GREY,

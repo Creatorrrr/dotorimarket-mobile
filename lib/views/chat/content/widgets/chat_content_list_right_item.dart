@@ -1,5 +1,6 @@
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChatContentListRightItem extends StatelessWidget {
   static const Color TEXT_BOX_COLOR_DEFAULT = ColorConstant.DEEP_YELLOW;
@@ -11,15 +12,17 @@ class ChatContentListRightItem extends StatelessWidget {
   static const double TIME_RIGHT_MARGIN = 10.0;
   static const double TIME_WIDTH = 40.0;
 
+  static const String TIME_FORMAT = 'HH:mm';
+
   final String text;
   final Color backgroundColor;
-  final String time;
+  final DateTime time;
 
   ChatContentListRightItem({
     Key key,
     @required this.text,
     this.backgroundColor = TEXT_BOX_COLOR_DEFAULT,
-    this.time = '',
+    this.time,
   }): super(key: key);
 
   @override
@@ -31,7 +34,7 @@ class ChatContentListRightItem extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  child: Text(time,
+                  child: Text(DateFormat(TIME_FORMAT).format(time),
                     style: const TextStyle(
                       fontSize: TIME_FONT_SIZE,
                       color: ColorConstant.TEXT_GREY,

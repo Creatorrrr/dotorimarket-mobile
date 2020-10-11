@@ -1,5 +1,8 @@
 import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/chat/chat_content_dto.dart';
+import 'package:dotorimarket/dtos/chat/chat_dto.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
+import 'package:dotorimarket/viewmodels/chat_view_model.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/chat/content/layouts/deal_profile_layout.dart';
 import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_left_item.dart';
@@ -7,6 +10,8 @@ import 'package:dotorimarket/views/chat/content/widgets/chat_content_list_right_
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
@@ -18,15 +23,18 @@ class BodyLayout extends StatelessWidget {
   static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 15.0;
 
   final int dealId;
+  final String chatId;
 
   BodyLayout({
     Key key,
     @required this.dealId,
+    @required this.chatId,
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
+    final ChatViewModel chatViewModel = ViewModelProvider.of<ChatViewModel>(context);
 
     return Container(
       child: Column(
@@ -55,51 +63,50 @@ class BodyLayout extends StatelessWidget {
             height: DIVIDER_HEIGHT,
             color: ColorConstant.BACKGROUND_GREY,
           ),
-          Container(
-            child: Column(
-              children: [
-                Container(
-                  child: ChatContentListRightItem(
-                    text: 'test\nasfgasdfasdf\nsfda',
-                    time: '16:23',
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-                  ),
-                ),
-                Container(
-                  child: ChatContentListLeftItem(
-                    text: 'test',
-                    time: '16:23',
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-                  ),
-                ),
-                Container(
-                  child: ChatContentListRightItem(
-                    text: 'test',
-                    time: '16:23',
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-                  ),
-                ),
-                Container(
-                  child: ChatContentListLeftItem(
-                    text: 'test',
-                    time: '16:23',
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-                  ),
-                ),
-              ],
+          Expanded(
+            child: Container(
+              child: CheckedFutureBuilder(
+                future: SharedPreferences.getInstance(),
+                builder: (BuildContext context, AsyncSnapshot<SharedPreferences> prefsSnapshot) {
+                  return CheckedFutureBuilder(
+                    future: chatViewModel.getChatContentList(chatId, '', '', '', '', '', context),
+                    builder: (BuildContext context, AsyncSnapshot<List<ChatContentDto>> chatContentDtoListSnapshot) {
+                      return ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          String prefAccountId = prefsSnapshot.data.getString('id');
+                          String chatContentAccountId = chatContentDtoListSnapshot.data[index].account.id;
+
+                          return prefAccountId == chatContentAccountId
+                              ? Container(
+                                child: ChatContentListRightItem(
+                                  text: chatContentDtoListSnapshot.data[index].content,
+                                  time: chatContentDtoListSnapshot.data[index].createdAt,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                                ),
+                              )
+                              : Container(
+                                child: ChatContentListLeftItem(
+                                  text: chatContentDtoListSnapshot.data[index].content,
+                                  time: chatContentDtoListSnapshot.data[index].createdAt,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                                ),
+                              );
+                        },
+                        itemCount: chatContentDtoListSnapshot.data.length,
+                      );
+                    },
+                  );
+                },
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: CHAT_CONTENT_ITEM_HORIZONTAL_PADDING,
+              ),
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: CHAT_CONTENT_ITEM_HORIZONTAL_PADDING,
-            ),
-          )
+          ),
         ],
       ),
     );

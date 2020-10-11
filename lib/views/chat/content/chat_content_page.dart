@@ -1,3 +1,4 @@
+import 'package:dotorimarket/viewmodels/chat_view_model.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/chat/content/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/chat/content/layouts/header_layout.dart';
@@ -11,6 +12,13 @@ class ChatContentPage extends StatelessWidget {
   static const double TAB_BOTTOM_HEIGHT = 50.0;
 
   final TextEditingController controller = TextEditingController();
+
+  final String chatId;
+
+  ChatContentPage({
+    Key key,
+    this.chatId,
+  }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +49,7 @@ class ChatContentPage extends StatelessWidget {
                         right: 0.0,
                         child: BodyLayout(
                           dealId: 1,
+                          chatId: chatId,
                         ),
                       ),
                       Positioned(
@@ -67,6 +76,7 @@ class ChatContentPage extends StatelessWidget {
       ),
       viewModels: [
         DealViewModel(),
+        ChatViewModel(),
       ]
     );
   }

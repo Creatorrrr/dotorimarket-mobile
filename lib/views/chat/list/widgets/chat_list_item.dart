@@ -2,6 +2,7 @@ import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 
 class ChatListItem extends StatelessWidget {
   static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
@@ -16,19 +17,21 @@ class ChatListItem extends StatelessWidget {
   static const double DESCRIPTION_FONT_SIZE = 14.0;
   static const double DESCRIPTION_TOP_PADDING = 5.0;
   static const double TEXT_AREA_LEFT_PADDING = 10.0;
+
   static const String DELETE_ACTION_BUTTON_TEXT = '삭제';
+  static const String TIME_FORMAT = 'yyyy년 MM월 dd일';
 
   final String nickName;
-  final String description;
-  final String time;
+  final String title;
+  final DateTime createdAt;
   final double height;
   final Function onPressed;
 
   ChatListItem({
     Key key,
     @required this.nickName,
-    @required this.description,
-    @required this.time,
+    @required this.title,
+    @required this.createdAt,
     this.height = HEIGHT_DEFAULT,
     @required this.onPressed,
   }):super(key: key);
@@ -65,7 +68,7 @@ class ChatListItem extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              child: Text(time,
+                              child: Text(DateFormat(TIME_FORMAT).format(createdAt),
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: TIME_FONT_SIZE,
@@ -81,7 +84,7 @@ class ChatListItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        child: Text(description,
+                        child: Text(title,
                           style: const TextStyle(
                             fontSize: DESCRIPTION_FONT_SIZE,
                           ),

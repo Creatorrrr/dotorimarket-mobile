@@ -193,6 +193,10 @@ class _BodyLayoutState extends State<BodyLayout> {
         Map<String, dynamic> body = jsonDecode(res.body);
         String token = body['result']['token'];
         prefs.setString(TOKEN_KEY, token);
+        prefs.setString('id', body['result']['account']['id']);
+        prefs.setString('accountId', body['result']['account']['accountId']);
+        prefs.setString('name', body['result']['account']['name']);
+        prefs.setString('email', body['result']['account']['email']);
 
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
