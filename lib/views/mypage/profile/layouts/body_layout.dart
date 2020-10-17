@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/word/word_dto.dart';
+import 'package:dotorimarket/viewmodels/word_view_model.dart';
+import 'package:dotorimarket/views/common/view_model_provider.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:dotorimarket/views/common/widgets/picture_selection_dialog.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +45,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   File picture;
   String nickName;
 
-  TextEditingController nickNameController;
+  TextEditingController nickNameController = TextEditingController();
 
   @override
   void initState() {
@@ -52,6 +56,8 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final WordViewModel wordViewModel = ViewModelProvider.of<WordViewModel>(context);
+
     return Container(
       child: Column(
         children: <Widget>[
@@ -104,32 +110,53 @@ class _BodyLayoutState extends State<BodyLayout> {
               vertical: PROFILE_VERTICAL_PADDING,
             ),
           ),
-          Container(
-            child: TextFormField(
-              onChanged: (String value) {
-                setState(() {
-                  nickName = value;
-                  widget.onChanged(picture, nickName);
-                });
-              },
-              decoration: InputDecoration(
-                labelText: NICKNAME_LABEL_TEXT,
-                labelStyle: TextStyle(
-                  fontSize: NICKNAME_LABEL_SIZE,
-                ),
-                hintText: NICKNAME_HINT_TEXT,
-                hintStyle: TextStyle(
-                  fontSize: NICKNAME_HINT_SIZE,
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.shuffle),
-                  onPressed: () {
-                    widget.onChanged(picture, nickName);
+          CheckedFutureBuilder(
+            future: Future.wait<WordDto>([
+              wordViewModel.getWordRandom('ADJ', context),
+              wordViewModel.getWordRandom('NOUN', context),
+            ]),
+            builder: (BuildContext context, AsyncSnapshot<List<WordDto>> snapshot) {
+              WordDto adj = snapshot.data[0];
+              WordDto noun = snapshot.data[1];
+              nickNameController.text = '${adj.name} ${noun.name}';
+
+              return Container(
+                child: TextFormField(
+                  controller: nickNameController,
+                  onChanged: (String value) {
+                    setState(() {
+                      nickName = value;
+                      widget.onChanged(picture, nickName);
+                    });
                   },
+                  decoration: InputDecoration(
+                    labelText: NICKNAME_LABEL_TEXT,
+                    labelStyle: TextStyle(
+                      fontSize: NICKNAME_LABEL_SIZE,
+                    ),
+                    hintText: NICKNAME_HINT_TEXT,
+                    hintStyle: TextStyle(
+                      fontSize: NICKNAME_HINT_SIZE,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.shuffle),
+                      onPressed: () async {
+                        List<WordDto> wordList = await Future.wait<WordDto>([
+                          wordViewModel.getWordRandom('ADJ', context),
+                          wordViewModel.getWordRandom('NOUN', context),
+                        ]);
+
+                        setState(() {
+                          nickNameController.text = '${wordList[0].name} ${wordList[1].name}';
+                        });
+                        widget.onChanged(picture, nickName);
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            width: NICKNAME_WIDTH,
+                width: NICKNAME_WIDTH,
+              );
+            },
           )
         ],
       ),

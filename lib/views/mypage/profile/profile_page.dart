@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dotorimarket/viewmodels/user_view_model.dart';
+import 'package:dotorimarket/viewmodels/word_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/mypage/profile/layouts/body_layout.dart';
 import 'package:dotorimarket/views/mypage/profile/layouts/header_layout.dart';
@@ -60,6 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       viewModels: [
         UserViewModel(),
+        WordViewModel(),
       ],
     );
   }
