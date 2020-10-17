@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotorimarket/dtos/account/account_dto.dart';
+import 'package:dotorimarket/utils/string_util.dart';
+import 'package:dotorimarket/viewmodels/account_view_model.dart';
 import 'package:dotorimarket/viewmodels/user_view_model.dart';
 import 'package:dotorimarket/viewmodels/word_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/mypage/profile/layouts/body_layout.dart';
 import 'package:dotorimarket/views/mypage/profile/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -14,6 +20,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   static const double HEADER_TOP_HEIGHT = 50.0;
+
+  static const String NICK_NAME_TEXT = '닉네임';
 
   File picture;
   String nickName;
@@ -36,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       right: 0.0,
                       child: HeaderLayout(
                         height: HEADER_TOP_HEIGHT,
-                        onComplete: () => _onComplete(context),
+                        onComplete: () => _changeNickName(context),
                       ),
                     ),
                     Positioned(
@@ -60,14 +68,54 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.white,
       ),
       viewModels: [
-        UserViewModel(),
+        AccountViewModel(),
         WordViewModel(),
       ],
     );
   }
 
   /// 닉네임 변경 완료
-  void _onComplete(BuildContext context) {
+  void _changeNickName(BuildContext context) async {
+    final AccountViewModel accountViewModel = ViewModelProvider.of<AccountViewModel>(context);
 
+    try {
+      AccountDto accountDto = AccountDto(
+        name: nickName,
+      );
+
+      // validation 확인
+      _checkChangeNickNameForm(accountDto);
+
+      // 닉네임 수정 요청
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String id = prefs.getString('id');
+      http.Response res = await accountViewModel.patchAccount(id, accountDto, context);
+
+      // 성공여부 확인
+      if (res.statusCode == HttpStatus.ok) {
+        prefs.setString('name', nickName);
+
+        Scaffold.of(context).removeCurrentSnackBar();
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text('수정되었습니다')));
+      } else {
+        Map<String, dynamic> bodyJson = jsonDecode(res.body);
+        String message = bodyJson['message'];
+
+        throw message;
+      }
+    } catch (err) {
+      Scaffold.of(context).removeCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text(err.toString())));  // 오류 메시지 출력
+    }
+  }
+
+  /// login form의 validation 확인
+  void _checkChangeNickNameForm(AccountDto accountDto) {
+    if (accountDto == null) {
+      throw '개발자에게 문의해주세요 (dto parameter is null)';
+    }
+    if (StringUtil.isEmpty(accountDto.name)) {
+      throw '$NICK_NAME_TEXT을 입력해주세요';
+    }
   }
 }

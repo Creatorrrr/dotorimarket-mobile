@@ -1,5 +1,7 @@
 import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/faq/faq_dto.dart';
 import 'package:dotorimarket/dtos/notice/notice_dto.dart';
+import 'package:dotorimarket/viewmodels/faq_view_model.dart';
 import 'package:dotorimarket/viewmodels/notice_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
@@ -25,19 +27,19 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double DIVIDER_THICKNESS = 1.0;
   static const Color DIVIDER_COLOR = ColorConstant.BACKGROUND_GREY;
 
-  Map<int, bool> isExpandedMap = {};
+  Map<String, bool> isExpandedMap = {};
 
   @override
   Widget build(BuildContext context) {
-    final NoticeViewModel noticeViewModel = ViewModelProvider.of<NoticeViewModel>(context);
+    final FaqViewModel faqViewModel = ViewModelProvider.of<FaqViewModel>(context);
 
     return Container(
       child: CheckedFutureBuilder(
-        future: noticeViewModel.getNoticeList("", "", "", "", "", context),
-        builder: (BuildContext context, AsyncSnapshot<List<NoticeDto>> snapshot) {
+        future: faqViewModel.getFaqList("", "", "", "", "", context),
+        builder: (BuildContext context, AsyncSnapshot<List<FaqDto>> snapshot) {
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {
-              bool isExpanded = isExpandedMap[snapshot.data[index].noticeId] ?? false;
+              bool isExpanded = isExpandedMap[snapshot.data[index].id] ?? false;
 
               return Container(
                 child: Column(
@@ -46,7 +48,6 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: Container(
                         child: FaqListHeaderItem(
                           title: snapshot.data[index].title,
-                          type: snapshot.data[index].type,
                           time: snapshot.data[index].createdAt,
                           isExpanded: isExpanded,
                         ),
@@ -57,7 +58,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       ),
                       onTap: () {
                         setState(() {
-                          isExpandedMap[snapshot.data[index].noticeId] = !isExpanded;
+                          isExpandedMap[snapshot.data[index].id] = !isExpanded;
                         });
                       },
                     ),

@@ -1,4 +1,5 @@
 
+import 'package:dotorimarket/viewmodels/faq_view_model.dart';
 import 'package:dotorimarket/viewmodels/notice_view_model.dart';
 import 'package:dotorimarket/viewmodels/view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -45,7 +46,7 @@ class FaqListPage extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       viewModels: <ViewModel>[
-        NoticeViewModel(),
+        FaqViewModel(),
       ],
     );
   }

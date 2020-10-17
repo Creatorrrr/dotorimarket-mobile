@@ -1,13 +1,17 @@
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/word/word_dto.dart';
+import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/word_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:dotorimarket/views/common/widgets/picture_selection_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatefulWidget {
   final File picture;
@@ -38,6 +42,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double NICKNAME_LABEL_SIZE = 12.0;
   static const double NICKNAME_HINT_SIZE = 14.0;
   static const double NICKNAME_WIDTH = 200.0;
+  static const int NICKNAME_MAX_LENGTH = 10;
 
   static const String NICKNAME_LABEL_TEXT = '닉네임';
   static const String NICKNAME_HINT_TEXT = '닉네임을 입력해주세요';
@@ -45,7 +50,8 @@ class _BodyLayoutState extends State<BodyLayout> {
   File picture;
   String nickName;
 
-  TextEditingController nickNameController = TextEditingController();
+  final AsyncMemoizer _memoizer = AsyncMemoizer();
+  TextEditingController _nickNameController = TextEditingController();
 
   @override
   void initState() {
@@ -111,24 +117,33 @@ class _BodyLayoutState extends State<BodyLayout> {
             ),
           ),
           CheckedFutureBuilder(
-            future: Future.wait<WordDto>([
-              wordViewModel.getWordRandom('ADJ', context),
-              wordViewModel.getWordRandom('NOUN', context),
-            ]),
-            builder: (BuildContext context, AsyncSnapshot<List<WordDto>> snapshot) {
-              WordDto adj = snapshot.data[0];
-              WordDto noun = snapshot.data[1];
-              nickNameController.text = '${adj.name} ${noun.name}';
+            future: SharedPreferences.getInstance(),
+            builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
+              SharedPreferences prefs = snapshot.data;
+              String nickName = prefs.getString('name');
+              if (StringUtil.isEmpty(_nickNameController.text)) {
+                if (nickName != null) {
+                  _nickNameController.text = nickName;
+                } else {
+                  _getRandomNickName(context)
+                  .then((String nickName) {
+                    setState(() {
+                      _nickNameController.text = nickName;
+                    });
+                  });
+                }
+              }
 
               return Container(
                 child: TextFormField(
-                  controller: nickNameController,
+                  controller: _nickNameController,
                   onChanged: (String value) {
-                    setState(() {
-                      nickName = value;
-                      widget.onChanged(picture, nickName);
-                    });
+                    nickName = value;
+                    widget.onChanged(picture, nickName);
                   },
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(NICKNAME_MAX_LENGTH),
+                  ],
                   decoration: InputDecoration(
                     labelText: NICKNAME_LABEL_TEXT,
                     labelStyle: TextStyle(
@@ -141,15 +156,11 @@ class _BodyLayoutState extends State<BodyLayout> {
                     suffixIcon: IconButton(
                       icon: Icon(Icons.shuffle),
                       onPressed: () async {
-                        List<WordDto> wordList = await Future.wait<WordDto>([
-                          wordViewModel.getWordRandom('ADJ', context),
-                          wordViewModel.getWordRandom('NOUN', context),
-                        ]);
-
-                        setState(() {
-                          nickNameController.text = '${wordList[0].name} ${wordList[1].name}';
-                        });
+                        nickName = await _getRandomNickName(context);
                         widget.onChanged(picture, nickName);
+                        setState(() {
+                          _nickNameController.text = nickName;
+                        });
                       },
                     ),
                   ),
@@ -161,5 +172,14 @@ class _BodyLayoutState extends State<BodyLayout> {
         ],
       ),
     );
+  }
+
+  Future<String> _getRandomNickName(BuildContext context) async {
+    final WordViewModel wordViewModel = ViewModelProvider.of<WordViewModel>(context);
+
+    WordDto adj = await wordViewModel.getWordRandom('ADJ', context);
+    WordDto noun = await wordViewModel.getWordRandom('NOUN', context);
+
+    return '${adj.name} ${noun.name}';
   }
 }

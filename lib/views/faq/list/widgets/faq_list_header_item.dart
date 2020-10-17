@@ -20,7 +20,6 @@ class FaqListHeaderItem extends StatelessWidget {
   static const String TIME_FORMAT = 'yyyy년 MM월 dd일';
 
   final String title;
-  final String type;
   final DateTime time;
   final bool isExpanded;
   final void Function() onPressed;
@@ -28,7 +27,6 @@ class FaqListHeaderItem extends StatelessWidget {
   FaqListHeaderItem({
     Key key,
     @required this.title,
-    @required this.type,
     @required this.time,
     this.isExpanded = IS_EXPANDED_DEFAULT,
     this.onPressed,
@@ -55,26 +53,6 @@ class FaqListHeaderItem extends StatelessWidget {
                   Container(
                     child: Row(
                       children: [
-                        Container(
-                          child: Text(type,
-                            style: const TextStyle(
-                              fontSize: TYPE_FONT_SIZE,
-                              color: TYPE_COLOR,
-                            ),
-                          ),
-                          alignment: Alignment.centerLeft,
-                        ),
-                        Container(
-                          child: Text(TYPE_TIME_SEPARATOR,
-                            style: const TextStyle(
-                              fontSize: TYPE_TIME_SEPARATOR_FONT_SIZE,
-                              color: TIME_SEPARATOR_COLOR,
-                            ),
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: TYPE_TIME_SEPARATOR_HORIZONTAL_MARGIN,
-                          ),
-                        ),
                         Container(
                           child: Text(DateFormat(TIME_FORMAT).format(time),
                             style: const TextStyle(
