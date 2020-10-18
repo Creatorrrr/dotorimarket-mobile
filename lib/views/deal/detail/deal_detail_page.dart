@@ -1,3 +1,4 @@
+import 'package:dotorimarket/viewmodels/chat_view_model.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/viewmodels/view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -67,6 +68,7 @@ class DealDetailPage extends StatelessWidget {
       ),
       viewModels: <ViewModel>[
         DealViewModel(),
+        ChatViewModel(),
       ],
     );
   }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/dtos/chat/chat_content_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_dto.dart';
+import 'package:dotorimarket/dtos/chat/chat_post_dto.dart';
 import 'package:dotorimarket/utils/http_util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Response;
@@ -15,11 +16,11 @@ class ChatViewModel extends ViewModel {
   static const GET_DEAL_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats';
   static const GET_CHAT_CONTENT_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%s/contents';
 
-  Future<Response> postChat(ChatDto chatDto, BuildContext context) async {
+  Future<Response> postChat(ChatPostDto chatPostDto, BuildContext context) async {
     Response res = await HttpUtil.post(
       POST_DEAL,
       context,
-      body: chatDto.toJson(),
+      body: chatPostDto.toJson(),
     );
     return res;
   }

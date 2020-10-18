@@ -1,3 +1,6 @@
+import 'package:dotorimarket/dtos/chat/chat_post_dto.dart';
+import 'package:dotorimarket/viewmodels/chat_view_model.dart';
+import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/detail/widgets/chat_button.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +41,8 @@ class _FooterLayoutState extends State<FooterLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final ChatViewModel chatViewModel = ViewModelProvider.of<ChatViewModel>(context);
+
     return Container(
       child: Row(
         children: <Widget>[
@@ -57,7 +62,14 @@ class _FooterLayoutState extends State<FooterLayout> {
             child: Container(
               child: ChatButton(
                 onPressed: () {
-
+                  // TODO 채팅이 생성되지 않았을 경우 생성 후 이동
+                  ChatPostDto chatPostDto = ChatPostDto(
+                    title: '거래제목',
+                    deal: '거래아이디',
+                    members: ['본인', '상대방'],
+                  );
+                  chatViewModel.postChat(chatPostDto, context);
+                  // TODO 채팅이 생성되어 있을 경우 바로 이동
                 },
               ),
               padding: const EdgeInsets.only(
