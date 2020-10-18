@@ -14,11 +14,11 @@ class FaqViewModel extends ViewModel {
     String url = GET_FAQ_LIST;
 
     Map<String, String> queryParams = {
-      filter: filter,
-      field: field,
-      keyword: keyword,
-      orders: orders,
-      paging: paging,
+      'filter': filter,
+      'field': field,
+      'keyword': keyword,
+      'orders': orders,
+      'paging': paging,
     };
 
     Response res = await HttpUtil.get(url, context,

@@ -22,7 +22,7 @@ class BodyLayout extends StatelessWidget {
   static const double CHAT_CONTENT_ITEM_VERTICAL_PADDING = 10.0;
   static const double CHAT_CONTENT_ITEM_HORIZONTAL_PADDING = 15.0;
 
-  final int dealId;
+  final String dealId;
   final String chatId;
 
   BodyLayout({

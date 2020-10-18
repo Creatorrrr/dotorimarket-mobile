@@ -8,7 +8,7 @@ part of 'deal_dto.dart';
 
 DealDto _$DealDtoFromJson(Map<String, dynamic> json) {
   return DealDto(
-    dealId: json['dealId'] as int,
+    id: json['id'] as String,
     title: json['title'] as String,
     categoryId: json['categoryId'] as String,
     price: json['price'] as int,
@@ -25,7 +25,7 @@ Map<String, dynamic> _$DealDtoToJson(DealDto instance) {
     }
   }
 
-  writeNotNull('dealId', instance.dealId);
+  writeNotNull('id', instance.id);
   writeNotNull('title', instance.title);
   writeNotNull('categoryId', instance.categoryId);
   writeNotNull('price', instance.price);

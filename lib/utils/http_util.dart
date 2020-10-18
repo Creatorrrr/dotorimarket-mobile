@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dotorimarket/configs/http_config.dart';
+import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -130,7 +131,9 @@ class HttpUtil {
     if (queryParams != null && queryParams.length > 0) {
       url = '$url?';
       queryParams.forEach((key, value) {
-        url = '$url$key=$value';
+        if (StringUtil.isNotEmpty(value)) {
+          url = '$url$key=$value';
+        }
       });
     }
 

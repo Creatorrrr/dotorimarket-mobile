@@ -12,7 +12,7 @@ class DealDetailPage extends StatelessWidget {
   static const double HEADER_HEIGHT = 50.0;
   static const double FOOTER_HEIGHT = 60.0;
 
-  final int dealId;
+  final String dealId;
 
   DealDetailPage({
     Key key,

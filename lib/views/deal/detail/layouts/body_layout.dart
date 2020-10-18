@@ -7,7 +7,7 @@ import 'package:dotorimarket/views/deal/detail/widgets/main_image.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatefulWidget {
-  final int dealId;
+  final String dealId;
 
   BodyLayout({
     Key key,

@@ -11,7 +11,7 @@ import 'package:sprintf/sprintf.dart';
 
 class DealViewModel extends ViewModel {
   static const POST_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals';
-  static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%d';
+  static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%s';
   static const GET_DEAL_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals';
 
   Future<Response> postDeal(DealPostDto dealPostDto, BuildContext context) async {
@@ -23,7 +23,7 @@ class DealViewModel extends ViewModel {
     return res;
   }
 
-  Future<DealDto> getDealOne(int dealId, BuildContext context) async {
+  Future<DealDto> getDealOne(String dealId, BuildContext context) async {
     String url = sprintf(GET_DEAL_ONE, [dealId]);
 
     Response res = await HttpUtil.get(url, context);
@@ -38,11 +38,11 @@ class DealViewModel extends ViewModel {
     String url = GET_DEAL_LIST;
 
     Map<String, String> queryParams = {
-      filter: filter,
-      field: field,
-      keyword: keyword,
-      orders: orders,
-      paging: paging,
+      'filter': filter,
+      'field': field,
+      'keyword': keyword,
+      'orders': orders,
+      'paging': paging,
     };
 
     Response res = await HttpUtil.get(url, context,

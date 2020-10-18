@@ -48,7 +48,7 @@ class ChatContentPage extends StatelessWidget {
                         left: 0.0,
                         right: 0.0,
                         child: BodyLayout(
-                          dealId: 1,
+                          dealId: '1',
                           chatId: chatId,
                         ),
                       ),

@@ -54,7 +54,7 @@ class TabBestLayout extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute<void>(
                             builder: (context) {
                               return DealDetailPage(
-                                dealId: snapshot.data[index].dealId,
+                                dealId: snapshot.data[index].id,
                               );
                             }
                         ));

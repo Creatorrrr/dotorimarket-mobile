@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dotorimarket/constants/app_constant.dart';
-import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/user/user_login_dto.dart';
 import 'package:dotorimarket/viewmodels/user_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/list/deal_list_page.dart';
 import 'package:dotorimarket/views/login/layouts/title_layout.dart';
-import 'package:dotorimarket/views/login/widgets/find_button.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/save_email_checkbox.dart';
@@ -30,6 +27,9 @@ class _BodyLayoutState extends State<BodyLayout> {
   // static const double FIND_FONT_SIZE = 16.0;
 
   static const String SAVE_EMAIL_KEY = 'saveEmail';
+  static const String ID_KEY = 'id';
+  static const String ACCOUNT_ID_KEY = 'accountId';
+  static const String NAME_KEY = 'name';
   static const String EMAIL_KEY = 'email';
   static const String TOKEN_KEY = 'token';
 
@@ -55,8 +55,8 @@ class _BodyLayoutState extends State<BodyLayout> {
       setState(() {
         saveEmail = prefs.getBool(SAVE_EMAIL_KEY) ?? false;
         if (saveEmail) {
-          String email = prefs.getString(EMAIL_KEY);
-          emailController.text = email;
+          String accountId = prefs.getString(ACCOUNT_ID_KEY);
+          emailController.text = accountId;
         }
       });
     });
@@ -193,10 +193,9 @@ class _BodyLayoutState extends State<BodyLayout> {
         Map<String, dynamic> body = jsonDecode(res.body);
         String token = body['result']['token'];
         prefs.setString(TOKEN_KEY, token);
-        prefs.setString('id', body['result']['account']['id']);
-        prefs.setString('accountId', body['result']['account']['accountId']);
-        prefs.setString('name', body['result']['account']['name']);
-        prefs.setString('email', body['result']['account']['email']);
+        prefs.setString(ID_KEY, body['result']['account']['id']);
+        prefs.setString(ACCOUNT_ID_KEY, body['result']['account']['accountId']);
+        prefs.setString(NAME_KEY, body['result']['account']['name']);
 
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
