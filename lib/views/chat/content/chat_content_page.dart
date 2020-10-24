@@ -9,9 +9,6 @@ import 'package:flutter/material.dart';
 class ChatContentPage extends StatelessWidget {
   static const String HEADER_LOGO_PATH = 'assets/images/dotori-logo.png';
   static const double HEADER_TOP_HEIGHT = 50.0;
-  static const double TAB_BOTTOM_HEIGHT = 50.0;
-
-  final TextEditingController controller = TextEditingController();
 
   final String chatId;
 
@@ -50,16 +47,6 @@ class ChatContentPage extends StatelessWidget {
                         child: BodyLayout(
                           dealId: '1',
                           chatId: chatId,
-                        ),
-                      ),
-                      Positioned(
-                        height: TAB_BOTTOM_HEIGHT,
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: FooterLayout(
-                          height: TAB_BOTTOM_HEIGHT,
-                          controller: controller,
                         ),
                       ),
                     ],

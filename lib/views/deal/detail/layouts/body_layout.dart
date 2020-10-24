@@ -7,11 +7,10 @@ import 'package:dotorimarket/views/deal/detail/widgets/main_image.dart';
 import 'package:flutter/material.dart';
 
 class BodyLayout extends StatefulWidget {
-  final String dealId;
+  final DealDto deal;
 
-  BodyLayout({
+  BodyLayout(this.deal, {
     Key key,
-    @required this.dealId,
   }):super(key: key);
 
   @override
@@ -52,18 +51,13 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Container(
-                          child: CheckedFutureBuilder(
-                            future: dealViewModel.getDealOne(widget.dealId, context),
-                            builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
-                              return GoodProfileLayout(
-                                category: '디지털/핸드폰 > 갤럭시 케이스',
-                                title: snapshot.data.title,
-                                price: snapshot.data.price,
-                                creatorName: '레코더팩토리',
-                                description: snapshot.data.description,
-                                scrollController: scrollController,
-                              );
-                            },
+                          child: GoodProfileLayout(
+                            category: '디지털/핸드폰 > 갤럭시 케이스',
+                            title: widget.deal.title,
+                            price: widget.deal.price,
+                            creatorName: '레코더팩토리',
+                            description: widget.deal.description,
+                            scrollController: scrollController,
                           ),
                           decoration: const BoxDecoration(
                             color: Colors.white,

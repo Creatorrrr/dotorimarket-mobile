@@ -1,7 +1,9 @@
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/chat_view_model.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/viewmodels/view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/body_layout.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/header_layout.dart';
@@ -15,9 +17,8 @@ class DealDetailPage extends StatelessWidget {
 
   final String dealId;
 
-  DealDetailPage({
+  DealDetailPage(this.dealId, {
     Key key,
-    @required this.dealId,
   }):super(key: key);
 
   @override
@@ -25,44 +26,49 @@ class DealDetailPage extends StatelessWidget {
     return ViewModelProvider(
       child: Scaffold(
         body: Builder(
-            builder: (context) {
-              return SafeArea(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        child: BodyLayout(
-                          dealId: dealId,
+          builder: (BuildContext context) {
+            final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
+
+            return CheckedFutureBuilder(
+              future: dealViewModel.getDealOne(this.dealId, context),
+              builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
+                return SafeArea(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          child: BodyLayout(snapshot.data),
+                          top: HEADER_HEIGHT,
+                          bottom: FOOTER_HEIGHT,
+                          left: 0.0,
+                          right: 0.0,
                         ),
-                        top: HEADER_HEIGHT,
-                        bottom: FOOTER_HEIGHT,
-                        left: 0.0,
-                        right: 0.0,
-                      ),
-                      Positioned(
-                        child: HeaderLayout(
+                        Positioned(
+                          child: HeaderLayout(
+                            height: HEADER_HEIGHT,
+                          ),
                           height: HEADER_HEIGHT,
+                          top: 0.0,
+                          left: 0.0,
+                          right: 0.0,
                         ),
-                        height: HEADER_HEIGHT,
-                        top: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                      ),
-                      Positioned(
-                        height: FOOTER_HEIGHT,
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: FooterLayout(
+                        Positioned(
                           height: FOOTER_HEIGHT,
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: FooterLayout(snapshot.data,
+                            height: FOOTER_HEIGHT,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }
+                );
+              }
+            );
+          },
         ),
         backgroundColor: Colors.white,
       ),

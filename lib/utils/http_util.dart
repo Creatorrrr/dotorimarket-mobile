@@ -55,7 +55,7 @@ class HttpUtil {
 
     http.Response res = await http.post(url,
       headers: headers,
-      body: body,
+      body: jsonEncode(body),
       encoding: encoding,
     );
 
@@ -77,7 +77,7 @@ class HttpUtil {
 
     http.Response res = await http.put(url,
       headers: headers,
-      body: body,
+      body: jsonEncode(body),
       encoding: encoding,
     );
 
@@ -99,7 +99,7 @@ class HttpUtil {
 
     http.Response res = await http.patch(url,
       headers: headers,
-      body: body,
+      body: jsonEncode(body),
       encoding: encoding,
     );
 

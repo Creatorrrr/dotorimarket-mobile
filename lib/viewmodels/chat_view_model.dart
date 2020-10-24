@@ -65,11 +65,11 @@ class ChatViewModel extends ViewModel {
     String url = sprintf(GET_CHAT_CONTENT_LIST, [chatId]);
 
     Map<String, String> queryParams = {
-      filter: filter,
-      field: field,
-      keyword: keyword,
-      orders: orders,
-      paging: paging,
+      'filter': filter,
+      'field': field,
+      'keyword': keyword,
+      'orders': orders,
+      'paging': paging,
     };
 
     Response res = await HttpUtil.get(url, context,

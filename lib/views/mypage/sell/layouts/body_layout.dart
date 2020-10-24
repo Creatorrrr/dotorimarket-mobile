@@ -32,9 +32,7 @@ class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMi
                 price: snapshot.data[index].price,
                 onItemPressed: () {
                   Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => DealDetailPage(
-                        dealId: snapshot.data[index].id,
-                      )
+                      builder: (BuildContext context) => DealDetailPage(snapshot.data[index].id),
                   ));
                 },
                 onToReservingPressed: () {

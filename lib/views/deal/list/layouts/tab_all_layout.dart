@@ -53,9 +53,7 @@ class TabAllLayout extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute<void>(
                           builder: (context) {
-                            return DealDetailPage(
-                              dealId: snapshot.data[index].id,
-                            );
+                            return DealDetailPage(snapshot.data[index].id);
                           }
                         ));
                       },
