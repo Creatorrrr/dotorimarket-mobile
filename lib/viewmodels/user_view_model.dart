@@ -12,6 +12,9 @@ class UserViewModel extends ViewModel {
     Response res = await HttpUtil.post(
       POST_USER,
       context,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: userLoginDto.toJson(),
     );
 

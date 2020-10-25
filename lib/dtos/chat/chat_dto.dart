@@ -1,5 +1,6 @@
 import 'package:dotorimarket/dtos/account/account_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_content_dto.dart';
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'chat_dto.g.dart';
@@ -8,6 +9,7 @@ part 'chat_dto.g.dart';
 class ChatDto {
   String id;
   String title;
+  DealDto deal;
   List<AccountDto> members;
   List<ChatContentDto> contents;
   DateTime createdAt;
@@ -16,6 +18,9 @@ class ChatDto {
   ChatDto({
     this.id,
     this.title,
+    this.deal,
+    this.members,
+    this.contents,
     this.createdAt,
     this.updatedAt,
   });

@@ -4,11 +4,11 @@ part 'category_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class CategoryDto {
-  int categoryId;
+  String id;
   String name;
 
   CategoryDto({
-    this.categoryId,
+    this.id,
     this.name,
   });
 

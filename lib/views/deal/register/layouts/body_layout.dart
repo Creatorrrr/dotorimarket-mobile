@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dotorimarket/dtos/category/category_dto.dart';
+import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/category_view_model.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/common/formatters/currency_formatter.dart';
@@ -19,6 +20,7 @@ import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatefulWidget {
   @override
@@ -251,11 +253,16 @@ class _BodyLayoutState extends State<BodyLayout> {
     final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
 
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String userId = prefs.getString('id');
+
       // 로그인 데이터
       DealPostDto dealPostDto = DealPostDto(
         title: titleTextEditingController.text.trim(),
+        category: selectedCategory.id,
         price: priceTextEditingController.text.trim().replaceAll(RegExp(r'[^\d]'), ''),
         description: descriptionTextEditingController.text.trim(),
+        seller: userId,
       );
 
       // validation 확인
@@ -292,17 +299,20 @@ class _BodyLayoutState extends State<BodyLayout> {
     if (dealPostDto == null) {
       throw '개발자에게 문의해주세요 : dto parameter is null';
     }
-    if (dealPostDto.title == null || dealPostDto.title.isEmpty) {
-      throw '$GOOD_NAME_HINT_TEXT$POSTFIX';
+    if (StringUtil.isEmpty(dealPostDto.title)) {
+      throw '제목을 입력해주세요';
     }
-//    if (dealPostDto.categoryId == null || dealPostDto.categoryId.isEmpty) {
-//      throw '$CATEGORY_HINT_TEXT$POSTFIX';
-//    }
-    if (dealPostDto.price == null || dealPostDto.price.isEmpty) {
-      throw '$PRICE_HINT_TEXT$POSTFIX';
+    if (StringUtil.isEmpty(dealPostDto.category)) {
+      throw '카테고리를 선택해주세요';
     }
-    if (dealPostDto.description == null || dealPostDto.description.isEmpty) {
-      throw '$DESCRIPTION_HINT_TEXT$POSTFIX';
+    if (StringUtil.isEmpty(dealPostDto.price)) {
+      throw '가격을 입력해주세요';
+    }
+    if (StringUtil.isEmpty(dealPostDto.description)) {
+      throw '상품의 설명을 입력해주세요';
+    }
+    if (StringUtil.isEmpty(dealPostDto.seller)) {
+      throw '개발자에게 문의해주세요 : seller parameter is null';
     }
   }
 }

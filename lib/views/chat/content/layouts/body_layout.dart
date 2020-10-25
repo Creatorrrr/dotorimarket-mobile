@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/chat/chat_content_dto.dart';
+import 'package:dotorimarket/dtos/chat/chat_dto.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/chat_view_model.dart';
@@ -19,13 +20,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class BodyLayout extends StatefulWidget {
-  final String dealId;
-  final String chatId;
+  final ChatDto chat;
+  final SharedPreferences prefs;
 
-  BodyLayout({
+  BodyLayout(this.chat, this.prefs, {
     Key key,
-    @required this.dealId,
-    @required this.chatId,
   }):super(key: key);
 
   @override
@@ -50,27 +49,25 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   @override
   void initState() {
-    SharedPreferences.getInstance().then((prefs) {
-        String token = prefs.getString('token');
-        socket = IO.io('ws://localhost:3000/chat', <String, dynamic>{
-          'transports': ['websocket'],
-          'autoConnect': false,
-          'extraHeaders': {'authorization': token},
-          'query': { 'chatId': widget.chatId},
-        });
-        socket.connect();
-        socket.on(CHAT_CONTENT_SOCKET_EVENT, (data) {
-          ChatContentDto chatContentDto = ChatContentDto.fromJson(data);
-          _socketStreamController.sink.add(chatContentDto);
-        });
-        socket.on('error', (data) {
-          Navigator.pushReplacement(context, PageRouteBuilder(
-            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
-            => LoginPage(
-              showUpdateMessage: true,
-            ),
-          ));
-        });
+    String token = widget.prefs.getString('token');
+    socket = IO.io('ws://localhost:3000/chat', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+      'extraHeaders': {'authorization': token},
+      'query': { 'chatId': widget.chat.id},
+    });
+    socket.connect();
+    socket.on(CHAT_CONTENT_SOCKET_EVENT, (data) {
+      ChatContentDto chatContentDto = ChatContentDto.fromJson(data);
+      _socketStreamController.sink.add(chatContentDto);
+    });
+    socket.on('error', (data) {
+      Navigator.pushReplacement(context, PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)
+        => LoginPage(
+          showUpdateMessage: true,
+        ),
+      ));
     });
     super.initState();
   }
@@ -83,26 +80,26 @@ class _BodyLayoutState extends State<BodyLayout> {
     return Container(
       child: Column(
         children: <Widget>[
-          // Container(
-          //   child: CheckedFutureBuilder(
-          //     future: dealViewModel.getDealOne(widget.dealId, context),
-          //     builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
-          //       // 위젯 리스트 그리기
-          //       return DealProfileLayout(
-          //         image: Image.asset(THUMBNAIL_PATH,
-          //           fit: BoxFit.cover,
-          //         ),
-          //         status: '거래중',
-          //         name: snapshot.data.title,
-          //         price: snapshot.data.price,
-          //       );
-          //     },
-          //   ),
-          //   padding: const EdgeInsets.symmetric(
-          //     vertical: DEAL_PROFILE_VERTICAL_PADDING,
-          //     horizontal: DEAL_PROFILE_HORIZONTAL_PADDING,
-          //   ),
-          // ),
+          Container(
+            child: CheckedFutureBuilder(
+              future: dealViewModel.getDealOne(widget.chat.deal.id, context),
+              builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
+                // 위젯 리스트 그리기
+                return DealProfileLayout(
+                  image: Image.asset(THUMBNAIL_PATH,
+                    fit: BoxFit.cover,
+                  ),
+                  status: '거래중',
+                  name: snapshot.data.title,
+                  price: snapshot.data.price,
+                );
+              },
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: DEAL_PROFILE_VERTICAL_PADDING,
+              horizontal: DEAL_PROFILE_HORIZONTAL_PADDING,
+            ),
+          ),
           Divider(
             height: DIVIDER_HEIGHT,
             color: ColorConstant.BACKGROUND_GREY,
@@ -110,48 +107,43 @@ class _BodyLayoutState extends State<BodyLayout> {
           Expanded(
             child: Container(
               child: CheckedFutureBuilder(
-                future: SharedPreferences.getInstance(),
-                builder: (BuildContext context, AsyncSnapshot<SharedPreferences> prefsSnapshot) {
-                  return CheckedFutureBuilder(
-                    future: chatViewModel.getChatContentList(widget.chatId, '', '', '', '{"createdAt": "desc"}', '', context),
-                    builder: (BuildContext context, AsyncSnapshot<List<ChatContentDto>> chatContentDtoListSnapshot) {
-                      return StreamBuilder(
-                        stream: _socketStreamController.stream,
-                        builder: (BuildContext context, AsyncSnapshot<ChatContentDto> chatContentDtoSnapshot) {
-                          if (chatContentDtoSnapshot.data != null) {
-                            bool isExist = chatContentDtoListSnapshot.data.any((element) => element.id == chatContentDtoSnapshot.data.id);
-                            if (!isExist) chatContentDtoListSnapshot.data.insert(0, chatContentDtoSnapshot.data);
-                          }
+                future: chatViewModel.getChatContentList(widget.chat.id, '', '', '', '{"createdAt": "desc"}', '', context),
+                builder: (BuildContext context, AsyncSnapshot<List<ChatContentDto>> chatContentDtoListSnapshot) {
+                  return StreamBuilder(
+                    stream: _socketStreamController.stream,
+                    builder: (BuildContext context, AsyncSnapshot<ChatContentDto> chatContentDtoSnapshot) {
+                      if (chatContentDtoSnapshot.data != null) {
+                        bool isExist = chatContentDtoListSnapshot.data.any((element) => element.id == chatContentDtoSnapshot.data.id);
+                        if (!isExist) chatContentDtoListSnapshot.data.insert(0, chatContentDtoSnapshot.data);
+                      }
 
-                          return ListView.builder(
-                            reverse: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              String prefAccountId = prefsSnapshot.data.getString('id');
-                              String chatContentAccountId = chatContentDtoListSnapshot.data[index].account.id;
+                      return ListView.builder(
+                        reverse: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          String prefAccountId = widget.prefs.getString('id');
+                          String chatContentAccountId = chatContentDtoListSnapshot.data[index].account.id;
 
-                              return prefAccountId == chatContentAccountId
-                                ? Container(
-                                    child: ChatContentListRightItem(
-                                      text: chatContentDtoListSnapshot.data[index].content,
-                                      time: chatContentDtoListSnapshot.data[index].createdAt,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-                                    ),
-                                  )
-                                : Container(
-                                    child: ChatContentListLeftItem(
-                                      text: chatContentDtoListSnapshot.data[index].content,
-                                      time: chatContentDtoListSnapshot.data[index].createdAt,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
-                                    ),
-                                  );
-                            },
-                            itemCount: chatContentDtoListSnapshot.data.length,
+                          return prefAccountId == chatContentAccountId
+                              ? Container(
+                            child: ChatContentListRightItem(
+                              text: chatContentDtoListSnapshot.data[index].content,
+                              time: chatContentDtoListSnapshot.data[index].createdAt,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                            ),
+                          )
+                              : Container(
+                            child: ChatContentListLeftItem(
+                              text: chatContentDtoListSnapshot.data[index].content,
+                              time: chatContentDtoListSnapshot.data[index].createdAt,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: CHAT_CONTENT_ITEM_VERTICAL_PADDING,
+                            ),
                           );
                         },
+                        itemCount: chatContentDtoListSnapshot.data.length,
                       );
                     },
                   );

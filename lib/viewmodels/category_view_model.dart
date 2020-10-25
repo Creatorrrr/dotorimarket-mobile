@@ -6,9 +6,22 @@ import 'package:dotorimarket/utils/http_util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Response;
 import 'package:dotorimarket/viewmodels/view_model.dart';
+import 'package:sprintf/sprintf.dart';
 
 class CategoryViewModel extends ViewModel {
+  static const GET_CATEGORY_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/categories/%s';
   static const GET_CATEGORY_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/categories';
+
+  Future<CategoryDto> getCategoryOne(String categoryId, BuildContext context) async {
+    String url = sprintf(GET_CATEGORY_ONE, [categoryId]);
+
+    Response res = await HttpUtil.get(url, context);
+    Map<String, dynamic> bodyJson = jsonDecode(res.body);
+
+    CategoryDto category = new CategoryDto.fromJson(bodyJson['result']);
+
+    return category;
+  }
 
   Future<List<CategoryDto>> getCategoryList(String filter, String field, String keyword, String orders, String paging, BuildContext context) async {
     String url = GET_CATEGORY_LIST;

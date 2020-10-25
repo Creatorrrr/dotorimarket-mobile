@@ -28,9 +28,7 @@ class BodyLayout extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute<void>(
                       builder: (BuildContext context) {
-                        return ChatContentPage(
-                          chatId: snapshot.data[index].id,
-                        );
+                        return ChatContentPage(snapshot.data[index].id);
                       }
                     ));
                   },

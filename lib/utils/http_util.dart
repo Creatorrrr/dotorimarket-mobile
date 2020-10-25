@@ -52,6 +52,7 @@ class HttpUtil {
     url = _setQueryParams(url, queryParams);
 
     headers = await _setDefaultHeaders(headers);
+    if (StringUtil.isEmpty(headers['content-type'])) headers['content-type'] = 'application/json';
 
     http.Response res = await http.post(url,
       headers: headers,
@@ -74,6 +75,7 @@ class HttpUtil {
     url = _setQueryParams(url, queryParams);
 
     headers = await _setDefaultHeaders(headers);
+    if (StringUtil.isEmpty(headers['content-type'])) headers['content-type'] = 'application/json';
 
     http.Response res = await http.put(url,
       headers: headers,
@@ -96,6 +98,7 @@ class HttpUtil {
     url = _setQueryParams(url, queryParams);
 
     headers = await _setDefaultHeaders(headers);
+    if (StringUtil.isEmpty(headers['content-type'])) headers['content-type'] = 'application/json';
 
     http.Response res = await http.patch(url,
       headers: headers,
@@ -128,11 +131,16 @@ class HttpUtil {
 
   /// url 쿼리 스트링 설정
   static String _setQueryParams(String url, Map<String, String> queryParams) {
-    if (queryParams != null && queryParams.length > 0) {
-      url = '$url?';
+    if (queryParams != null) {
+      bool hasValue = false;
       queryParams.forEach((key, value) {
         if (StringUtil.isNotEmpty(value)) {
-          url = '$url$key=$value';
+          if (hasValue) {
+            url = '$url&$key=$value';
+          } else {
+            url = '$url?$key=$value';
+            hasValue = true;
+          }
         }
       });
     }
@@ -149,9 +157,7 @@ class HttpUtil {
     headers['app-version'] = appVersion;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString(TOKEN_KEY);
-    if (token != null) {
-      headers['Authorization'] = '$TOKEN_PREFIX $token';
-    }
+    if (StringUtil.isNotEmpty(token)) headers['Authorization'] = '$TOKEN_PREFIX $token';
 
     return headers;
   }

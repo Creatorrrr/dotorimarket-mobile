@@ -8,7 +8,7 @@ part of 'category_dto.dart';
 
 CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) {
   return CategoryDto(
-    categoryId: json['categoryId'] as int,
+    id: json['id'] as String,
     name: json['name'] as String,
   );
 }
@@ -22,7 +22,7 @@ Map<String, dynamic> _$CategoryDtoToJson(CategoryDto instance) {
     }
   }
 
-  writeNotNull('categoryId', instance.categoryId);
+  writeNotNull('id', instance.id);
   writeNotNull('name', instance.name);
   return val;
 }

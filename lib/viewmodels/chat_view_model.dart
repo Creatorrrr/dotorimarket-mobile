@@ -12,7 +12,7 @@ import 'package:sprintf/sprintf.dart';
 
 class ChatViewModel extends ViewModel {
   static const POST_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats';
-  static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%d';
+  static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%s';
   static const GET_DEAL_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats';
   static const GET_CHAT_CONTENT_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%s/contents';
 
@@ -25,7 +25,7 @@ class ChatViewModel extends ViewModel {
     return res;
   }
 
-  Future<ChatDto> getChatOne(int chatId, BuildContext context) async {
+  Future<ChatDto> getChatOne(String chatId, BuildContext context) async {
     String url = sprintf(GET_DEAL_ONE, [chatId]);
 
     Response res = await HttpUtil.get(url, context);

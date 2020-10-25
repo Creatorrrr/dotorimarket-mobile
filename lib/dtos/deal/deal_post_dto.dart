@@ -6,15 +6,17 @@ part 'deal_post_dto.g.dart';
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class DealPostDto {
   String title;
-  String categoryId;
+  String category;
   String price;
   String description;
+  String seller;
 
   DealPostDto({
     this.title,
-    this.categoryId,
+    this.category,
     this.price,
     this.description,
+    this.seller,
   });
 
   factory DealPostDto.fromJson(Map<String, dynamic> json) => _$DealPostDtoFromJson(json);

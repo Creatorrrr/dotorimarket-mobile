@@ -8,6 +8,7 @@ import 'package:dotorimarket/views/deal/detail/layouts/body_layout.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DealDetailPage extends StatelessWidget {
   static const String GOOD_IMAGE_PATH = 'assets/images/dotori-logo.png';
@@ -30,15 +31,21 @@ class DealDetailPage extends StatelessWidget {
             final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
 
             return CheckedFutureBuilder(
-              future: dealViewModel.getDealOne(this.dealId, context),
-              builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
+              future: Future.wait([
+                SharedPreferences.getInstance(),
+                dealViewModel.getDealOne(this.dealId, context),
+              ]),
+              builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                SharedPreferences prefs = snapshot.data[0];
+                DealDto deal = snapshot.data[1];
+
                 return SafeArea(
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     child: Stack(
                       children: <Widget>[
                         Positioned(
-                          child: BodyLayout(snapshot.data),
+                          child: BodyLayout(deal, prefs),
                           top: HEADER_HEIGHT,
                           bottom: FOOTER_HEIGHT,
                           left: 0.0,
@@ -58,7 +65,7 @@ class DealDetailPage extends StatelessWidget {
                           bottom: 0.0,
                           left: 0.0,
                           right: 0.0,
-                          child: FooterLayout(snapshot.data,
+                          child: FooterLayout(deal, prefs,
                             height: FOOTER_HEIGHT,
                           ),
                         ),

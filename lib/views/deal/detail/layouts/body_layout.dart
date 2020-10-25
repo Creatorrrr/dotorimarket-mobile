@@ -5,11 +5,13 @@ import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/good_profile_layout.dart';
 import 'package:dotorimarket/views/deal/detail/widgets/main_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatefulWidget {
   final DealDto deal;
+  final SharedPreferences prefs;
 
-  BodyLayout(this.deal, {
+  BodyLayout(this.deal, this.prefs, {
     Key key,
   }):super(key: key);
 
@@ -52,10 +54,10 @@ class _BodyLayoutState extends State<BodyLayout> {
                         controller: scrollController,
                         child: Container(
                           child: GoodProfileLayout(
-                            category: '디지털/핸드폰 > 갤럭시 케이스',
+                            category: widget.deal.category.name,
                             title: widget.deal.title,
                             price: widget.deal.price,
-                            creatorName: '레코더팩토리',
+                            creatorName: widget.deal.seller.name,
                             description: widget.deal.description,
                             scrollController: scrollController,
                           ),

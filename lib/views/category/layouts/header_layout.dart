@@ -31,31 +31,31 @@ class HeaderLayout extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            child: Row(
-              children: [
-                Container(
-                  child: HeaderIconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-
-                    },
-                  ),
-                ),
-                Container(
-                  child: HeaderIconButton(
-                    icon: Icon(Icons.notifications_none),
-                    onPressed: () {
-
-                    },
-                  ),
-                ),
-              ],
-            ),
-            top: 0.0,
-            bottom: 0.0,
-            right: 0.0,
-          ),
+          // Positioned(
+          //   child: Row(
+          //     children: [
+          //       Container(
+          //         child: HeaderIconButton(
+          //           icon: Icon(Icons.search),
+          //           onPressed: () {
+          //
+          //           },
+          //         ),
+          //       ),
+          //       Container(
+          //         child: HeaderIconButton(
+          //           icon: Icon(Icons.notifications_none),
+          //           onPressed: () {
+          //
+          //           },
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          //   top: 0.0,
+          //   bottom: 0.0,
+          //   right: 0.0,
+          // ),
         ],
       ),
       height: height,
