@@ -10,6 +10,7 @@ class AccountDto {
   String password;
   String name;
   String email;
+  String place;
 
   AccountDto({
     this.id,
@@ -17,6 +18,7 @@ class AccountDto {
     this.password,
     this.name,
     this.email,
+    this.place,
   });
 
   factory AccountDto.fromJson(Map<String, dynamic> json) => _$AccountDtoFromJson(json);

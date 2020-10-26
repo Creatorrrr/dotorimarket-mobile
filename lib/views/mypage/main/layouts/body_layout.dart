@@ -3,6 +3,7 @@ import 'package:dotorimarket/views/mypage/main/layouts/my_list_buttons_layout.da
 import 'package:dotorimarket/views/mypage/main/layouts/my_profile_layout.dart';
 import 'package:dotorimarket/views/mypage/main/layouts/text_buttons_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatelessWidget {
   static const double VERTICAL_PADDING = 10.0;
@@ -14,15 +15,24 @@ class BodyLayout extends StatelessWidget {
   static const double TEXT_BUTTONS_TOP_PADDING = 20.0;
   static const double DIVIDER_HEIGHT = 0.0;
 
+  final SharedPreferences prefs;
+
+  BodyLayout(this.prefs, {
+    Key key,
+  }):super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    String userName = prefs.getString('name');
+    String place = prefs.getString('place');
+
     return Container(
       child: Column(
         children: <Widget>[
           Container(
             child: MyProfileLayout(
-              name: '을지로짱',
-              description: '페럼타워',
+              name: userName,
+              description: place,
             ),
             padding: const EdgeInsets.symmetric(
               vertical: MY_PROFILE_VERTICAL_PADDING,

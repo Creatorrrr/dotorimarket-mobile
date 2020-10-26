@@ -57,14 +57,14 @@ class _BodyLayoutState extends State<BodyLayout> {
                             category: widget.deal.category.name,
                             title: widget.deal.title,
                             price: widget.deal.price,
-                            creatorName: widget.deal.seller.name,
+                            sellerName: widget.deal.sellerName,
                             description: widget.deal.description,
                             scrollController: scrollController,
                           ),
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: const BorderRadius.vertical(
-                                top: const Radius.circular(DEAL_PROFILE_TOP_RADIUS)
+                              top: const Radius.circular(DEAL_PROFILE_TOP_RADIUS)
                             ),
                           ),
                           height: goodProfileMaxHeight,

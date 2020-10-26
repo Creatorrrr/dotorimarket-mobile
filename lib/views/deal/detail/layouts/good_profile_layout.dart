@@ -24,7 +24,7 @@ class GoodProfileLayout extends StatelessWidget {
   final String category;
   final String title;
   final int price;
-  final String creatorName;
+  final String sellerName;
   final String description;
   final ScrollController scrollController;
 
@@ -33,7 +33,7 @@ class GoodProfileLayout extends StatelessWidget {
     @required this.category,
     @required this.title,
     @required this.price,
-    @required this.creatorName,
+    @required this.sellerName,
     this.description,
     @required this.scrollController,
   }): super(key: key);
@@ -102,7 +102,7 @@ class GoodProfileLayout extends StatelessWidget {
                   child: Container(
                     child: Column(
                       children: [
-                        Text(creatorName,
+                        Text(sellerName,
                           style: TextStyle(
                             fontSize: CREATOR_NAME_SIZE,
                           ),

@@ -42,7 +42,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double NICKNAME_LABEL_SIZE = 12.0;
   static const double NICKNAME_HINT_SIZE = 14.0;
   static const double NICKNAME_WIDTH = 200.0;
-  static const int NICKNAME_MAX_LENGTH = 10;
+  static const int NICKNAME_MAX_LENGTH = 8;
 
   static const String NICKNAME_LABEL_TEXT = '닉네임';
   static const String NICKNAME_HINT_TEXT = '닉네임을 입력해주세요';

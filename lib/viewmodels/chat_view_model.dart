@@ -12,6 +12,7 @@ import 'package:sprintf/sprintf.dart';
 
 class ChatViewModel extends ViewModel {
   static const POST_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats';
+  static const DELETE_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%s';
   static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%s';
   static const GET_DEAL_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats';
   static const GET_CHAT_CONTENT_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/chats/%s/contents';
@@ -22,6 +23,14 @@ class ChatViewModel extends ViewModel {
       context,
       body: chatPostDto.toJson(),
     );
+    return res;
+  }
+
+  Future<Response> deleteChat(String chatId, BuildContext context) async {
+    String url = sprintf(DELETE_DEAL, [chatId]);
+
+    Response res = await HttpUtil.delete(url, context);
+
     return res;
   }
 

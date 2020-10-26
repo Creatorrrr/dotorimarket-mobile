@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:dotorimarket/views/mypage/sell/widgets/sell_list_item.dart';
 
 class BodyLayout extends StatefulWidget {
-  BodyLayout({
+  final List<DealDto> dealList;
+
+  BodyLayout(this.dealList,{
     Key key,
   }):super(key: key);
 
@@ -22,30 +24,25 @@ class BodyLayoutState extends State<BodyLayout> with SingleTickerProviderStateMi
     final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
 
     return Container(
-      child: CheckedFutureBuilder(
-        future: dealViewModel.getDealList("", "", "", "", "", context),
-        builder: (BuildContext context, AsyncSnapshot<List<DealDto>> snapshot) {
-          return ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return SellListItem(
-                title: snapshot.data[index].title,
-                price: snapshot.data[index].price,
-                onItemPressed: () {
-                  Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => DealDetailPage(snapshot.data[index].id),
-                  ));
-                },
-                onToReservingPressed: () {
-
-                },
-                onToDealtPressed: () {
-
-                },
-              );
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return SellListItem(
+            title: widget.dealList[index].title,
+            price: widget.dealList[index].price,
+            onItemPressed: () {
+              Navigator.push(context, MaterialPageRoute<void>(
+                builder: (BuildContext context) => DealDetailPage(widget.dealList[index].id),
+              ));
             },
-            itemCount: snapshot.data.length,
+            onToReservingPressed: () {
+
+            },
+            onToDealtPressed: () {
+
+            },
           );
         },
+        itemCount: widget.dealList.length,
       ),
     );
   }

@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 class ChatListItem extends StatelessWidget {
   static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
 
-  static const double HEIGHT_DEFAULT = 70.0;
   static const double PROFILE_IMAGE_RADIUS = 30.0;
   static const ImageProvider DEFAULT_PROFILE_IMAGE = AssetImage(DEFAULT_PROFILE_IMAGE_PATH);
   static const double ACTION_EXTENT_RATIO = 0.25;
@@ -17,6 +16,8 @@ class ChatListItem extends StatelessWidget {
   static const double DESCRIPTION_FONT_SIZE = 14.0;
   static const double DESCRIPTION_TOP_PADDING = 5.0;
   static const double TEXT_AREA_LEFT_PADDING = 10.0;
+  static const double ITEM_VERTICAL_PADDING = 10.0;
+  static const double ITEM_HORIZONTAL_PADDING = 15.0;
 
   static const String DELETE_ACTION_BUTTON_TEXT = '삭제';
   static const String TIME_FORMAT = 'yyyy년 MM월 dd일';
@@ -24,16 +25,13 @@ class ChatListItem extends StatelessWidget {
   final String nickName;
   final String title;
   final DateTime createdAt;
-  final double height;
-  final Function onPressed;
+  final void Function() onPressed;
+  final void Function() onDeletePressed;
 
-  ChatListItem({
+  ChatListItem(this.nickName, this.title, this.createdAt, {
     Key key,
-    @required this.nickName,
-    @required this.title,
-    @required this.createdAt,
-    this.height = HEIGHT_DEFAULT,
     @required this.onPressed,
+    @required this.onDeletePressed,
   }):super(key: key);
 
   @override
@@ -104,16 +102,19 @@ class ChatListItem extends StatelessWidget {
               ),
             ],
           ),
-          height: this.height,
+          padding: const EdgeInsets.symmetric(
+            vertical: ITEM_VERTICAL_PADDING,
+            horizontal: ITEM_HORIZONTAL_PADDING,
+          ),
         ),
-        onTap: this.onPressed,
+        onTap: onPressed,
       ),
       secondaryActions: <Widget>[
         IconSlideAction(
           caption: DELETE_ACTION_BUTTON_TEXT,
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () => print(DELETE_ACTION_BUTTON_TEXT),
+          onTap: onDeletePressed,
         ),
       ],
     );

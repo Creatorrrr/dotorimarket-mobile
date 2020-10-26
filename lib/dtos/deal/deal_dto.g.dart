@@ -15,9 +15,14 @@ DealDto _$DealDtoFromJson(Map<String, dynamic> json) {
         : CategoryDto.fromJson(json['category'] as Map<String, dynamic>),
     price: json['price'] as int,
     description: json['description'] as String,
+    chats: (json['chats'] as List)
+        ?.map((e) =>
+            e == null ? null : ChatDto.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     seller: json['seller'] == null
         ? null
         : AccountDto.fromJson(json['seller'] as Map<String, dynamic>),
+    sellerName: json['sellerName'] as String,
   );
 }
 
@@ -35,6 +40,8 @@ Map<String, dynamic> _$DealDtoToJson(DealDto instance) {
   writeNotNull('category', instance.category?.toJson());
   writeNotNull('price', instance.price);
   writeNotNull('description', instance.description);
+  writeNotNull('chats', instance.chats?.map((e) => e?.toJson())?.toList());
   writeNotNull('seller', instance.seller?.toJson());
+  writeNotNull('sellerName', instance.sellerName);
   return val;
 }

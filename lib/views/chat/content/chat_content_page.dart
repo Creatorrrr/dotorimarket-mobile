@@ -48,9 +48,8 @@ class ChatContentPage extends StatelessWidget {
                             top: 0.0,
                             left: 0.0,
                             right: 0.0,
-                            child: HeaderLayout(
+                            child: HeaderLayout(chat,
                               height: HEADER_TOP_HEIGHT,
-                              text: '닉네임',
                             ),
                           ),
                           Positioned(

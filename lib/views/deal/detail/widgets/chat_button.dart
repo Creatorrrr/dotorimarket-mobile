@@ -9,7 +9,7 @@ class ChatButton extends StatelessWidget {
 
   static const String CHAT_BUTTON_TEXT = '채팅으로 거래하기';
 
-  final Function onPressed;
+  final void Function() onPressed;
 
   ChatButton({
     Key key,

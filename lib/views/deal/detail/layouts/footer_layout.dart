@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dotorimarket/dtos/chat/chat_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_post_dto.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/chat_view_model.dart';
 import 'package:dotorimarket/views/chat/content/chat_content_page.dart';
+import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/detail/widgets/chat_button.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +52,7 @@ class _FooterLayoutState extends State<FooterLayout> {
 
   @override
   Widget build(BuildContext context) {
+    String userId = widget.prefs.getString('id');
     final ChatViewModel chatViewModel = ViewModelProvider.of<ChatViewModel>(context);
 
     return Container(
@@ -70,35 +74,54 @@ class _FooterLayoutState extends State<FooterLayout> {
             child: Container(
               child: ChatButton(
                 onPressed: () async {
-                  // TODO 채팅이 생성되지 않았을 경우 생성 후 이동
-                  String userId = widget.prefs.getString('id');
-
-                  ChatPostDto chatPostDto = ChatPostDto(
-                    title: widget.deal.title,
-                    deal: widget.deal.id,
-                    members: [userId, widget.deal.seller.id],
-                  );
-
-                  http.Response res = await chatViewModel.postChat(chatPostDto, context);
-
-                  // 성공여부 확인
-                  if (res.statusCode == 200) {
-                    Map<String, dynamic> bodyJson = jsonDecode(res.body);
-
-                    // 화면 이동
+                  // 판매자 본인일 경우 대화 리스트 화면 이동
+                  if (userId == widget.deal.seller.id) {
                     Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                        builder: (context) {
-                          return ChatContentPage(bodyJson['result']['id']);
-                        }
+                      builder: (BuildContext context) => ChatListPage(),
                     ));
-                  } else {
-                    Map<String, dynamic> bodyJson = jsonDecode(res.body);
-                    String message = bodyJson['message'];
+                  } else {  // 판매자가 아닐 경우
+                    String filter = jsonEncode({
+                      'deal': widget.deal.id,
+                      'members': {
+                        '\$in' : userId,
+                      },
+                    });
+                    List<ChatDto> chatList = await chatViewModel.getChatList(filter, '', '', '', '', context);
+                    // 채팅이 생성되지 않았을 경우 생성 후 이동
+                    if (chatList == null || chatList.length == 0) {
+                      ChatPostDto chatPostDto = ChatPostDto(
+                        title: widget.deal.title,
+                        deal: widget.deal.id,
+                        members: [userId, widget.deal.seller.id],
+                      );
 
-                    Scaffold.of(context).removeCurrentSnackBar();
-                    Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));  // 서버 메시지 출력
+                      http.Response res = await chatViewModel.postChat(chatPostDto, context);
+
+                      // 성공여부 확인
+                      if (res.statusCode == HttpStatus.ok) {
+                        Map<String, dynamic> bodyJson = jsonDecode(res.body);
+
+                        // 화면 이동
+                        Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                          builder: (context) {
+                            return ChatContentPage(bodyJson['result']['id']);
+                          }
+                        ));
+                      } else {
+                        Map<String, dynamic> bodyJson = jsonDecode(res.body);
+                        String message = bodyJson['message'];
+
+                        Scaffold.of(context).removeCurrentSnackBar();
+                        Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));  // 서버 메시지 출력
+                      }
+                    } else {  // 채팅이 생성되어 있을 경우 바로 이동
+                      Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                        builder: (context) {
+                          return ChatContentPage(chatList[0].id);
+                        }
+                      ));
+                    }
                   }
-                  // TODO 채팅이 생성되어 있을 경우 바로 이동
                 },
               ),
               padding: const EdgeInsets.only(

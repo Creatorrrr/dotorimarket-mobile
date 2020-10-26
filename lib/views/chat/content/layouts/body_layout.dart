@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/chat/chat_content_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_dto.dart';
@@ -50,7 +51,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   @override
   void initState() {
     String token = widget.prefs.getString('token');
-    socket = IO.io('ws://localhost:3000/chat', <String, dynamic>{
+    socket = IO.io('${HttpConfig.URL_WEB_SOCKET_PREFIX}/chat', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
       'extraHeaders': {'authorization': token},

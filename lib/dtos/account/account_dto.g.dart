@@ -13,6 +13,7 @@ AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) {
     password: json['password'] as String,
     name: json['name'] as String,
     email: json['email'] as String,
+    place: json['place'] as String,
   );
 }
 
@@ -30,5 +31,6 @@ Map<String, dynamic> _$AccountDtoToJson(AccountDto instance) {
   writeNotNull('password', instance.password);
   writeNotNull('name', instance.name);
   writeNotNull('email', instance.email);
+  writeNotNull('place', instance.place);
   return val;
 }
