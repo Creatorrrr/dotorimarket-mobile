@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dotorimarket/dtos/category/category_dto.dart';
 import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/category_view_model.dart';
@@ -269,10 +270,10 @@ class _BodyLayoutState extends State<BodyLayout> {
       _checkRegisterForm(dealPostDto);
 
       // 로그인 요청
-      http.Response res = await dealViewModel.postDeal(dealPostDto, context);
+      Response res = await dealViewModel.postDeal(dealPostDto, pictureList, context);
 
       // 성공여부 확인
-      if (res.statusCode == 200) {
+      if (res.statusCode == HttpStatus.ok) {
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
             builder: (context) {
@@ -280,7 +281,7 @@ class _BodyLayoutState extends State<BodyLayout> {
             }
         ));
       } else {
-        Map<String, dynamic> bodyJson = jsonDecode(res.body);
+        Map<String, dynamic> bodyJson = jsonDecode(res.data);
         String message = bodyJson['message'];
 
         Scaffold.of(context).removeCurrentSnackBar();

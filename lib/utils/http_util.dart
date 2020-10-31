@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/utils/string_util.dart';
-import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:dio/dio.dart';
 
 
 class HttpUtil {
@@ -61,6 +62,29 @@ class HttpUtil {
     );
 
     _showUpdateDialog(res, context);
+
+    return res;
+  }
+
+  /// post multipart 요청
+  static Future<Response> postMultipart(dynamic url, BuildContext context, {
+    Map<String, String> headers,
+    Map<String, String> queryParams,
+    dynamic body,
+    Encoding encoding,
+  }) async {
+    url = _setQueryParams(url, queryParams);
+
+    headers = await _setDefaultHeaders(headers);
+    if (StringUtil.isEmpty(headers['content-type'])) headers['content-type'] = 'application/json';
+
+    Dio dio = Dio();
+    Response res = await dio.post(url,
+      data: body,
+      options: Options(
+        headers: headers,
+      ),
+    );
 
     return res;
   }
