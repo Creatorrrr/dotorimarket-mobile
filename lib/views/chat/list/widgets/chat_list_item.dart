@@ -1,8 +1,13 @@
+import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/account/account_dto.dart';
+import 'package:dotorimarket/dtos/chat/chat_dto.dart';
+import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatListItem extends StatelessWidget {
   static const String DEFAULT_PROFILE_IMAGE_PATH = 'assets/images/default-profile.png';
@@ -22,13 +27,12 @@ class ChatListItem extends StatelessWidget {
   static const String DELETE_ACTION_BUTTON_TEXT = '삭제';
   static const String TIME_FORMAT = 'yyyy년 MM월 dd일';
 
-  final String nickName;
-  final String title;
-  final DateTime createdAt;
+  final ChatDto chat;
+  final SharedPreferences prefs;
   final void Function() onPressed;
   final void Function() onDeletePressed;
 
-  ChatListItem(this.nickName, this.title, this.createdAt, {
+  ChatListItem(this.chat, this.prefs, {
     Key key,
     @required this.onPressed,
     @required this.onDeletePressed,
@@ -36,6 +40,22 @@ class ChatListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userId = prefs.getString('id');
+    String img = prefs.getString('img');
+
+    // 내가 판매자일 경우 상대방의 현재 닉네임
+    // 내가 판매자가 아닐 경우 상대방의 당시 닉네
+
+    AccountDto member = chat.members.firstWhere((member) => member.id != userId);
+
+    String nickName;
+    if (chat.deal.seller.id == userId) nickName = member.name;
+    else nickName = chat.deal.sellerName;
+
+    String imagePath;
+    if (chat.deal.seller.id == userId) imagePath = member.img?.path;
+    else imagePath = chat.deal.seller.img?.path;
+
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: ACTION_EXTENT_RATIO,
@@ -45,7 +65,7 @@ class ChatListItem extends StatelessWidget {
             children: <Widget>[
               Container(
                 child: CircleImage(
-                  image: DEFAULT_PROFILE_IMAGE,
+                  image: StringUtil.isNotEmpty(imagePath) ? NetworkImage('${HttpConfig.URL_PREFIX}/${imagePath}') : DEFAULT_PROFILE_IMAGE,
                   radius: PROFILE_IMAGE_RADIUS,
                 ),
               ),
@@ -66,7 +86,7 @@ class ChatListItem extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              child: Text(DateFormat(TIME_FORMAT).format(createdAt),
+                              child: Text(DateFormat(TIME_FORMAT).format(chat.createdAt),
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: TIME_FONT_SIZE,
@@ -82,7 +102,7 @@ class ChatListItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        child: Text(title,
+                        child: Text(chat.title,
                           style: const TextStyle(
                             fontSize: DESCRIPTION_FONT_SIZE,
                           ),

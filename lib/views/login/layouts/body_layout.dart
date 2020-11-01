@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotorimarket/dtos/account/account_dto.dart';
 import 'package:dotorimarket/dtos/user/user_login_dto.dart';
 import 'package:dotorimarket/viewmodels/user_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -31,6 +32,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String ACCOUNT_ID_KEY = 'accountId';
   static const String NAME_KEY = 'name';
   static const String PLACE_KEY = 'place';
+  static const String IMAGE_KEY = 'img';
   static const String EMAIL_KEY = 'email';
   static const String TOKEN_KEY = 'token';
 
@@ -193,11 +195,13 @@ class _BodyLayoutState extends State<BodyLayout> {
         }
         Map<String, dynamic> body = jsonDecode(res.body);
         String token = body['result']['token'];
+        AccountDto account = AccountDto.fromJson(body['result']['account']);
         prefs.setString(TOKEN_KEY, token);
-        prefs.setString(ID_KEY, body['result']['account']['id']);
-        prefs.setString(ACCOUNT_ID_KEY, body['result']['account']['accountId']);
-        prefs.setString(NAME_KEY, body['result']['account']['name']);
-        prefs.setString(PLACE_KEY, body['result']['account']['place']);
+        prefs.setString(ID_KEY, account.id);
+        prefs.setString(ACCOUNT_ID_KEY, account.accountId);
+        prefs.setString(NAME_KEY, account.name);
+        prefs.setString(PLACE_KEY, account.place);
+        prefs.setString(IMAGE_KEY, account.img?.path);
 
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(

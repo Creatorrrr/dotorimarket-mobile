@@ -35,23 +35,23 @@ class MyListButtonsLayout extends StatelessWidget {
               ),
               flex: 1,
             ),
-            VerticalDivider(
-              width: VERTICAL_DIVIDER_WIDTH,
-              color: ColorConstant.BACKGROUND_GREY,
-            ),
-            Expanded(
-              child: Container(
-                child: MyListButton(
-                  text: PURCHASE_LIST_BUTTON_TEXT,
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => PurchaseListPage())
-                    );
-                  },
-                ),
-              ),
-              flex: 1,
-            ),
+            // VerticalDivider(
+            //   width: VERTICAL_DIVIDER_WIDTH,
+            //   color: ColorConstant.BACKGROUND_GREY,
+            // ),
+            // Expanded(
+            //   child: Container(
+            //     child: MyListButton(
+            //       text: PURCHASE_LIST_BUTTON_TEXT,
+            //       onPressed: () {
+            //         Navigator.push(context, MaterialPageRoute<void>(
+            //           builder: (BuildContext context) => PurchaseListPage())
+            //         );
+            //       },
+            //     ),
+            //   ),
+            //   flex: 1,
+            // ),
             VerticalDivider(
               width: VERTICAL_DIVIDER_WIDTH,
               color: ColorConstant.BACKGROUND_GREY,

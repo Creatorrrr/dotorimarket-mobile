@@ -13,7 +13,7 @@ class CurrencyFormatter extends TextInputFormatter {
     if (newValue.text.trim() == WON) {
       return newValue.copyWith(text: '');
     } else {
-      final currencyNumberFormat = new NumberFormat.currency(
+      final currencyNumberFormat = NumberFormat.currency(
         decimalDigits: 0,
         symbol: '$WON ',
       );

@@ -1,4 +1,5 @@
 import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,20 +22,11 @@ class GoodProfileLayout extends StatelessWidget {
   static const double CREATOR_NAME_LEFT_PADDING = 10.0;
   static const double DESCRIPTION_VERTICAL_PADDING = 10.0;
 
-  final String category;
-  final String title;
-  final int price;
-  final String sellerName;
-  final String description;
+  final DealDto deal;
   final ScrollController scrollController;
 
-  GoodProfileLayout({
+  GoodProfileLayout(this.deal, {
     Key key,
-    @required this.category,
-    @required this.title,
-    @required this.price,
-    @required this.sellerName,
-    this.description,
     @required this.scrollController,
   }): super(key: key);
 
@@ -49,7 +41,7 @@ class GoodProfileLayout extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  child: Text(category,
+                  child: Text(deal.category.name,
                     style: const TextStyle(
                       fontSize: CATEGORY_FONT_SIZE,
                       color: ColorConstant.TEXT_GREY,
@@ -60,7 +52,7 @@ class GoodProfileLayout extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: Text(title,
+                  child: Text(deal.title,
                     style: const TextStyle(
                       fontSize: TITLE_FONT_SIZE,
                       fontWeight: FontWeight.bold,
@@ -71,7 +63,7 @@ class GoodProfileLayout extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: Text('${numberFormat.format(price)}원',
+                  child: Text('${numberFormat.format(deal.price)}원',
                     style: const TextStyle(
                       fontSize: PRICE_FONT_SIZE,
                       fontWeight: FontWeight.bold,
@@ -102,7 +94,7 @@ class GoodProfileLayout extends StatelessWidget {
                   child: Container(
                     child: Column(
                       children: [
-                        Text(sellerName,
+                        Text(deal.sellerName,
                           style: TextStyle(
                             fontSize: CREATOR_NAME_SIZE,
                           ),
@@ -129,7 +121,7 @@ class GoodProfileLayout extends StatelessWidget {
                 controller: scrollController,
                 child: Container(
                   child: Text(
-                    this.description ?? '',
+                    deal.description ?? '',
                     overflow: TextOverflow.ellipsis,
                   ),
                   alignment: Alignment.centerLeft,

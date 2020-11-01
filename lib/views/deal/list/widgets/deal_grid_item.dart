@@ -1,3 +1,5 @@
+import 'package:dotorimarket/configs/http_config.dart';
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,14 +14,11 @@ class DealGridItem extends StatelessWidget {
   static const double PRICE_FONT_SIZE = 16.0;
   static const double TEXT_LEFT_PADDING = 5.0;
 
-  final String title;
-  final int price;
+  final DealDto deal;
   final Function onPressed;
 
-  DealGridItem({
+  DealGridItem(this.deal, {
     Key key,
-    @required this.title,
-    @required this.price,
     @required this.onPressed,
   }):super(key: key);
 
@@ -34,7 +33,7 @@ class DealGridItem extends StatelessWidget {
             Container(
               child: AspectRatio(
                 child: ClipRRect(
-                  child: Image.asset(THUMBNAIL_PATH,
+                  child: Image.network('${HttpConfig.URL_PREFIX}/${deal.imgs[0].path}',
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
@@ -43,7 +42,7 @@ class DealGridItem extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text(title,
+              child: Text(deal.title,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: TITLE_FONT_SIZE,
@@ -56,7 +55,7 @@ class DealGridItem extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text('${numberFormat.format(price)}원',
+              child: Text('${numberFormat.format(deal.price)}원',
                 style: const TextStyle(
                   fontSize: PRICE_FONT_SIZE,
                   fontWeight: FontWeight.bold,

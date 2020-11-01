@@ -116,7 +116,7 @@ class HeaderLayout extends StatelessWidget {
                         child: Text('중요 채팅방으로 표시'),
                       ),
                       const PopupMenuItem(
-                        value: 4,
+                        value: DELETE_CHAT,
                         child: Text('채팅방 나가기'),
                       ),
                     ],

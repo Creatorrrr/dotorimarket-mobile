@@ -85,9 +85,10 @@ class _BodyLayoutState extends State<BodyLayout> {
             child: CheckedFutureBuilder(
               future: dealViewModel.getDealOne(widget.chat.deal.id, context),
               builder: (BuildContext context, AsyncSnapshot<DealDto> snapshot) {
+                DealDto deal = snapshot.data;
                 // 위젯 리스트 그리기
                 return DealProfileLayout(
-                  image: Image.asset(THUMBNAIL_PATH,
+                  image: Image.network('${HttpConfig.URL_PREFIX}/${deal.imgs[0].path}',
                     fit: BoxFit.cover,
                   ),
                   status: '거래중',

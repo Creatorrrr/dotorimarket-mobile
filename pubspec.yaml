@@ -37,6 +37,7 @@ dependencies:
   sprintf: ^4.0.0
   url_launcher: ^5.5.3
   flutter_svg: ^0.19.0
+  flutter_swiper: ^1.1.6
 #  image_picker: ^0.6.7+11
 # 스레드 권한 문제 핫픽스 (공식 패키지 수정 후 원복할 것)
   image_picker:

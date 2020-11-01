@@ -9,7 +9,6 @@ import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/menu_layout.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
-import 'package:dotorimarket/views/deal/list/layouts/body_layout.dart';
 import 'package:dotorimarket/views/deal/list/layouts/category_header_layout.dart';
 import 'package:dotorimarket/views/deal/list/layouts/header_layout.dart';
 import 'package:dotorimarket/views/deal/list/layouts/tab_all_layout.dart';

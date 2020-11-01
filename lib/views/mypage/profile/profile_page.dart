@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dotorimarket/dtos/account/account_dto.dart';
 import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/account_view_model.dart';
-import 'package:dotorimarket/viewmodels/user_view_model.dart';
 import 'package:dotorimarket/viewmodels/word_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
+import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/mypage/profile/layouts/body_layout.dart';
 import 'package:dotorimarket/views/mypage/profile/layouts/header_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -31,37 +31,46 @@ class _ProfilePageState extends State<ProfilePage> {
     return ViewModelProvider(
       child: Scaffold(
         body: Builder(
-          builder: (context) {
-            return SafeArea(
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      height: HEADER_TOP_HEIGHT,
-                      top: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: HeaderLayout(
-                        height: HEADER_TOP_HEIGHT,
-                        onComplete: () => _changeNickName(context),
-                      ),
+          builder: (BuildContext context) {
+            return CheckedFutureBuilder(
+              future: SharedPreferences.getInstance(),
+              builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
+                SharedPreferences prefs = snapshot.data;
+                String name = prefs.getString('name');
+                String img = prefs.getString('img');
+
+                return SafeArea(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          height: HEADER_TOP_HEIGHT,
+                          top: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: HeaderLayout(
+                            height: HEADER_TOP_HEIGHT,
+                            onComplete: () => _changeNickName(context),
+                          ),
+                        ),
+                        Positioned(
+                          top: HEADER_TOP_HEIGHT,
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: BodyLayout(prefs, img, name,
+                            onChanged: (File picture, String nickName) {
+                              this.picture = picture;
+                              this.nickName = nickName;
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    Positioned(
-                      top: HEADER_TOP_HEIGHT,
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: BodyLayout(
-                        onChanged: (File picture, String nickName) {
-                          this.picture = picture;
-                          this.nickName = nickName;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
           },
         ),
@@ -89,16 +98,18 @@ class _ProfilePageState extends State<ProfilePage> {
       // 닉네임 수정 요청
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String id = prefs.getString('id');
-      http.Response res = await accountViewModel.patchAccount(id, accountDto, context);
+      Response res = await accountViewModel.patchAccount(id, accountDto, picture, context);
 
       // 성공여부 확인
       if (res.statusCode == HttpStatus.ok) {
-        prefs.setString('name', nickName);
+        Map<String, dynamic> body = res.data;
+        prefs.setString('name', body['result']['name']);
+        prefs.setString('img', body['result']['img']['path']);
 
         Scaffold.of(context).removeCurrentSnackBar();
         Scaffold.of(context).showSnackBar(SnackBar(content: Text('수정되었습니다')));
       } else {
-        Map<String, dynamic> bodyJson = jsonDecode(res.body);
+        Map<String, dynamic> bodyJson = jsonDecode(res.data);
         String message = bodyJson['message'];
 
         throw message;

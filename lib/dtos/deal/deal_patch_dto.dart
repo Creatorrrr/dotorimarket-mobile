@@ -1,10 +1,10 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'deal_post_dto.g.dart';
+part 'deal_patch_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class DealPostDto {
+class DealPatchDto {
   String title;
   String category;
   String price;
@@ -12,7 +12,7 @@ class DealPostDto {
   String description;
   String seller;
 
-  DealPostDto({
+  DealPatchDto({
     this.title,
     this.category,
     this.price,
@@ -21,6 +21,6 @@ class DealPostDto {
     this.seller,
   });
 
-  factory DealPostDto.fromJson(Map<String, dynamic> json) => _$DealPostDtoFromJson(json);
-  Map<String, dynamic> toJson() => _$DealPostDtoToJson(this);
+  factory DealPatchDto.fromJson(Map<String, dynamic> json) => _$DealPatchDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$DealPatchDtoToJson(this);
 }

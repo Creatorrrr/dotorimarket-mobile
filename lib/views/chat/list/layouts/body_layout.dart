@@ -1,7 +1,6 @@
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/account/account_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_dto.dart';
-import 'package:dotorimarket/views/chat/content/chat_content_page.dart';
 import 'package:dotorimarket/views/chat/list/widgets/chat_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,10 +30,7 @@ class BodyLayout extends StatelessWidget {
           if (nickNameAccount.id == chatList[index].deal.seller.id) nickName = chatList[index].deal.sellerName;
           else nickName = nickNameAccount.name;
             return Container(
-            child: ChatListItem(
-              nickName,
-              chatList[index].title,
-              chatList[index].createdAt,
+            child: ChatListItem(chatList[index], prefs,
               onPressed: () {
                 onPressed(index);
               },

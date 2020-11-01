@@ -49,9 +49,7 @@ class TabAllLayout extends StatelessWidget {
                     crossAxisSpacing: DEAL_GRID_CROSS_AXIS_SPACING,
                     childAspectRatio: DEAL_GRID_CHILD_ASPECT_RATIO,
                   ),
-                  itemBuilder: (BuildContext context, int index) => DealGridItem(
-                    title: this.dealList[index].title ?? '',
-                    price: this.dealList[index].price,
+                  itemBuilder: (BuildContext context, int index) => DealGridItem(dealList[index],
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute<void>(
                           builder: (context) {

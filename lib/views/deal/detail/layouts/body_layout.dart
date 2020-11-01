@@ -1,3 +1,4 @@
+import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -5,6 +6,7 @@ import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/deal/detail/layouts/good_profile_layout.dart';
 import 'package:dotorimarket/views/deal/detail/widgets/main_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatefulWidget {
@@ -20,20 +22,27 @@ class BodyLayout extends StatefulWidget {
 }
 
 class _BodyLayoutState extends State<BodyLayout> {
-  static const String DEAL_TEMP_IMAGE_PATH = 'assets/images/dotori-banner.png';
-
   static const double DEAL_PROFILE_TOP_RADIUS = 30.0;
 
   @override
   Widget build(BuildContext context) {
-    final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
-
     return Container(
       child: Stack(
         children: [
           Positioned(
-            child: MainImage(
-              image: DEAL_TEMP_IMAGE_PATH,
+            child: Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                return MainImage(
+                  image: Image.network('${HttpConfig.URL_PREFIX}/${widget.deal.imgs[index].path}',
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+              itemCount: widget.deal.imgs.length,
+              pagination: SwiperPagination(
+                alignment: Alignment.center,
+              ),
+              loop: false,
             ),
           ),
           Positioned(
@@ -53,12 +62,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Container(
-                          child: GoodProfileLayout(
-                            category: widget.deal.category.name,
-                            title: widget.deal.title,
-                            price: widget.deal.price,
-                            sellerName: widget.deal.sellerName,
-                            description: widget.deal.description,
+                          child: GoodProfileLayout(widget.deal,
                             scrollController: scrollController,
                           ),
                           decoration: const BoxDecoration(

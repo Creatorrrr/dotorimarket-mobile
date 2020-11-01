@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
+import 'package:dotorimarket/dtos/deal/deal_patch_dto.dart';
 import 'package:dotorimarket/utils/http_util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +15,8 @@ import 'package:sprintf/sprintf.dart';
 
 class DealViewModel extends ViewModel {
   static const POST_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals';
+  static const PATCH_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%s';
+  static const DELETE_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%s';
   static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%s';
   static const GET_DEAL_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals';
 
@@ -32,6 +35,39 @@ class DealViewModel extends ViewModel {
       POST_DEAL,
       context,
       body: body,
+    );
+
+    return res;
+  }
+
+  Future<Response> patchDeal(String dealId, DealPatchDto dealPatchDto, List<File> imgs, BuildContext context) async {
+    String url = sprintf(PATCH_DEAL, [dealId]);
+
+    FormData body = FormData();
+    body.files.add(MapEntry('deal', MultipartFile.fromString(jsonEncode(dealPatchDto.toJson()),
+      contentType: MediaType('application', 'json'),
+    )));
+    if (imgs != null) {
+      for (File img in imgs) {
+        body.files.add(MapEntry('imgs', await MultipartFile.fromFile(img.path)));
+      }
+    }
+
+    Response res = await HttpUtil.patchMultipart(
+      url,
+      context,
+      body: body,
+    );
+
+    return res;
+  }
+
+  Future<http.Response> deleteDeal(String dealId, BuildContext context) async {
+    String url = sprintf(DELETE_DEAL, [dealId]);
+
+    http.Response res = await HttpUtil.delete(
+      url,
+      context,
     );
 
     return res;

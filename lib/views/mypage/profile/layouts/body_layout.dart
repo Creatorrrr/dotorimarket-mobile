@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:async/async.dart';
+import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/dtos/word/word_dto.dart';
 import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/word_view_model.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
-import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/common/widgets/circle_image.dart';
 import 'package:dotorimarket/views/common/widgets/picture_selection_dialog.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +14,13 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatefulWidget {
-  final File picture;
+  final SharedPreferences prefs;
+  final String imagePath;
   final String nickName;
   final void Function(File picture, String nickName) onChanged;
 
-  BodyLayout({
+  BodyLayout(this.prefs, this.imagePath, this.nickName, {
     Key key,
-    this.picture,
-    this.nickName,
     this.onChanged,
   }):super(key: key);
 
@@ -55,15 +54,13 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   @override
   void initState() {
-    picture = widget.picture;
     nickName = widget.nickName;
+    _nickNameController.text = widget.nickName;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final WordViewModel wordViewModel = ViewModelProvider.of<WordViewModel>(context);
-
     return Container(
       child: Column(
         children: <Widget>[
@@ -71,7 +68,11 @@ class _BodyLayoutState extends State<BodyLayout> {
             child: Stack(
               children: [
                 CircleImage(
-                  image: picture == null ? DEFAULT_PROFILE_IMAGE : Image.file(picture).image,
+                  image: picture == null
+                    ? StringUtil.isNotEmpty(widget.imagePath)
+                      ? NetworkImage('${HttpConfig.URL_PREFIX}/${widget.imagePath}')
+                      : DEFAULT_PROFILE_IMAGE
+                    : Image.file(picture).image,
                   radius: PROFILE_IMAGE_RADIUS,
                   border: Border.all(
                     width: PICTURE_SELECTION_BORDER_WIDTH,
@@ -116,59 +117,39 @@ class _BodyLayoutState extends State<BodyLayout> {
               vertical: PROFILE_VERTICAL_PADDING,
             ),
           ),
-          CheckedFutureBuilder(
-            future: SharedPreferences.getInstance(),
-            builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-              SharedPreferences prefs = snapshot.data;
-              String nickName = prefs.getString('name');
-              if (StringUtil.isEmpty(_nickNameController.text)) {
-                if (nickName != null) {
-                  _nickNameController.text = nickName;
-                } else {
-                  _getRandomNickName(context)
-                  .then((String nickName) {
+          Container(
+            child: TextFormField(
+              controller: _nickNameController,
+              onChanged: (String value) {
+                nickName = value;
+                widget.onChanged(picture, nickName);
+              },
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(NICKNAME_MAX_LENGTH),
+              ],
+              decoration: InputDecoration(
+                labelText: NICKNAME_LABEL_TEXT,
+                labelStyle: TextStyle(
+                  fontSize: NICKNAME_LABEL_SIZE,
+                ),
+                hintText: NICKNAME_HINT_TEXT,
+                hintStyle: TextStyle(
+                  fontSize: NICKNAME_HINT_SIZE,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.shuffle),
+                  onPressed: () async {
+                    nickName = await _getRandomNickName(context);
+                    widget.onChanged(picture, nickName);
                     setState(() {
                       _nickNameController.text = nickName;
                     });
-                  });
-                }
-              }
-
-              return Container(
-                child: TextFormField(
-                  controller: _nickNameController,
-                  onChanged: (String value) {
-                    nickName = value;
-                    widget.onChanged(picture, nickName);
                   },
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(NICKNAME_MAX_LENGTH),
-                  ],
-                  decoration: InputDecoration(
-                    labelText: NICKNAME_LABEL_TEXT,
-                    labelStyle: TextStyle(
-                      fontSize: NICKNAME_LABEL_SIZE,
-                    ),
-                    hintText: NICKNAME_HINT_TEXT,
-                    hintStyle: TextStyle(
-                      fontSize: NICKNAME_HINT_SIZE,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.shuffle),
-                      onPressed: () async {
-                        nickName = await _getRandomNickName(context);
-                        widget.onChanged(picture, nickName);
-                        setState(() {
-                          _nickNameController.text = nickName;
-                        });
-                      },
-                    ),
-                  ),
                 ),
-                width: NICKNAME_WIDTH,
-              );
-            },
-          )
+              ),
+            ),
+            width: NICKNAME_WIDTH,
+          ),
         ],
       ),
     );

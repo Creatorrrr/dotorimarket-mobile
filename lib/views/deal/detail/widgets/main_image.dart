@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MainImage extends StatelessWidget {
 
-  final String image;
+  final Image image;
 
   MainImage({
     Key key,
@@ -12,10 +12,7 @@ class MainImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      child: Image.asset(
-        this.image,
-        fit: BoxFit.cover,
-      ),
+      child: image,
       aspectRatio: 1.0,
     );
   }

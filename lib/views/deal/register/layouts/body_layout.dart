@@ -257,7 +257,7 @@ class _BodyLayoutState extends State<BodyLayout> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String userId = prefs.getString('id');
 
-      // 로그인 데이터
+      // 거래 데이터
       DealPostDto dealPostDto = DealPostDto(
         title: titleTextEditingController.text.trim(),
         category: selectedCategory.id,
@@ -296,7 +296,6 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   /// register form의 validation 확인
   void _checkRegisterForm(DealPostDto dealPostDto) {
-    const String POSTFIX = '을(를) 입력해주세요';
     if (dealPostDto == null) {
       throw '개발자에게 문의해주세요 : dto parameter is null';
     }

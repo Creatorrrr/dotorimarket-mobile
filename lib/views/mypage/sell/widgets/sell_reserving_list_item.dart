@@ -1,8 +1,13 @@
+import 'package:dotorimarket/configs/http_config.dart';
 import 'package:dotorimarket/constants/color_constant.dart';
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class SellListItem extends StatelessWidget {
+class SellReservingListItem extends StatelessWidget {
+  static const int MODIFY_DEAL = 1;
+  static const int DELETE_DEAL = 2;
+
   static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
   static const double IMAGE_SIZE = 80.0;
   static const double IMAGE_BORDER_RADIUS = 5.0;
@@ -19,22 +24,26 @@ class SellListItem extends StatelessWidget {
   static const double BOTTOM_BUTTON_FONT_SIZE = 12.0;
   static const double BOTTOM_BUTTON_HEIGHT = 35.0;
 
-  static const String TO_RESERVING_TEXT = '예약중으로 변경';
-  static const String TO_DEALT_TEXT = '거래완료로 변경';
+  static const String TO_SELLING_TEXT = '판매중으로 변경';
+  static const String TO_FINISHED_TEXT = '거래완료로 변경';
+  static const String DELETE_DIALOG_TEXT = '삭제하시겠습니까?';
+  static const String CANCEL_TEXT = '취소';
+  static const String DELETE_TEXT = '삭제하기';
 
-  final String title;
-  final int price;
-  final Function onItemPressed;
-  final Function onToReservingPressed;
-  final Function onToDealtPressed;
+  final DealDto deal;
+  final void Function() onItemPressed;
+  final void Function() onModifyPressed;
+  final void Function() onDeletePressed;
+  final void Function() onToSellingPressed;
+  final void Function() onToFinishedPressed;
 
-  SellListItem({
+  SellReservingListItem(this.deal, {
     Key key,
-    @required this.title,
-    @required this.price,
     @required this.onItemPressed,
-    @required this.onToReservingPressed,
-    @required this.onToDealtPressed,
+    @required this.onModifyPressed,
+    @required this.onDeletePressed,
+    @required this.onToSellingPressed,
+    @required this.onToFinishedPressed,
   }):super(key: key);
 
   @override
@@ -50,9 +59,13 @@ class SellListItem extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: ClipRRect(
-                      child: Image.asset(THUMBNAIL_PATH,
-                        fit: BoxFit.cover,
-                      ),
+                      child: deal.imgs != null && deal.imgs.length > 0
+                        ? Image.network('${HttpConfig.URL_PREFIX}/${deal.imgs[0].path}',
+                          fit: BoxFit.cover,
+                        )
+                        : Image.asset(THUMBNAIL_PATH,
+                          fit: BoxFit.cover,
+                        ),
                       borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
                     ),
                     width: IMAGE_SIZE,
@@ -63,7 +76,7 @@ class SellListItem extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                              child: Text(title,
+                              child: Text(deal.title,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: TITLE_FONT_SIZE,
@@ -75,7 +88,7 @@ class SellListItem extends StatelessWidget {
                               alignment: Alignment.centerLeft,
                             ),
                             Container(
-                              child: Text('${numberFormat.format(price)}원',
+                              child: Text('${numberFormat.format(deal.price)}원',
                                 style: TextStyle(
                                   fontSize: PRICE_FONT_SIZE,
                                   fontWeight: FontWeight.bold,
@@ -94,11 +107,47 @@ class SellListItem extends StatelessWidget {
                       )
                   ),
                   Container(
-                    child: GestureDetector(
-                      child: const Icon(Icons.more_vert),
-                      onTap: () {
-
+                    child: PopupMenuButton(
+                      onSelected: (int value) async {
+                        switch(value) {
+                          case MODIFY_DEAL:
+                            onModifyPressed();
+                            break;
+                          case DELETE_DEAL:
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext dialogContext) {
+                                  return AlertDialog(
+                                    title: Text(DELETE_DIALOG_TEXT),
+                                    actions: [
+                                      FlatButton(
+                                        child: Text(CANCEL_TEXT),
+                                        onPressed: () {
+                                          Navigator.pop(dialogContext);
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text(DELETE_TEXT),
+                                        onPressed: onDeletePressed,
+                                      ),
+                                    ],
+                                  );
+                                }
+                            );
+                            break;
+                          default:
+                        }
                       },
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+                        const PopupMenuItem(
+                          value: 1,
+                          child: Text('수정하기'),
+                        ),
+                        const PopupMenuItem(
+                          value: 2,
+                          child: Text('삭제하기'),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -125,7 +174,7 @@ class SellListItem extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     child: Container(
-                      child: const Text(TO_RESERVING_TEXT,
+                      child: const Text(TO_SELLING_TEXT,
                         style: const TextStyle(
                           fontSize: BOTTOM_BUTTON_FONT_SIZE,
                           fontWeight: FontWeight.bold,
@@ -133,7 +182,7 @@ class SellListItem extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                     ),
-                    onTap: onToReservingPressed,
+                    onTap: onToSellingPressed,
                   ),
                   flex: 1,
                 ),
@@ -145,7 +194,7 @@ class SellListItem extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     child: Container(
-                      child: const Text(TO_DEALT_TEXT,
+                      child: const Text(TO_FINISHED_TEXT,
                         style: const TextStyle(
                           fontSize: BOTTOM_BUTTON_FONT_SIZE,
                           fontWeight: FontWeight.bold,
@@ -153,7 +202,7 @@ class SellListItem extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                     ),
-                    onTap: onToDealtPressed,
+                    onTap: onToFinishedPressed,
                   ),
                   flex: 1,
                 ),

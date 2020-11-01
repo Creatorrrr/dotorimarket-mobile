@@ -112,6 +112,29 @@ class HttpUtil {
     return res;
   }
 
+  /// put multipart 요청
+  static Future<Response> putMultipart(dynamic url, BuildContext context, {
+    Map<String, String> headers,
+    Map<String, String> queryParams,
+    dynamic body,
+    Encoding encoding,
+  }) async {
+    url = _setQueryParams(url, queryParams);
+
+    headers = await _setDefaultHeaders(headers);
+    if (StringUtil.isEmpty(headers['content-type'])) headers['content-type'] = 'application/json';
+
+    Dio dio = Dio();
+    Response res = await dio.put(url,
+      data: body,
+      options: Options(
+        headers: headers,
+      ),
+    );
+
+    return res;
+  }
+
   /// patch 요청
   static Future<http.Response> patch(dynamic url, BuildContext context, {
     Map<String, String> headers,
@@ -131,6 +154,29 @@ class HttpUtil {
     );
 
     _showUpdateDialog(res, context);
+
+    return res;
+  }
+
+  /// patch multipart 요청
+  static Future<Response> patchMultipart(dynamic url, BuildContext context, {
+    Map<String, String> headers,
+    Map<String, String> queryParams,
+    dynamic body,
+    Encoding encoding,
+  }) async {
+    url = _setQueryParams(url, queryParams);
+
+    headers = await _setDefaultHeaders(headers);
+    if (StringUtil.isEmpty(headers['content-type'])) headers['content-type'] = 'application/json';
+
+    Dio dio = Dio();
+    Response res = await dio.patch(url,
+      data: body,
+      options: Options(
+        headers: headers,
+      ),
+    );
 
     return res;
   }

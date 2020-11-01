@@ -6,6 +6,7 @@ class DealDropdownButtonFormField<T> extends StatefulWidget {
   static const double CONTENT_PADDING_DEFAULT = 10.0;
 
   final List<DealDropdownMenuItem<T>> items;
+  final String currentText;
   final String hintText;
   final double contentPadding;
   final Function(T) onChanged;
@@ -13,6 +14,7 @@ class DealDropdownButtonFormField<T> extends StatefulWidget {
   DealDropdownButtonFormField({
     Key key,
     @required this.items,
+    this.currentText,
     @required this.hintText,
     this.contentPadding = CONTENT_PADDING_DEFAULT,
     @required this.onChanged,
@@ -38,6 +40,7 @@ class _DtrDropdownButtonFormField<T> extends State<DealDropdownButtonFormField<T
   /// state 초기화
   void _init() {
     items = widget.items;
+    currentText = widget.currentText;
     hintText = widget.hintText;
     contentPadding = widget.contentPadding;
     onChanged = widget.onChanged;

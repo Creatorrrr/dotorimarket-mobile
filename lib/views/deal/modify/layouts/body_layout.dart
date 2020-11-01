@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dotorimarket/dtos/category/category_dto.dart';
+import 'package:dotorimarket/dtos/deal/deal_dto.dart';
+import 'package:dotorimarket/dtos/deal/deal_patch_dto.dart';
+import 'package:dotorimarket/utils/string_util.dart';
 import 'package:dotorimarket/viewmodels/category_view_model.dart';
 import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/common/widgets/permission_setting_dialog.dart';
@@ -20,9 +24,17 @@ import 'package:dotorimarket/views/common/view_model_provider.dart';
 import 'package:dotorimarket/views/deal/common/widgets/deal_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyLayout extends StatefulWidget {
+  final DealDto deal;
+
+  BodyLayout(this.deal, {
+    Key key,
+  }):super(key: key);
+
   @override
   State<StatefulWidget> createState() => _BodyLayoutState();
 }
@@ -51,12 +63,24 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String GALLERY_PERMISSION_DIALOG_TITLE = '갤러리 접근 권한이 필요합니다';
 
   final TextEditingController titleTextEditingController = TextEditingController();
-  final TextEditingController categoryTextEditingController = TextEditingController();
   final TextEditingController priceTextEditingController = TextEditingController();
   final TextEditingController descriptionTextEditingController = TextEditingController();
 
   CategoryDto selectedCategory;
   List<File> pictureList = [];
+
+  @override
+  void initState() {
+    final currencyNumberFormat = NumberFormat.currency(
+      decimalDigits: 0,
+      symbol: '₩ ',
+    );
+    titleTextEditingController.text = widget.deal.title;
+    selectedCategory = widget.deal.category;
+    priceTextEditingController.text = currencyNumberFormat.format(widget.deal.price);
+    descriptionTextEditingController.text = widget.deal.description;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,11 +165,14 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: CheckedFutureBuilder(
                         future: categoryViewModel.getCategoryList("", "", "", "", "", context),
                         builder: (BuildContext context, AsyncSnapshot<List<CategoryDto>> snapshot) {
+                          List<CategoryDto> categoryList = snapshot.data;
+
                           return DealDropdownButtonFormField(
+                            currentText: selectedCategory.name,
                             hintText: CATEGORY_HINT_TEXT,
-                            items: List.generate(snapshot.data.length, (index) => DealDropdownMenuItem(
-                              text: snapshot.data[index].name,
-                              value: snapshot.data[index],
+                            items: List.generate(categoryList.length, (index) => DealDropdownMenuItem(
+                              text: categoryList[index].name,
+                              value: categoryList[index],
                             )),
                             onChanged: (CategoryDto categoryDto) {
                               selectedCategory = categoryDto;
@@ -246,18 +273,22 @@ class _BodyLayoutState extends State<BodyLayout> {
     final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
 
     try {
-      // 로그인 데이터
-      DealPostDto dealPostDto = DealPostDto(
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String userId = prefs.getString('id');
+
+      DealPatchDto dealPatchDto = DealPatchDto(
         title: titleTextEditingController.text.trim(),
+        category: selectedCategory.id,
         price: priceTextEditingController.text.trim().replaceAll(RegExp(r'[^\d]'), ''),
         description: descriptionTextEditingController.text.trim(),
+        seller: userId,
       );
 
       // validation 확인
-      _checkModifyForm(dealPostDto);
+      _checkModifyForm(dealPatchDto);
 
       // 로그인 요청
-      http.Response res = await dealViewModel.postDeal(dealPostDto, context);
+      Response res = await dealViewModel.patchDeal(widget.deal.id, dealPatchDto, pictureList, context);
 
       // 성공여부 확인
       if (res.statusCode == 200) {
@@ -268,7 +299,7 @@ class _BodyLayoutState extends State<BodyLayout> {
             }
         ));
       } else {
-        Map<String, dynamic> bodyJson = jsonDecode(res.body);
+        Map<String, dynamic> bodyJson = jsonDecode(res.data);
         String message = bodyJson['message'];
 
         Scaffold.of(context).removeCurrentSnackBar();
@@ -281,23 +312,25 @@ class _BodyLayoutState extends State<BodyLayout> {
     }
   }
 
-  /// register form의 validation 확인
-  void _checkModifyForm(DealPostDto dealPostDto) {
-    const String POSTFIX = '을(를) 입력해주세요';
-    if (dealPostDto == null) {
+  /// modify form의 validation 확인
+  void _checkModifyForm(DealPatchDto dealPatchDto) {
+    if (dealPatchDto == null) {
       throw '개발자에게 문의해주세요 : dto parameter is null';
     }
-    if (dealPostDto.title == null || dealPostDto.title.isEmpty) {
-      throw '$GOOD_NAME_HINT_TEXT$POSTFIX';
+    if (StringUtil.isEmpty(dealPatchDto.title)) {
+      throw '제목을 입력해주세요';
     }
-//    if (dealPostDto.categoryId == null || dealPostDto.categoryId.isEmpty) {
-//      throw '$CATEGORY_HINT_TEXT$POSTFIX';
-//    }
-    if (dealPostDto.price == null || dealPostDto.price.isEmpty) {
-      throw '$PRICE_HINT_TEXT$POSTFIX';
+    if (StringUtil.isEmpty(dealPatchDto.category)) {
+      throw '카테고리를 선택해주세요';
     }
-    if (dealPostDto.description == null || dealPostDto.description.isEmpty) {
-      throw '$DESCRIPTION_HINT_TEXT$POSTFIX';
+    if (StringUtil.isEmpty(dealPatchDto.price)) {
+      throw '가격을 입력해주세요';
+    }
+    if (StringUtil.isEmpty(dealPatchDto.description)) {
+      throw '상품의 설명을 입력해주세요';
+    }
+    if (StringUtil.isEmpty(dealPatchDto.seller)) {
+      throw '개발자에게 문의해주세요 : seller parameter is null';
     }
   }
 

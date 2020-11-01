@@ -47,9 +47,7 @@ class TabBestLayout extends StatelessWidget {
                       crossAxisSpacing: DEAL_GRID_CROSS_AXIS_SPACING,
                       childAspectRatio: DEAL_GRID_CHILD_ASPECT_RATIO,
                     ),
-                    itemBuilder: (BuildContext context, int index) => DealGridItem(
-                      title: snapshot.data[index].title ?? '',
-                      price: snapshot.data[index].price,
+                    itemBuilder: (BuildContext context, int index) => DealGridItem(snapshot.data[index],
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute<void>(
                             builder: (context) {
