@@ -33,7 +33,7 @@ class DealGridItem extends StatelessWidget {
             Container(
               child: AspectRatio(
                 child: ClipRRect(
-                  child: Image.network('${HttpConfig.URL_PREFIX}/${deal.imgs[0].path}',
+                  child: Image.network('${HttpConfig.URL_FILE_PREFIX}/${deal.imgs[0].filename}',
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),

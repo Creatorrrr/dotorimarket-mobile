@@ -70,7 +70,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                 CircleImage(
                   image: picture == null
                     ? StringUtil.isNotEmpty(widget.imagePath)
-                      ? NetworkImage('${HttpConfig.URL_PREFIX}/${widget.imagePath}')
+                      ? NetworkImage('${HttpConfig.URL_FILE_PREFIX}/${widget.imagePath}')
                       : DEFAULT_PROFILE_IMAGE
                     : Image.file(picture).image,
                   radius: PROFILE_IMAGE_RADIUS,

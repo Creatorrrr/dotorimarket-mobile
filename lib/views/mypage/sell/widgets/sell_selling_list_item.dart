@@ -61,7 +61,7 @@ class SellSellingListItem extends StatelessWidget {
                   Container(
                     child: ClipRRect(
                       child: deal.imgs != null && deal.imgs.length > 0
-                        ? Image.network('${HttpConfig.URL_PREFIX}/${deal.imgs[0].path}',
+                        ? Image.network('${HttpConfig.URL_FILE_PREFIX}/${deal.imgs[0].filename}',
                           fit: BoxFit.cover,
                         )
                         : Image.asset(THUMBNAIL_PATH,

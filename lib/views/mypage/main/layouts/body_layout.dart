@@ -37,7 +37,7 @@ class BodyLayout extends StatelessWidget {
         children: <Widget>[
           Container(
             child: MyProfileLayout(
-              image: StringUtil.isNotEmpty(img) ? NetworkImage('${HttpConfig.URL_PREFIX}/${img}') : PROFILE_IMAGE_DEFAULT,
+              image: StringUtil.isNotEmpty(img) ? NetworkImage('${HttpConfig.URL_FILE_PREFIX}/${img}') : PROFILE_IMAGE_DEFAULT,
               name: userName,
               description: place,
             ),

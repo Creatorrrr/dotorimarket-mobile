@@ -33,7 +33,7 @@ class _BodyLayoutState extends State<BodyLayout> {
             child: Swiper(
               itemBuilder: (BuildContext context, int index) {
                 return MainImage(
-                  image: Image.network('${HttpConfig.URL_PREFIX}/${widget.deal.imgs[index].path}',
+                  image: Image.network('${HttpConfig.URL_FILE_PREFIX}/${widget.deal.imgs[index].filename}',
                     fit: BoxFit.cover,
                   ),
                 );

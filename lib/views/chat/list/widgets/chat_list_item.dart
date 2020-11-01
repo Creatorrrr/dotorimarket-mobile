@@ -53,8 +53,8 @@ class ChatListItem extends StatelessWidget {
     else nickName = chat.deal.sellerName;
 
     String imagePath;
-    if (chat.deal.seller.id == userId) imagePath = member.img?.path;
-    else imagePath = chat.deal.seller.img?.path;
+    if (chat.deal.seller.id == userId) imagePath = member.img?.filename;
+    else imagePath = chat.deal.seller.img?.filename;
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
@@ -65,7 +65,7 @@ class ChatListItem extends StatelessWidget {
             children: <Widget>[
               Container(
                 child: CircleImage(
-                  image: StringUtil.isNotEmpty(imagePath) ? NetworkImage('${HttpConfig.URL_PREFIX}/${imagePath}') : DEFAULT_PROFILE_IMAGE,
+                  image: StringUtil.isNotEmpty(imagePath) ? NetworkImage('${HttpConfig.URL_FILE_PREFIX}/${imagePath}') : DEFAULT_PROFILE_IMAGE,
                   radius: PROFILE_IMAGE_RADIUS,
                 ),
               ),

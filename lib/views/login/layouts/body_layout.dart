@@ -201,7 +201,7 @@ class _BodyLayoutState extends State<BodyLayout> {
         prefs.setString(ACCOUNT_ID_KEY, account.accountId);
         prefs.setString(NAME_KEY, account.name);
         prefs.setString(PLACE_KEY, account.place);
-        prefs.setString(IMAGE_KEY, account.img?.path);
+        prefs.setString(IMAGE_KEY, account.img?.filename);
 
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(
