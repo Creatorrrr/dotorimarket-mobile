@@ -17,6 +17,9 @@ AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) {
     img: json['img'] == null
         ? null
         : ImageDto.fromJson(json['img'] as Map<String, dynamic>),
+    thumbnail: json['thumbnail'] == null
+        ? null
+        : ThumbnailDto.fromJson(json['thumbnail'] as Map<String, dynamic>),
   );
 }
 
@@ -36,5 +39,6 @@ Map<String, dynamic> _$AccountDtoToJson(AccountDto instance) {
   writeNotNull('email', instance.email);
   writeNotNull('place', instance.place);
   writeNotNull('img', instance.img?.toJson());
+  writeNotNull('thumbnail', instance.thumbnail?.toJson());
   return val;
 }

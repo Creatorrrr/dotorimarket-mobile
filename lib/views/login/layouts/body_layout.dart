@@ -10,6 +10,7 @@ import 'package:dotorimarket/views/login/layouts/title_layout.dart';
 import 'package:dotorimarket/views/login/widgets/login_button.dart';
 import 'package:dotorimarket/views/login/widgets/login_text_field.dart';
 import 'package:dotorimarket/views/login/widgets/save_email_checkbox.dart';
+import 'package:dotorimarket/views/signup/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const double EMAIL_LOGIN_TEXT_FIELD_TOP_MARGIN = 70.0;
   static const double PASSWORD_LOGIN_TEXT_FIELD_TOP_MARGIN = 10.0;
   static const double LOGIN_BUTTON_TOP_MARGIN = 30.0;
+  static const double SIGN_UP_BUTTON_TOP_MARGIN = 10.0;
   // static const double FIND_FONT_SIZE = 16.0;
 
   static const String SAVE_EMAIL_KEY = 'saveEmail';
@@ -33,13 +35,14 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String NAME_KEY = 'name';
   static const String PLACE_KEY = 'place';
   static const String IMAGE_KEY = 'img';
+  static const String THUMBNAIL_KEY = 'thumbnail';
   static const String EMAIL_KEY = 'email';
   static const String TOKEN_KEY = 'token';
 
   static const String EMAIL_TEXT = '이메일';
   static const String PASSWORD_TEXT = '패스워드';
   static const String LOGIN_TEXT = '로그인';
-  // static const String SIGN_UP_TEXT = '회원가입';
+  static const String SIGN_UP_TEXT = '회원가입';
   // static const String FIND_ID_TEXT = '아이디 찾기';
   // static const String FIND_PASSWORD_TEXT = '패스워드 찾기';
   static const String SAVE_EMAIL_PASSWORD_TEXT = '아이디 저장';
@@ -117,6 +120,26 @@ class _BodyLayoutState extends State<BodyLayout> {
             ),
             padding: const EdgeInsets.only(
               top: LOGIN_BUTTON_TOP_MARGIN,
+              left: HORIZONTAL_PADDING,
+              right: HORIZONTAL_PADDING,
+            ),
+          ),
+          Container(
+            child: LoginButton(
+              text: SIGN_UP_TEXT,
+              buttonColor: Colors.black54,
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                // 화면 이동
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return SignUpPage();
+                  },
+                ));
+              },
+            ),
+            padding: const EdgeInsets.only(
+              top: SIGN_UP_BUTTON_TOP_MARGIN,
               left: HORIZONTAL_PADDING,
               right: HORIZONTAL_PADDING,
             ),
@@ -202,6 +225,7 @@ class _BodyLayoutState extends State<BodyLayout> {
         prefs.setString(NAME_KEY, account.name);
         prefs.setString(PLACE_KEY, account.place);
         prefs.setString(IMAGE_KEY, account.img?.filename);
+        prefs.setString(THUMBNAIL_KEY, account.thumbnail?.filename);
 
         // 화면 이동
         Navigator.pushReplacement(context, MaterialPageRoute<void>(

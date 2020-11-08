@@ -2,6 +2,7 @@ import 'package:dotorimarket/dtos/account/account_dto.dart';
 import 'package:dotorimarket/dtos/category/category_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_dto.dart';
 import 'package:dotorimarket/dtos/common/image_dto.dart';
+import 'package:dotorimarket/dtos/common/thumbnail_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'deal_dto.g.dart';
@@ -18,6 +19,7 @@ class DealDto {
   AccountDto seller;
   String sellerName;
   List<ImageDto> imgs;
+  List<ThumbnailDto> thumbnails;
 
   DealDto({
     this.id,
@@ -30,6 +32,7 @@ class DealDto {
     this.seller,
     this.sellerName,
     this.imgs,
+    this.thumbnails,
   });
 
   factory DealDto.fromJson(Map<String, dynamic> json) => _$DealDtoFromJson(json);

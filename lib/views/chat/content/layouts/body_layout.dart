@@ -88,7 +88,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                 DealDto deal = snapshot.data;
                 // 위젯 리스트 그리기
                 return DealProfileLayout(
-                  image: Image.network('${HttpConfig.URL_FILE_PREFIX}/${deal.imgs[0].filename}',
+                  image: Image.network('${HttpConfig.URL_FILE_PREFIX}/${deal.thumbnails[0].filename}',
                     fit: BoxFit.cover,
                   ),
                   status: '거래중',

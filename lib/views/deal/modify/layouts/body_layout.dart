@@ -56,7 +56,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String PRICE_HINT_TEXT = '₩ 가격';
   static const String DESCRIPTION_HINT_TEXT = '판매할 상품의 설명을 작성해주세요';
   static const String BOTTOM_BUTTON_TEXT = '수정하기';
-  static const String CONFIRM_DIALOG_TITLE = '등록하시겠습니까?';
+  static const String CONFIRM_DIALOG_TITLE = '수정하시겠습니까?';
   static const String CONFIRM_DIALOG_CANCEL = '취소';
   static const String CONFIRM_DIALOG_MODIFY = '수정하기';
   static const String CAMERA_PERMISSION_DIALOG_TITLE = '카메라 접근 권한이 필요합니다';

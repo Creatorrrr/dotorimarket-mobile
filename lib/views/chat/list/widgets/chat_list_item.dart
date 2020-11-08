@@ -41,7 +41,7 @@ class ChatListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String userId = prefs.getString('id');
-    String img = prefs.getString('img');
+    String thumbnail = prefs.getString('thumbnail');
 
     // 내가 판매자일 경우 상대방의 현재 닉네임
     // 내가 판매자가 아닐 경우 상대방의 당시 닉네
@@ -53,8 +53,8 @@ class ChatListItem extends StatelessWidget {
     else nickName = chat.deal.sellerName;
 
     String imagePath;
-    if (chat.deal.seller.id == userId) imagePath = member.img?.filename;
-    else imagePath = chat.deal.seller.img?.filename;
+    if (chat.deal.seller.id == userId) imagePath = member.thumbnail?.filename;
+    else imagePath = chat.deal.seller.thumbnail?.filename;
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),

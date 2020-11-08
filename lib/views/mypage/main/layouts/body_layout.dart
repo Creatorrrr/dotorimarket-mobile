@@ -30,14 +30,14 @@ class BodyLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     String userName = prefs.getString('name');
     String place = prefs.getString('place');
-    String img = prefs.getString('img');
+    String thumbnail = prefs.getString('thumbnail');
 
     return Container(
       child: Column(
         children: <Widget>[
           Container(
             child: MyProfileLayout(
-              image: StringUtil.isNotEmpty(img) ? NetworkImage('${HttpConfig.URL_FILE_PREFIX}/${img}') : PROFILE_IMAGE_DEFAULT,
+              image: StringUtil.isNotEmpty(thumbnail) ? NetworkImage('${HttpConfig.URL_FILE_PREFIX}/${thumbnail}') : PROFILE_IMAGE_DEFAULT,
               name: userName,
               description: place,
             ),

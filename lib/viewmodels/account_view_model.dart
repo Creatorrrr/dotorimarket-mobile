@@ -16,11 +16,17 @@ class AccountViewModel extends ViewModel {
   static const PATCH_ACCOUNT = '${HttpConfig.URL_MOBILE_PREFIX}/v1/accounts/%s';
   static const GET_ACCOUNT_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/accounts/%s';
 
-  Future<http.Response> postAccount(AccountDto accountDto, BuildContext context) async {
-    http.Response res = await HttpUtil.post(
+  Future<Response> postAccount(AccountDto accountDto, File img, BuildContext context) async {
+    FormData body = FormData();
+    body.files.add(MapEntry('account', MultipartFile.fromString(jsonEncode(accountDto.toJson()),
+      contentType: MediaType('application', 'json'),
+    )));
+    body.files.add(MapEntry('img', await MultipartFile.fromFile(img.path)));
+
+    Response res = await HttpUtil.postMultipart(
       POST_ACCOUNT,
       context,
-      body: accountDto.toJson(),
+      body: body,
     );
 
     return res;
@@ -28,7 +34,6 @@ class AccountViewModel extends ViewModel {
 
   Future<Response> patchAccount(String id, AccountDto accountDto, File img, BuildContext context) async {
     String url = sprintf(PATCH_ACCOUNT, [id]);
-
 
     FormData body = FormData();
     body.files.add(MapEntry('account', MultipartFile.fromString(jsonEncode(accountDto.toJson()),

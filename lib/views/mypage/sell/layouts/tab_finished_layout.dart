@@ -37,8 +37,6 @@ class _TabFinishedLayoutState extends State<TabFinishedLayout> {
   bool hasMore = true;
   bool requested = false;
 
-  final AsyncMemoizer _memoizer = AsyncMemoizer();
-
   @override
   Widget build(BuildContext context) {
     final String userId = widget.prefs.getString('id');
@@ -54,7 +52,7 @@ class _TabFinishedLayoutState extends State<TabFinishedLayout> {
     });
 
     return CheckedFutureBuilder(
-      future: _memoizer.runOnce(() => dealViewModel.getDealList(filter, '', '', orders, '', context)),
+      future: dealViewModel.getDealList(filter, '', '', orders, '', context),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         List<DealDto> dealList = snapshot.data;
 
@@ -100,12 +98,7 @@ class _TabFinishedLayoutState extends State<TabFinishedLayout> {
 
                           // 성공여부 확인
                           if (res.statusCode == HttpStatus.ok) {
-                            // 화면 이동
-                            Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                                builder: (context) {
-                                  return SellListPage();
-                                }
-                            ));
+                            setState(() {});
                           } else {
                             Map<String, dynamic> bodyJson = jsonDecode(res.data);
                             String message = bodyJson['message'];
@@ -122,18 +115,13 @@ class _TabFinishedLayoutState extends State<TabFinishedLayout> {
                       onToReservingPressed: () async {
                         try {
                           DealPatchDto dealPatchDto = DealPatchDto(
-                            status: 'F',
+                            status: 'R',
                           );
                           Response res = await dealViewModel.patchDeal(dealList[index].id, dealPatchDto, null, context);
 
                           // 성공여부 확인
                           if (res.statusCode == HttpStatus.ok) {
-                            // 화면 이동
-                            Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                                builder: (context) {
-                                  return SellListPage();
-                                }
-                            ));
+                            setState(() {});
                           } else {
                             Map<String, dynamic> bodyJson = jsonDecode(res.data);
                             String message = bodyJson['message'];
