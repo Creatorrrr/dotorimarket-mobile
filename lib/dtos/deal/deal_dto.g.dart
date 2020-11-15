@@ -32,6 +32,7 @@ DealDto _$DealDtoFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : ThumbnailDto.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    favorite: json['favorite'] as bool,
   );
 }
 
@@ -56,5 +57,6 @@ Map<String, dynamic> _$DealDtoToJson(DealDto instance) {
   writeNotNull('imgs', instance.imgs?.map((e) => e?.toJson())?.toList());
   writeNotNull(
       'thumbnails', instance.thumbnails?.map((e) => e?.toJson())?.toList());
+  writeNotNull('favorite', instance.favorite);
   return val;
 }

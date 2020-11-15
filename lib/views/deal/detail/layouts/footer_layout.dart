@@ -5,6 +5,7 @@ import 'package:dotorimarket/dtos/chat/chat_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_post_dto.dart';
 import 'package:dotorimarket/dtos/deal/deal_dto.dart';
 import 'package:dotorimarket/viewmodels/chat_view_model.dart';
+import 'package:dotorimarket/viewmodels/deal_view_model.dart';
 import 'package:dotorimarket/views/chat/content/chat_content_page.dart';
 import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -40,7 +41,7 @@ class _FooterLayoutState extends State<FooterLayout> {
   /// state 초기화
   void _init() {
     height = widget.height;
-    favorite = false;
+    favorite = widget.deal.favorite;
   }
 
   @override
@@ -54,6 +55,7 @@ class _FooterLayoutState extends State<FooterLayout> {
   Widget build(BuildContext context) {
     String userId = widget.prefs.getString('id');
     final ChatViewModel chatViewModel = ViewModelProvider.of<ChatViewModel>(context);
+    final DealViewModel dealViewModel = ViewModelProvider.of<DealViewModel>(context);
 
     return Container(
       child: Row(
@@ -66,6 +68,7 @@ class _FooterLayoutState extends State<FooterLayout> {
               onPressed: () {
                 setState(() {
                   favorite = !favorite;
+                  dealViewModel.postFavorite(widget.deal.id, context);
                 });
               },
             ),

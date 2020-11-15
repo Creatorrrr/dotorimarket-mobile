@@ -1,6 +1,5 @@
 import 'package:dotorimarket/views/login/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
 
 void main() => runApp(MyApp());
 

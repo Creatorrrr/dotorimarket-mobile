@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 class LoginTextField extends StatelessWidget {
   static const bool AUTO_FOCUS_DEFAULT = false;
-  static const double VERTICAL_CONTENT_PADDING = 18.0;
-  static const double HORIZONTAL_CONTENT_PADDING = 12.0;
+  static const bool OBSCURE_TEXT_DEFAULT = false;
+  static const double VERTICAL_CONTENT_PADDING = 10.0;
+  static const double HORIZONTAL_CONTENT_PADDING = 20.0;
 
   final String labelText;
   final Icon icon;
   final bool autoFocus;
+  final bool obscureText;
   final TextEditingController controller;
   final FocusNode focusNode;
   final Function onFieldSubmitted;
@@ -19,6 +21,7 @@ class LoginTextField extends StatelessWidget {
     @required this.labelText,
     @required this.icon,
     this.autoFocus = AUTO_FOCUS_DEFAULT,
+    this.obscureText = OBSCURE_TEXT_DEFAULT,
     this.controller,
     this.focusNode,
     this.onFieldSubmitted,
@@ -37,6 +40,7 @@ class LoginTextField extends StatelessWidget {
         border: OutlineInputBorder(),
       ),
       autofocus: this.autoFocus,
+      obscureText: this.obscureText,
       focusNode: this.focusNode ?? FocusNode(),
       onFieldSubmitted: this.onFieldSubmitted ?? (String value) {},
     );

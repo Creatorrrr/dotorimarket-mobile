@@ -20,6 +20,7 @@ class DealDto {
   String sellerName;
   List<ImageDto> imgs;
   List<ThumbnailDto> thumbnails;
+  bool favorite;
 
   DealDto({
     this.id,
@@ -33,6 +34,7 @@ class DealDto {
     this.sellerName,
     this.imgs,
     this.thumbnails,
+    this.favorite,
   });
 
   factory DealDto.fromJson(Map<String, dynamic> json) => _$DealDtoFromJson(json);

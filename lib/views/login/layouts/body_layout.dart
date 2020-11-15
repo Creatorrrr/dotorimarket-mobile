@@ -22,10 +22,11 @@ class BodyLayout extends StatefulWidget {
 
 class _BodyLayoutState extends State<BodyLayout> {
   static const double HORIZONTAL_PADDING = 30.0;
+  static const double TITLE_TOP_MARGIN = 100.0;
   static const double SAVE_EMAIL_CHECKBOX_LEFT_PADDING = 20.0;
-  static const double EMAIL_LOGIN_TEXT_FIELD_TOP_MARGIN = 70.0;
+  static const double EMAIL_LOGIN_TEXT_FIELD_TOP_MARGIN = 90.0;
   static const double PASSWORD_LOGIN_TEXT_FIELD_TOP_MARGIN = 10.0;
-  static const double LOGIN_BUTTON_TOP_MARGIN = 30.0;
+  static const double LOGIN_BUTTON_TOP_MARGIN = 40.0;
   static const double SIGN_UP_BUTTON_TOP_MARGIN = 10.0;
   // static const double FIND_FONT_SIZE = 16.0;
 
@@ -39,13 +40,13 @@ class _BodyLayoutState extends State<BodyLayout> {
   static const String EMAIL_KEY = 'email';
   static const String TOKEN_KEY = 'token';
 
-  static const String EMAIL_TEXT = '이메일';
+  static const String ACCOUNT_ID_TEXT = '아이디';
   static const String PASSWORD_TEXT = '패스워드';
   static const String LOGIN_TEXT = '로그인';
   static const String SIGN_UP_TEXT = '회원가입';
   // static const String FIND_ID_TEXT = '아이디 찾기';
   // static const String FIND_PASSWORD_TEXT = '패스워드 찾기';
-  static const String SAVE_EMAIL_PASSWORD_TEXT = '아이디 저장';
+  static const String SAVE_EMAIL_PASSWORD_TEXT = '아이디 저장하기';
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -79,10 +80,13 @@ class _BodyLayoutState extends State<BodyLayout> {
             padding: const EdgeInsets.symmetric(
               horizontal: HORIZONTAL_PADDING,
             ),
+            margin: const EdgeInsets.only(
+              top: TITLE_TOP_MARGIN,
+            ),
           ),
           Container(
             child: LoginTextField(
-              labelText: EMAIL_TEXT,
+              labelText: ACCOUNT_ID_TEXT,
               icon: const Icon(Icons.email),
               controller: emailController,
               onFieldSubmitted: (String value) {
@@ -102,6 +106,7 @@ class _BodyLayoutState extends State<BodyLayout> {
               icon: const Icon(Icons.lock),
               controller: passwordController,
               focusNode: passwordFocusNode,
+              obscureText: true,
             ),
             padding: const EdgeInsets.symmetric(
               horizontal: HORIZONTAL_PADDING,
@@ -251,7 +256,7 @@ class _BodyLayoutState extends State<BodyLayout> {
       throw '개발자에게 문의해주세요 (dto parameter is null)';
     }
     if (userLoginDto.userId == null || userLoginDto.userId.isEmpty) {
-      throw '$EMAIL_TEXT를 입력해주세요';
+      throw '$ACCOUNT_ID_TEXT를 입력해주세요';
     }
     if (userLoginDto.password == null || userLoginDto.password.isEmpty) {
       throw '$PASSWORD_TEXT를 입력해주세요';

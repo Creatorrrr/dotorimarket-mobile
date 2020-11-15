@@ -19,6 +19,8 @@ class DealViewModel extends ViewModel {
   static const DELETE_DEAL = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%s';
   static const GET_DEAL_ONE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals/%s';
   static const GET_DEAL_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/deals';
+  static const POST_FAVORITE = '${HttpConfig.URL_MOBILE_PREFIX}/v1/favorites';
+  static const GET_FAVORITE_LIST = '${HttpConfig.URL_MOBILE_PREFIX}/v1/favorites';
 
   Future<Response> postDeal(DealPostDto dealPostDto, List<File> imgs, BuildContext context) async {
     FormData body = FormData();
@@ -98,6 +100,32 @@ class DealViewModel extends ViewModel {
     http.Response res = await HttpUtil.get(url, context,
       queryParams: queryParams,
     );
+    Map<String, dynamic> bodyJson = jsonDecode(res.body);
+
+    List<DealDto> dealList = [];
+    for (dynamic json in bodyJson['result']) {
+      DealDto dealDto = new DealDto.fromJson(json);
+      dealList.add(dealDto);
+    }
+
+    return dealList;
+  }
+
+  Future<http.Response> postFavorite(String dealId, BuildContext context) async {
+    http.Response res = await HttpUtil.post(
+      POST_FAVORITE,
+      context,
+      body: {
+        'dealId': dealId,
+      },
+    );
+    return res;
+  }
+
+  Future<List<DealDto>> getFavoriteList(BuildContext context) async {
+    String url = GET_FAVORITE_LIST;
+
+    http.Response res = await HttpUtil.get(url, context);
     Map<String, dynamic> bodyJson = jsonDecode(res.body);
 
     List<DealDto> dealList = [];
