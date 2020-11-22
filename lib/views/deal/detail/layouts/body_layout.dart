@@ -23,6 +23,7 @@ class BodyLayout extends StatefulWidget {
 
 class _BodyLayoutState extends State<BodyLayout> {
   static const double DEAL_PROFILE_TOP_RADIUS = 30.0;
+  static const double SWIPER_PAGINATION_BOTTOM_MARGIN = 50.0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +31,38 @@ class _BodyLayoutState extends State<BodyLayout> {
       child: Stack(
         children: [
           Positioned(
-            child: Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                return MainImage(
-                  image: Image.network('${HttpConfig.URL_FILE_PREFIX}/${widget.deal.imgs[index].filename}',
-                    fit: BoxFit.cover,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                final double mainImageHeight = constraints.maxWidth;
+
+                return Container(
+                  height: mainImageHeight,
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return MainImage(
+                        image: Image.network('${HttpConfig.URL_FILE_PREFIX}/${widget.deal.imgs[index].filename}',
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                    itemCount: widget.deal.imgs.length,
+                    pagination: SwiperPagination(
+                      alignment: Alignment.bottomCenter,
+                      margin: const EdgeInsets.only(
+                        bottom: SWIPER_PAGINATION_BOTTOM_MARGIN,
+                      )
+                    ),
+                    loop: false,
                   ),
                 );
               },
-              itemCount: widget.deal.imgs.length,
-              pagination: SwiperPagination(
-                alignment: Alignment.center,
-              ),
-              loop: false,
             ),
           ),
           Positioned(
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                final goodProfileHeight = constraints.maxHeight - constraints.maxWidth + DEAL_PROFILE_TOP_RADIUS;
-                final goodProfileMaxHeight = constraints.maxHeight - constraints.maxWidth / 2 + DEAL_PROFILE_TOP_RADIUS;
+                final double goodProfileHeight = constraints.maxHeight - constraints.maxWidth + DEAL_PROFILE_TOP_RADIUS;
+                final double goodProfileMaxHeight = constraints.maxHeight - constraints.maxWidth / 2 + DEAL_PROFILE_TOP_RADIUS;
                 final double goodProfileInitialChildSize = goodProfileHeight / constraints.maxHeight;
                 final double goodProfileMaxChildSize = goodProfileMaxHeight / constraints.maxHeight;
 

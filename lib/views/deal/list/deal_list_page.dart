@@ -35,6 +35,7 @@ class _DealListPageState extends State<DealListPage> {
   List<DealDto> dealList;
   String filter = '';
   String orders = jsonEncode({
+    'status': 'desc',
     'createdAt': 'desc',
   });
   int skip = 0;

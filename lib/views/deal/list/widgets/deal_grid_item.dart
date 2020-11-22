@@ -42,7 +42,7 @@ class DealGridItem extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text(deal.title,
+              child: Text('${deal.status == 'F' ? '[판매완료]' : deal.status == 'R' ? '[예약중]' : ''} ${deal.title}',
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: TITLE_FONT_SIZE,
