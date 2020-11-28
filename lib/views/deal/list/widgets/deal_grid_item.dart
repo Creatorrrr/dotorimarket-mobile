@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 class DealGridItem extends StatelessWidget {
   static const String THUMBNAIL_PATH = 'assets/images/dotori-grid-item.png';
 
+  static const Color IMAGE_BORDER_COLOR = Color.fromRGBO(225, 225, 225, 1);
   static const double IMAGE_BORDER_RADIUS = 5.0;
+  static const double IMAGE_BORDER_WIDTH = 0.5;
   static const double IMAGE_ASPECT_RATIO = 1.0;
   static const double TITLE_TOP_PADDING = 10.0;
   static const double TITLE_FONT_SIZE = 16.0;
@@ -32,11 +34,18 @@ class DealGridItem extends StatelessWidget {
           children: <Widget>[
             Container(
               child: AspectRatio(
-                child: ClipRRect(
-                  child: Image.network('${HttpConfig.URL_FILE_PREFIX}/${deal.thumbnails[0].filename}',
-                    fit: BoxFit.cover,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: IMAGE_BORDER_COLOR,
+                      width: IMAGE_BORDER_WIDTH,
+                    ),
+                    image: DecorationImage(
+                      image: NetworkImage('${HttpConfig.URL_FILE_PREFIX}/${deal.thumbnails[0].filename}',),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
                   ),
-                  borderRadius: BorderRadius.circular(IMAGE_BORDER_RADIUS),
                 ),
                 aspectRatio: IMAGE_ASPECT_RATIO,
               ),

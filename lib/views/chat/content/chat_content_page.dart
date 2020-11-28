@@ -1,8 +1,6 @@
-import 'package:dotorimarket/dtos/chat/chat_content_dto.dart';
 import 'package:dotorimarket/dtos/chat/chat_dto.dart';
 import 'package:dotorimarket/viewmodels/chat_view_model.dart';
 import 'package:dotorimarket/viewmodels/deal_view_model.dart';
-import 'package:dotorimarket/views/chat/content/layouts/footer_layout.dart';
 import 'package:dotorimarket/views/chat/content/layouts/header_layout.dart';
 import 'package:dotorimarket/views/chat/content/layouts/body_layout.dart';
 import 'package:dotorimarket/views/common/view_model_provider.dart';
@@ -71,6 +69,7 @@ class ChatContentPage extends StatelessWidget {
             );
           },
         ),
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
       ),
       viewModels: [

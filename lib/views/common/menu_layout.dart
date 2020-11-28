@@ -1,3 +1,4 @@
+
 import 'package:dotorimarket/constants/color_constant.dart';
 import 'package:dotorimarket/views/category/category_list_page.dart';
 import 'package:dotorimarket/views/chat/list/chat_list_page.dart';
@@ -8,8 +9,15 @@ import 'package:dotorimarket/views/mypage/main/mypage_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuLayout extends StatelessWidget {
+  static const String HOME_ICON_PATH = 'assets/icon/home.png';
+  static const String CATEGORY_ICON_PATH = 'assets/icon/menu.png';
+  static const String WRITE_ICON_PATH = 'assets/icon/write.png';
+  static const String CHAT_ICON_PATH = 'assets/icon/chat.png';
+  static const String MY_PAGE_ICON_PATH = 'assets/icon/user.png';
+
   static const double HEIGHT_DEFAULT = 50.0;
   static const double HEADER_TOP_BORDER_WIDTH = 1.0;
+  static const double ICON_WIDTH = 24.0;
 
   static const String MENU_ITEM_HOME = '홈';
   static const String MENU_ITEM_CATEGORY = '카테고리';
@@ -42,7 +50,9 @@ class MenuLayout extends StatelessWidget {
           Expanded(
             flex: 1,
             child: MenuItemButton(
-              icon: Icons.home,
+              icon: Image.asset(HOME_ICON_PATH,
+                width: ICON_WIDTH,
+              ),
               name: MENU_ITEM_HOME,
               onPressed: onHomePressed ?? () {
                 Navigator.pushReplacement(context, PageRouteBuilder(
@@ -55,7 +65,9 @@ class MenuLayout extends StatelessWidget {
           Expanded(
             flex: 1,
             child: MenuItemButton(
-              icon: Icons.menu,
+              icon: Image.asset(CATEGORY_ICON_PATH,
+                width: ICON_WIDTH,
+              ),
               name: MENU_ITEM_CATEGORY,
               onPressed: onCategoryPressed ?? () {
                 Navigator.pushReplacement(context, PageRouteBuilder(
@@ -68,7 +80,9 @@ class MenuLayout extends StatelessWidget {
           Expanded(
             flex: 1,
             child: MenuItemButton(
-              icon: Icons.add_circle_outline,
+              icon: Image.asset(WRITE_ICON_PATH,
+                width: ICON_WIDTH,
+              ),
               name: MENU_ITEM_WRITE,
               onPressed: onWritePressed ?? () {
                 Navigator.push(context, PageRouteBuilder(
@@ -97,7 +111,9 @@ class MenuLayout extends StatelessWidget {
           Expanded(
             flex: 1,
             child: MenuItemButton(
-              icon: Icons.chat_bubble_outline,
+              icon: Image.asset(CHAT_ICON_PATH,
+                width: ICON_WIDTH,
+              ),
               name: MENU_ITEM_CHAT,
               onPressed: onChatPressed ?? () {
                 Navigator.pushReplacement(context, PageRouteBuilder(
@@ -110,7 +126,9 @@ class MenuLayout extends StatelessWidget {
           Expanded(
             flex: 1,
             child: MenuItemButton(
-              icon: Icons.perm_identity,
+              icon: Image.asset(MY_PAGE_ICON_PATH,
+                width: ICON_WIDTH,
+              ),
               name: MENU_ITEM_MY_PAGE,
               onPressed: onMyPagePressed ?? () {
                 Navigator.pushReplacement(context, PageRouteBuilder(

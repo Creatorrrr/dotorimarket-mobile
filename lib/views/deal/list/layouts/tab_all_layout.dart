@@ -5,6 +5,7 @@ import 'package:dotorimarket/views/common/widgets/checked_future_builder.dart';
 import 'package:dotorimarket/views/deal/detail/deal_detail_page.dart';
 import 'package:dotorimarket/views/deal/list/widgets/banner_image.dart';
 import 'package:dotorimarket/views/deal/list/widgets/deal_grid_item.dart';
+import 'package:dotorimarket/views/notice/list/notice_list_page.dart';
 import 'package:flutter/material.dart';
 
 class TabAllLayout extends StatelessWidget {
@@ -34,6 +35,13 @@ class TabAllLayout extends StatelessWidget {
           Container(
             child: BannerImage(
               image: ALL_BANNER_PATH,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (context) {
+                      return NoticeListPage();
+                    }
+                ));
+              },
             ),
             margin: const EdgeInsets.only(
               top: LAYOUT_BANNER_TOP_MARGIN,
